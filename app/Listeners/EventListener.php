@@ -15,7 +15,7 @@ class EventListener
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -26,6 +26,6 @@ class EventListener
      */
     public function handle(SomeEvent $event)
     {
-        //
+        dd('Listener', $event);
     }
 }

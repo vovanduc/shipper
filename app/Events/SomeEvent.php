@@ -17,7 +17,7 @@ class SomeEvent extends Event
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**

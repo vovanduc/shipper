@@ -34,8 +34,14 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $result = $this->users->all(10);
 
+        // $faker = \Faker\Factory::create();
+        // echo $faker->uuid;exit;
+        // echo $faker->username;exit;
+
+
+        $result = $this->users->all(10);
+        //\Event::fire(new \App\Events\SomeEvent($result) );
         return view('admin.users.index', compact('result'));
     }
 
@@ -66,6 +72,10 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return \Redirect::route('admin.users.create')->withErrors($validator)->withInput();        
         }
+
+        $password = $this->request->input('password');
+
+        \Input::merge(array('password' => bcrypt($password)));
 
         $result = $this->users->add($this->request->except(['_method', '_token', 'password_confirmation']));
 

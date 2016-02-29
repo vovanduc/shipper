@@ -23,6 +23,7 @@ class UserRepository implements IUserRepository
 
     public function add($input)
     {
+        $input = array_add($input, 'uuid', \Uuid::generate(4)->string);     
         return User::create($input);
     }
 
