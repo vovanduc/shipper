@@ -3,6 +3,7 @@
 namespace App\Http\Models\Admin;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Http\Models\Admin;
 
 class User extends Authenticatable
 {
@@ -27,7 +28,7 @@ class User extends Authenticatable
     public function getCvActiveAttribute($value)
     {
         if ($this->attributes['active'] == 1) {
-            return '<span class="label label-success">Đang hoạt động</span>';        
+            return '<span class="label label-success">Đang hoạt động</span>';
         } else {
             return '<span class="label label-danger">Không hoạt động</span';
         }
@@ -41,7 +42,7 @@ class User extends Authenticatable
     public function getCvIsAdminAttribute($value)
     {
         if ($this->attributes['is_admin'] == 1) {
-            return 'Có';        
+            return 'Có';
         } else {
             return 'Không';
         }
@@ -50,9 +51,19 @@ class User extends Authenticatable
     public function getCvIsRootAttribute($value)
     {
         if ($this->attributes['is_root'] == 1) {
-            return 'Có';        
+            return 'Có';
         } else {
             return 'Không';
         }
+    }
+
+    public function customers_created()
+    {
+        return $this->hasMany('Customer', 'id');
+    }
+
+    public function customers_updated()
+    {
+        return $this->hasMany('Customer', 'id');
     }
 }

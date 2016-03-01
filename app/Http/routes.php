@@ -38,5 +38,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::resource('users', 'Admin\UsersController');
 		Route::any('change_pass', array("as"=>"admin.users.change_pass","uses"=>"Admin\UsersController@change_pass"));
 
+		// Customers
+		Route::resource('customers', 'Admin\CustomersController');
+
 	});
 });
