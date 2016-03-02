@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td>Người tạo</td>
-                            <td>{{$result->user_created->email}} </td>
+                            <td>{{$result->created_by}} </td>
                         </tr>
                         <tr>
                             <td>Ngày tạo</td>
@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <td>Người cập nhật</td>
-                            <td>{{$result->user_updated->email}} </td>
+                            <td>{{$result->updated_by}} </td>
                         </tr>
                         <tr>
                             <td>Ngày cập nhật</td>

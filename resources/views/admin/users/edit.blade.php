@@ -9,13 +9,25 @@
 
             <div class="row">
 
-                {!! Form::model($result, array('method' => 'put', 
+                {!! Form::model($result, array('method' => 'put',
 
                                               'class' => 'form-horizontal',
 
                                               'route' => array('admin.users.update', $result->uuid))) !!}
                     {!! csrf_field() !!}
 
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Tên</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('name',null,array('class' => 'form-control'))}}
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">E-Mail Address</label>

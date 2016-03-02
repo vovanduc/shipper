@@ -50,4 +50,21 @@ class Customer extends \Eloquent
     {
         return $this->belongsTo('\App\Http\Models\Admin\User', 'updated_by');
     }
+
+    public function setCreatedByAttribute($data)
+    {
+        $this->attributes['created_by'] = $data ? $data->name : '';
+    }
+
+    public function setUpdatedByAttribute($data)
+    {
+        $this->attributes['updated_by'] = $data ? $data->name : '';
+    }
+
+    public static function convert($data)
+    {
+        $data->created_by = $data->user_created;
+        $data->updated_by = $data->user_updated;
+        return $data;
+    }
 }

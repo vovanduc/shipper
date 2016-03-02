@@ -20,7 +20,7 @@ class UsersController extends Controller
         if(\Auth::user()->is_admin == false) {
             return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
         }
-    }   
+    }
 
     protected function validator(array $data, array $rules)
     {
@@ -64,13 +64,14 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validator($this->request->all(), [
+                'name' => 'required|max:255',
                 'username' => 'required|max:255|unique:users',
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|confirmed|min:6',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.users.create')->withErrors($validator)->withInput();        
+            return \Redirect::route('admin.users.create')->withErrors($validator)->withInput();
         }
 
         $password = $this->request->input('password');
@@ -121,12 +122,13 @@ class UsersController extends Controller
     public function update($id)
     {
         $validator = $this->validator($this->request->all(), [
+                'name' => 'required|max:255',
                 'email' => 'required|email|max:255',
                 'password' => 'confirmed|min:6',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.users.edit', $id)->withErrors($validator);        
+            return \Redirect::route('admin.users.edit', $id)->withErrors($validator);
         }
 
         $data = $this->users->firstOrFail($id);
@@ -166,7 +168,7 @@ class UsersController extends Controller
     }
 
     public function change_pass()
-    {   
+    {
         if ($this->request->input('password')) {
 
             $validator = $this->validator($this->request->all(), [
@@ -174,7 +176,7 @@ class UsersController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return \Redirect::route('admin.users.change_pass')->withErrors($validator);        
+                return \Redirect::route('admin.users.change_pass')->withErrors($validator);
             }
 
             $password = $this->request->input('password');

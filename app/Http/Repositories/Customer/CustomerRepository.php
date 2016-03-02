@@ -13,7 +13,9 @@ class CustomerRepository implements ICustomerRepository
 
     public function firstOrFail($id)
     {
-        return Customer::where('uuid', $id)->firstOrFail();
+        $result = Customer::where('uuid', $id)->firstOrFail();
+        $result = Customer::convert($result);
+        return $result;
     }
 
     public function findBy($field, $value)

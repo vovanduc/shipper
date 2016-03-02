@@ -12,21 +12,21 @@
 
         <div class="panel-body">
         	<table class="table table-hover table-responsive">
-        		<thead> 
-        			<tr> 
-        				<th class="text-center">#</th> 
-        				<th class="text-center">Username</th>
+        		<thead>
+        			<tr>
+        				<th class="text-center">#</th>
+        				<th class="text-center">Tên</th>
         				<th class="text-center">Email</th>
         				<th class="text-center">Trạng thái</th>
         				<th class="text-center">Ngày tạo</th>
         				<th class="text-center">Quản lý</th>
-        			</tr> 
-        		</thead> 
-        		<tbody> 
+        			</tr>
+        		</thead>
+        		<tbody>
         			@foreach( $result as $count => $item)
-	        			<tr class="text-center"> 
+	        			<tr class="text-center">
 	        				<th>{{ ++$count }}</th>
-	        				<td>{{ $item->username }}</td>
+	        				<td>{{ $item->name }}</td>
 	        				<td>{{ $item->email }}</td>
 	        				<td>{!! $item->cv_active !!}</td>
 	        				<td>{{ $item->created_at }}</td>
@@ -58,15 +58,15 @@
 										      else
 
 										        return false;
-										    }		
+										    }
 
 										</script>
 									{!! Form::close() !!}
-								@endif	
+								@endif
 	        				</td>
-	        			</tr> 
+	        			</tr>
         			@endforeach
-        		</tbody> 
+        		</tbody>
         	</table>
         	{!! $result->links() !!}
         </div>
