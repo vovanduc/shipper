@@ -56,14 +56,4 @@ class User extends Authenticatable
             return 'Không';
         }
     }
-
-    public function customers_created()
-    {
-        return $this->hasMany('Customer', 'id');
-    }
-
-    public function customers_updated()
-    {
-        return $this->hasMany('Customer', 'id');
-    }
 }

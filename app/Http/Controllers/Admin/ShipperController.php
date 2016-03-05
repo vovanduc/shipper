@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Repositories\Customer\ICustomerRepository;
-use App\Http\Models\Admin\Customer as Customer;
+use App\Http\Repositories\Shipper\IShipperRepository;
+use App\Http\Models\Admin\Shipper as Shipper;
 
-class CustomersController extends Controller
+class ShippersController extends Controller
 {
-    protected $customers;
+    protected $shippers;
 
-    public function __construct(ICustomerRepository $customers, Request $request)
+    public function __construct(IShipperRepository $shippers, Request $request)
     {
-        $this->customers = $customers;
+        $this->shippers = $shippers;
         $this->request = $request;
 
         if(\Auth::user()->is_admin == false) {
@@ -35,8 +35,8 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $result = $this->customers->all(10);
-        return view('admin.customers.index', compact('result'))
+        $result = $this->shippers->all(10);
+        return view('admin.shippers.index', compact('result'))
             ->with('name')
             ->with('email');
     }
@@ -48,7 +48,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        return view('admin.customers.create');
+        return view('admin.shippers.create');
     }
 
     /**
@@ -61,23 +61,23 @@ class CustomersController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
                 'name' => 'required|max:255',
-                'email' => 'required|email|max:255|unique:customers',
+                'email' => 'required|email|max:255|unique:shippers',
                 'phone' => 'required',
                 'address' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.customers.create')->withErrors($validator)->withInput();
+            return \Redirect::route('admin.shippers.create')->withErrors($validator)->withInput();
         }
 
         \Input::merge(array('created_by' => \Auth::user()->id));
 
-        $result = $this->customers->add($this->request->except(['_method', '_token', 'password_confirmation']));
+        $result = $this->shippers->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.add_success'));
+            return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.add_success'));
         } else {
-            return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
 
     }
@@ -90,8 +90,8 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        $result = $this->customers->firstOrFail($id);
-        return view('admin.customers.show', compact('result'));
+        $result = $this->shippers->firstOrFail($id);
+        return view('admin.shippers.show', compact('result'));
     }
 
     /**
@@ -102,8 +102,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        $result = $this->customers->firstOrFail($id);
-        return view('admin.customers.edit', compact('result'));
+        $result = $this->shippers->firstOrFail($id);
+        return view('admin.shippers.edit', compact('result'));
     }
 
     /**
@@ -117,23 +117,23 @@ class CustomersController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
               'name' => 'required|max:255',
-              'email'=>'required|email|unique:customers,email,'.$id.',uuid',
+              'email'=>'required|email|unique:shippers,email,'.$id.',uuid',
               'phone' => 'required',
               'address' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.customers.edit', $id)->withErrors($validator);
+            return \Redirect::route('admin.shippers.edit', $id)->withErrors($validator);
         }
 
         \Input::merge(array('updated_by' => \Auth::user()->id));
 
-        $result = $this->customers->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
+        $result = $this->shippers->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.update_success'));
+            return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.update_success'));
         } else {
-            return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -146,12 +146,12 @@ class CustomersController extends Controller
     public function destroy($id)
     {
         if ($id) {
-            $result = $this->customers->update($id, ['deleted' => 1]);
+            $result = $this->shippers->update($id, ['deleted' => 1]);
 
             if ($result) {
-                return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.delete_success'));
+                return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.delete_success'));
             } else {
-                return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }
@@ -159,11 +159,11 @@ class CustomersController extends Controller
     public function search()
     {
         if (!$this->request->has('name') && !$this->request->has('email')) {
-            return \Redirect::route('admin.customers.index');
+            return \Redirect::route('admin.shippers.index');
         }
 
 
-        $result = Customer::where('deleted',0);
+        $result = Shipper::where('deleted',0);
 
         if ($this->request->has('name')) {
             $result = $result->where('name', 'LIKE', '%'.$this->request->name.'%');
@@ -177,7 +177,7 @@ class CustomersController extends Controller
 
 
 
-        return view('admin.customers.index', compact('result'))
+        return view('admin.shippers.index', compact('result'))
             ->with('name', $this->request->name)
             ->with('email', $this->request->email);
     }

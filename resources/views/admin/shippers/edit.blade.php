@@ -5,8 +5,8 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6">Khách hàng {{$result->username}} ( {{$result->email}} )</div>
-                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.index')}}">Trở lại</a></span></div>
+                <div class="col-md-6">{{Lang::get('admin.shipper.edit')}} {{$result->username}} ( {{$result->email}} )</div>
+                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.shippers.index')}}">Trở lại</a></span></div>
             </div>
         </div>
 
@@ -18,7 +18,7 @@
 
                                               'class' => 'form-horizontal',
 
-                                              'route' => array('admin.customers.update', $result->uuid))) !!}
+                                              'route' => array('admin.shippers.update', $result->uuid))) !!}
                     {!! csrf_field() !!}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

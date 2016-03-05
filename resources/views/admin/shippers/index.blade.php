@@ -5,13 +5,13 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-        		    <div class="col-md-6">Quản lý khách hàng</div>
-                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.create')}}">Thêm</a></span></div>
+        		    <div class="col-md-6">{{Lang::get('admin.shipper.index')}}</div>
+                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.shippers.create')}}">Thêm</a></span></div>
             </div>
         </div>
 
         <div class="panel-body">
-            {{ Form::open(array('route' => array('admin.customers.search'), 'method' => 'POST')) }}
+            {{ Form::open(array('route' => array('admin.shippers.search'), 'method' => 'POST')) }}
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="row">
@@ -60,13 +60,13 @@
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>
             	        					  @if (\Auth::user()->is_admin)
-            		        					<a href="{{URL::route('admin.customers.show', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.shippers.show', $item->uuid)}}">
             		        						<i class="fa fa-search"></i> Xem
             		        					</a>
-            		        					<a href="{{URL::route('admin.customers.edit', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.shippers.edit', $item->uuid)}}">
             		        						<i class="fa fa-pencil"></i> Sửa
             									    </a>
-                									{!! Form::open(array('route' => array('admin.customers.destroy', $item->uuid), 'method' => 'delete')) !!}
+                									{!! Form::open(array('route' => array('admin.shippers.destroy', $item->uuid), 'method' => 'delete')) !!}
                 										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
 
                 											<i class="fa fa-trash-o"></i> Xóa
@@ -103,7 +103,7 @@
                   @endif
           		</tbody>
           	</table>
-            @if (!Request::is('admin/customers/search'))
+            @if (!Request::is('admin/shippers/search'))
               {!! $result->links() !!}
             @endif
         </div>

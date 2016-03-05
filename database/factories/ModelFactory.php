@@ -11,6 +11,18 @@
 |
 */
 
+$factory->define(App\Http\Models\Admin\User::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'username' => 'vovanduc',
+        'name' => 'Võ Văn Đức',
+        'email' => 'vovanduc1989@gmail.com',
+        'is_root' => 1,
+        'is_admin' => 1,
+        'password' => bcrypt('123456'),
+    ];
+});
+
 $factory->define(App\Http\Models\Admin\Customer::class, function (Faker\Generator $faker) {
     return [
         'uuid' => $faker->uuid,
@@ -18,7 +30,15 @@ $factory->define(App\Http\Models\Admin\Customer::class, function (Faker\Generato
         'phone' => $faker->phoneNumber,
         'name' => $faker->name,
         'address' => $faker->address,
-        'created_by' => 1,
-        'updated_by' => 1,
+    ];
+});
+
+$factory->define(App\Http\Models\Admin\Shipper::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'email' => $faker->email,
+        'phone' => $faker->phoneNumber,
+        'name' => $faker->name,
+        'address' => $faker->address,
     ];
 });

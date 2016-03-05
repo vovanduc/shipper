@@ -5,8 +5,8 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6">Khách hàng {{$result->username}} ( {{$result->email}} )</div>
-                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.index')}}">Trở lại</a></span></div>
+                <div class="col-md-6">{{Lang::get('admin.shipper.info')}} {{$result->username}} ( {{$result->email}} )</div>
+                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.shippers.index')}}">Trở lại</a></span></div>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
 
-                <a href="{{URL::route('admin.customers.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                <a href="{{URL::route('admin.shippers.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
                 </div>
             </div>
         </div>

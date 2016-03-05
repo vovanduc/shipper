@@ -21,8 +21,8 @@ class CreateCustomersTable extends Migration
             $table->string('address');
             $table->boolean('active')->default(true);
             $table->boolean('deleted')->default(false);
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->default(1);
+            $table->integer('updated_by')->default(1);
             $table->timestamps();
         });
     }

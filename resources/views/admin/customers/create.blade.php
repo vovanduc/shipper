@@ -3,7 +3,12 @@
 @section('content')
 <div class="col-md-9">
     <div class="panel panel-default">
-        <div class="panel-heading">Thêm mới khách hàng</div>
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-md-6">Quản lý khách hàng</div>
+              <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.index')}}">Trở lại</a></span></div>
+          </div>
+      </div>
 
         <div class="panel-body">
 
@@ -14,15 +19,15 @@
 
                     {!! csrf_field() !!}
 
-                    <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Username</label>
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Tên</label>
 
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="username" value="{{ old('username') }}">
+                            <input type="text" class="form-control" name="name" value="{{ old('name') }}">
 
-                            @if ($errors->has('username'))
+                            @if ($errors->has('name'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('username') }}</strong>
+                                    <strong>{{ $errors->first('name') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -42,28 +47,29 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Mật khẩu</label>
+                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Điện thoại</label>
 
                         <div class="col-md-6">
-                            <input type="password" class="form-control" name="password" value="{{ old('password') }}">
-                            @if ($errors->has('password'))
+                            <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+
+                            @if ($errors->has('phone'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
+                                    <strong>{{ $errors->first('phone') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Xác nhận mật khẩu</label>
+                    <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Địa chỉ</label>
 
                         <div class="col-md-6">
-                            <input type="password" class="form-control" name="password_confirmation">
+                            <input type="text" class="form-control" name="address" value="{{ old('address') }}">
 
-                            @if ($errors->has('password_confirmation'))
+                            @if ($errors->has('address'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    <strong>{{ $errors->first('address') }}</strong>
                                 </span>
                             @endif
                         </div>

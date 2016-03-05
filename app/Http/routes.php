@@ -40,6 +40,10 @@ Route::group(['middleware' => 'web'], function () {
 
 		// Customers
 		Route::resource('customers', 'Admin\CustomersController');
+		Route::any('customers/search', array("as"=>"admin.customers.search","uses"=>"Admin\CustomersController@search"));
 
+		// Shippers
+		Route::resource('shippers', 'Admin\ShippersController');
+		Route::any('shippers/search', array("as"=>"admin.shippers.search","uses"=>"Admin\ShippersController@search"));
 	});
 });

@@ -13,7 +13,7 @@ class CustomerRepository implements ICustomerRepository
 
     public function firstOrFail($id)
     {
-        $result = Customer::where('uuid', $id)->firstOrFail();
+        $result = Customer::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         $result = Customer::convert($result);
         return $result;
     }
@@ -21,6 +21,11 @@ class CustomerRepository implements ICustomerRepository
     public function findBy($field, $value)
     {
         return Customer::where($field, $value);
+    }
+
+    public function get()
+    {
+        return Customer::get();
     }
 
     public function add($input)

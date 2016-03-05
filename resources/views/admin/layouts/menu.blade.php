@@ -6,6 +6,7 @@
             <ol>
             	<li><a href="{{URL::route('admin.users.index')}}">Quản lý nhân viên</a></li>
             	<li><a href="{{URL::route('admin.customers.index')}}">Quản lý khách hàng</a></li>
+              <li><a href="{{URL::route('admin.shippers.index')}}">{{Lang::get('admin.shipper.index')}}</a></li>
             </ol>
         </div>
     </div>
