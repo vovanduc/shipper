@@ -18,6 +18,12 @@ class CustomerRepository implements ICustomerRepository
         return $result;
     }
 
+    public function edit($id)
+    {
+        $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
+        return $result;
+    }
+    
     public function findBy($field, $value)
     {
         return Customer::where($field, $value);

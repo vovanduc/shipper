@@ -8,6 +8,8 @@ interface BaseInterface {
 
 	public function firstOrFail($id);
 
+	public function edit($id);
+
 	public function findBy($field, $value);
 
 	public function add($input);

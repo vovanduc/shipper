@@ -42,3 +42,19 @@ $factory->define(App\Http\Models\Admin\Shipper::class, function (Faker\Generator
         'address' => $faker->address,
     ];
 });
+
+$factory->define(App\Http\Models\Admin\Package::class, function (Faker\Generator $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'address' => $faker->address,
+        'latitude' => $faker->latitude($min = -90, $max = 90),
+        'longitude' => $faker->longitude($min = -180, $max = 180),
+        'shipper_id' => $faker->numberBetween($min = 1, $max = 10),
+        'customer_id' => $faker->numberBetween($min = 1, $max = 100),
+        'status' => $faker->numberBetween($min = 1, $max = 5),
+        'county' => $faker->numberBetween($min = 1, $max = 19),
+        'delivery_at' => $faker->dateTime($startDate='now', $endDate='+90 days'),
+        'note' => $faker->text($maxNbChars = 500),
+        'label' => 'auto',
+    ];
+});

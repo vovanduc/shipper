@@ -45,5 +45,9 @@ Route::group(['middleware' => 'web'], function () {
 		// Shippers
 		Route::resource('shippers', 'Admin\ShippersController');
 		Route::any('shippers/search', array("as"=>"admin.shippers.search","uses"=>"Admin\ShippersController@search"));
+
+		// Packages
+		Route::resource('packages', 'Admin\PackagesController');
+		Route::any('packages/search', array("as"=>"admin.packages.search","uses"=>"Admin\PackagesController@search"));
 	});
 });

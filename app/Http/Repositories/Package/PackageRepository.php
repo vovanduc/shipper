@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Http\Repositories\Shipper;
+namespace App\Http\Repositories\Package;
 
-use App\Http\Models\Admin\Shipper;
-
-class ShipperRepository implements IShipperRepository
+class PackageRepository implements IPackageRepository
 {
     public function all($paginate)
     {
-        return Shipper::where('deleted', 0)->orderBy('id', 'DESC')->paginate($paginate);
+        return \Package::where('deleted', 0)->orderBy('id', 'DESC')->paginate($paginate);
     }
 
     public function firstOrFail($id)
     {
-        $result = Shipper::where('uuid', $id)->where('deleted', 0)->firstOrFail();
-        $result = Shipper::convert($result);
+        $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
+        $result = \Package::convert($result);
         return $result;
     }
 
@@ -23,30 +21,30 @@ class ShipperRepository implements IShipperRepository
         $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         return $result;
     }
-    
+
     public function findBy($field, $value)
     {
-        return Shipper::where($field, $value);
+        return \Package::where($field, $value);
     }
 
     public function get()
     {
-        return Shipper::get();
+        return \Package::get();
     }
 
     public function add($input)
     {
         $input = array_add($input, 'uuid', \Uuid::generate(4)->string);
-        return Shipper::create($input);
+        return \Package::create($input);
     }
 
     public function update($id, $input)
     {
-        return Shipper::where('uuid', $id)->update($input);
+        return \Package::where('uuid', $id)->update($input);
     }
 
     public function delete($id)
     {
-        return Shipper::where('uuid', $id)->delete();
+        return \Package::where('uuid', $id)->delete();
     }
 }

@@ -19,4 +19,11 @@ return [
 						'edit' => 'Cập nhật người vận chuyển',
 						'info' => 'Thông tin người vận chuyển',
 				],
+		'package' =>
+				[
+						'index' => 'Quản lý kiện hàng',
+						'add' => 'Thêm kiện hàng',
+						'edit' => 'Cập nhật kiện hàng',
+						'info' => 'Thông tin kiện hàng',
+				],
 ];

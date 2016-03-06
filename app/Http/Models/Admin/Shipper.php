@@ -67,4 +67,8 @@ class Shipper extends \Eloquent
         $data->updated_by = $data->user_updated;
         return $data;
     }
+
+    public function packages(){
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'shipper_id');
+    }
 }

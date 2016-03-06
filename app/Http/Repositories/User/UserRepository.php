@@ -16,6 +16,12 @@ class UserRepository implements IUserRepository
         return User::where('uuid', $id)->firstOrFail();
     }
 
+    public function edit($id)
+    {
+        $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
+        return $result;
+    }
+    
     public function findBy($field, $value)
     {
         return User::where($field, $value);
@@ -23,7 +29,7 @@ class UserRepository implements IUserRepository
 
     public function add($input)
     {
-        $input = array_add($input, 'uuid', \Uuid::generate(4)->string);     
+        $input = array_add($input, 'uuid', \Uuid::generate(4)->string);
         return User::create($input);
     }
 
