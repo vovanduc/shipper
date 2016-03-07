@@ -34,11 +34,11 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        $response = \GoogleMaps::load('geocoding')
-        ->setParam (['address' =>'santa cruz'])
-        ->get();
-
-        print_r($response);exit;
+        // $response = \GoogleMaps::load('distancematrix')
+        //         ->setParamByKey('origins', '262 Bùi Viện, Hồ Chí Minh, Việt Nam')
+        //         ->setParamByKey('destinations', '403 Nguyễn Trãi, Hồ Chí Minh, Việt Nam|90/18 Dương Bá Trạc, Hồ Chí Minh, Việt Nam|101 Nguyễn Thị Minh Khai, Hồ Chí Minh, Việt Nam')
+        //         ->get();
+        // print_r($response);exit;
 
 
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
@@ -80,6 +80,7 @@ class PackagesController extends Controller
                 'customer_id' => 'required',
                 'shipper_id' => 'required',
                 'address' => 'required',
+                'county' => 'required'
         ]);
 
         if ($validator->fails()) {
