@@ -12,7 +12,7 @@ class Package extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'uuid','address','label','status','customer_id','shipper_id','note','county'
+        'uuid','address','label','status','customer_id','shipper_id','note','county','place_id'
     ];
 
     /**
@@ -117,6 +117,8 @@ class Package extends \Eloquent
     public static function get_county_option($index='')
     {
         $data = array();
+
+        $data[0] = 'Chọn quận';
 
         for ($i=1; $i <= 12; $i++) {
             $data[$i] = 'Quận '.$i;

@@ -62,6 +62,8 @@ class PackagesController extends Controller
     public function create()
     {
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customers = array(''=>'Chọn khách hàng') + $customers->toArray();
+
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
         return view('admin.packages.create')
             ->with('customers', $customers)
@@ -78,7 +80,7 @@ class PackagesController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
                 'customer_id' => 'required',
-                'shipper_id' => 'required',
+                //'shipper_id' => 'required',
                 'address' => 'required',
                 'county' => 'required'
         ]);
@@ -121,7 +123,11 @@ class PackagesController extends Controller
     public function edit($id)
     {
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customers = array(''=>'Chọn khách hàng') + $customers->toArray();
+
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
+
         $result = $this->packages->edit($id);
         return view('admin.packages.edit', compact('result'))
             ->with('customers', $customers)
@@ -139,7 +145,7 @@ class PackagesController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
             'customer_id' => 'required',
-            'shipper_id' => 'required',
+            //'shipper_id' => 'required',
             'address' => 'required',
         ]);
 

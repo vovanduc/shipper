@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Người vận chuyển</label>
 
                         <div class="col-md-6">
@@ -53,7 +53,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Địa chỉ</label>
@@ -75,6 +75,8 @@
                             @endif
                         </div>
                     </div>
+
+                    <input type="hidden" class="form-control" name="place_id" id="place_id">
 
                     <div class="form-group{{ $errors->has('county') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Quận</label>

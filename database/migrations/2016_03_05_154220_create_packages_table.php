@@ -22,6 +22,7 @@ class CreatePackagesTable extends Migration
             $table->string('address');
             $table->string('latitude');
             $table->string('longitude');
+            $table->string('place_id');
             $table->text('note');
             $table->string('label');
             $table->timestamp('delivery_at');

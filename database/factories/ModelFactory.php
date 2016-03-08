@@ -49,7 +49,7 @@ $factory->define(App\Http\Models\Admin\Package::class, function (Faker\Generator
         'address' => $faker->address,
         'latitude' => $faker->latitude($min = -90, $max = 90),
         'longitude' => $faker->longitude($min = -180, $max = 180),
-        'shipper_id' => $faker->numberBetween($min = 1, $max = 10),
+        //'shipper_id' => $faker->numberBetween($min = 1, $max = 10),
         'customer_id' => $faker->numberBetween($min = 1, $max = 100),
         'status' => $faker->numberBetween($min = 1, $max = 5),
         'county' => $faker->numberBetween($min = 1, $max = 19),

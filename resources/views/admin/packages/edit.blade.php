@@ -49,9 +49,16 @@
 
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Địa chỉ</label>
-
                         <div class="col-md-6">
-                            {{Form::text('address',null,array('class' => 'form-control'))}}
+                            <b style="color: red">Vui lòng nhập đúng địa chỉ theo gợi ý của hệ thống</b>
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                        <div class="col-md-12">
+                            <input id="origin-input" class="controls" type="text" placeholder="Từ địa điểm" value="262 Bùi Viện, Hồ Chí Minh, Việt Nam" disabled>
+                            <input id="destination-input" class="controls" type="text" placeholder="Đến địa điểm" name="address" value="{{$result->address}}">
+                            <div id="map" style="width: 825px;height: 500px;"></div>
                             @if ($errors->has('address'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('address') }}</strong>
@@ -59,6 +66,8 @@
                             @endif
                         </div>
                     </div>
+
+                    {{Form::hidden('place_id',null,array('class' => 'form-control', 'id' => 'place_id'))}}
 
                     <div class="form-group{{ $errors->has('county') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Quận</label>

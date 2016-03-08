@@ -158,7 +158,7 @@
 
       function initMap() {
         var origin_place_id = 'ChIJhQkbrxcvdTER67tD_GbKSMk';
-        var destination_place_id = null;
+        var destination_place_id = document.getElementById('place_id').value ? document.getElementById('place_id').value : null;
         var travel_mode = google.maps.TravelMode.DRIVING;
         var map = new google.maps.Map(document.getElementById('map'), {
           mapTypeControl: false,
@@ -249,6 +249,7 @@
             travelMode: travel_mode
           }, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
+                $('#place_id').val(destination_place_id);
               directionsDisplay.setDirections(response);
             } else {
               window.alert('Directions request failed due to ' + status);
