@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -11,6 +12,13 @@
         </div>
 
         <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 " align="center">
+                    <div id="map" style="width: 800px;height: 500px;"></div>
+                    {{Form::hidden('place_id',$result->place_id,array('class' => 'form-control', 'id' => 'place_id'))}}
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-3 col-lg-3 " align="center">
@@ -39,6 +47,14 @@
                         <tr>
                             <td>Người vận chuyển</td>
                             <td>{{$result->shipper_id}} </td>
+                        </tr>
+                        <tr>
+                            <td>Giá vận chuyển</td>
+                            <td>{{$result->cv_price}} </td>
+                        </tr>
+                        <tr>
+                            <td>Khoảng cách</td>
+                            <td>{{$result->cv_distance}} </td>
                         </tr>
                         <tr>
                             <td>Ngày đã giao hàng</td>

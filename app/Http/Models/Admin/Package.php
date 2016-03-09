@@ -12,7 +12,9 @@ class Package extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'uuid','address','label','status','customer_id','shipper_id','note','county','place_id'
+        'uuid','address','label','status','customer_id','shipper_id','note',
+        'county','place_id','latitude','longitude','price','distance','duration',
+        'steps'
     ];
 
     /**
@@ -54,6 +56,18 @@ class Package extends \Eloquent
     public function getUpdatedAtAttribute($date)
     {
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('H:i d-m-Y');
+    }
+
+    public function getCvPriceAttribute()
+    {
+        if ($this->attributes['price']) return \Currency::format($this->attributes['price']);
+        return '';
+    }
+
+    public function getCvDistanceAttribute()
+    {
+        if ($this->attributes['distance']) return $this->attributes['distance'] / 1000 . ' KM';
+        return '';
     }
 
     public function user_created()
@@ -138,6 +152,54 @@ class Package extends \Eloquent
             return $data;
         }
 
+        return $data;
+    }
+
+    public static function convert_address_to_lat_long($value)
+    {
+        $data = array();
+
+        $response = \GoogleMaps::load('directions')
+               ->setParamByKey('origin', '262 Bùi Viện, Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam')
+               ->setParamByKey('destination', $value)
+               ->setParamByKey('language', 'vi')
+               ->setParamByKey('alternatives', true)
+               ->get();
+
+        // $response = \GoogleMaps::load('distancematrix')
+        //
+        //         ->setParamByKey('origins', '262 Bùi Viện, Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam')
+        //         ->setParamByKey('destinations', $value)
+        //         ->setParamByKey('language', 'vi')
+        //         ->setParamByKey('mode', 'driving')
+        //         ->get();
+        $response = json_decode($response);
+
+        if($response->status != 'OK') {
+            print 'Error';exit;
+        }
+
+        $legs = $response->routes[0]->legs[0];
+
+        if ($legs->distance->value) {
+            $data['distance'] = $legs->distance->value ? $legs->distance->value : '';
+        }
+
+        if ($legs->duration->value) {
+            $data['duration'] = $legs->duration->value ? $legs->duration->value : '';
+        }
+
+        if ($legs->end_location->lat) {
+            $data['latitude'] = $legs->end_location->lat ? $legs->end_location->lat : '';
+        }
+
+        if ($legs->end_location->lng) {
+            $data['longitude'] = $legs->end_location->lng ? $legs->end_location->lng : '';
+        }
+
+        $data['price'] = $data['distance'];
+        $data['steps'] = serialize($legs->steps);
+//print_r($data);exit;
         return $data;
     }
 }

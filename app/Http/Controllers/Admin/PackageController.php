@@ -92,6 +92,15 @@ class PackagesController extends Controller
         \Input::merge(array('created_by' => \Auth::user()->id));
         \Input::merge(array('label' => \Package::create_label()));
 
+        $response = \Package::convert_address_to_lat_long($this->request->address);
+
+        \Input::merge(array('latitude' => $response['latitude']));
+        \Input::merge(array('longitude' => $response['longitude']));
+        \Input::merge(array('price' => $response['price']));
+        \Input::merge(array('distance' => $response['distance']));
+        \Input::merge(array('duration' => $response['duration']));
+        \Input::merge(array('steps' => $response['steps']));
+
         $result = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
@@ -154,6 +163,15 @@ class PackagesController extends Controller
         }
 
         \Input::merge(array('updated_by' => \Auth::user()->id));
+
+        $response = \Package::convert_address_to_lat_long($this->request->address);
+
+        \Input::merge(array('latitude' => $response['latitude']));
+        \Input::merge(array('longitude' => $response['longitude']));
+        \Input::merge(array('price' => $response['price']));
+        \Input::merge(array('distance' => $response['distance']));
+        \Input::merge(array('duration' => $response['duration']));
+        \Input::merge(array('steps' => $response['steps']));
 
         $result = $this->packages->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 

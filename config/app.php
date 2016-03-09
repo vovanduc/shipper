@@ -213,6 +213,7 @@ return [
         'Customer' => App\Http\Models\Admin\Customer::class,
         'Shipper' => App\Http\Models\Admin\Shipper::class,
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
+        'Currency' => App\lib\Currency::class,
     ],
 
 ];

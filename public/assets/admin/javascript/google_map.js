@@ -98,7 +98,7 @@ function initMap() {
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
           $('#place_id').val(destination_place_id);
-        directionsDisplay.setDirections(response);
+        directionsDisplay.setDirections(response);console.log(response);
       } else {
         window.alert('Directions request failed due to ' + status);
       }
