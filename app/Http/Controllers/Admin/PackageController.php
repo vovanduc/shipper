@@ -104,7 +104,7 @@ class PackagesController extends Controller
         $result = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.packages.index')->with('message_success', trans('admin.global.add_success'));
+            return \Redirect::route('admin.packages.show', $result->uuid)->with('message_success', trans('admin.global.add_success'));
         } else {
             return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -120,6 +120,15 @@ class PackagesController extends Controller
     public function show($id)
     {
         $result = $this->packages->firstOrFail($id);
+
+        if ($result->steps) {
+            $steps = unserialize($result->steps);
+            if (count($steps) > 0) {
+                $result->steps = $steps;
+                //dd($result->steps);
+            }
+        }
+
         return view('admin.packages.show', compact('result'));
     }
 
@@ -176,7 +185,7 @@ class PackagesController extends Controller
         $result = $this->packages->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.packages.index')->with('message_success', trans('admin.global.update_success'));
+            return \Redirect::route('admin.packages.show', $id)->with('message_success', trans('admin.global.update_success'));
         } else {
             return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }

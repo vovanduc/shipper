@@ -66,7 +66,25 @@ class Package extends \Eloquent
 
     public function getCvDistanceAttribute()
     {
-        if ($this->attributes['distance']) return $this->attributes['distance'] / 1000 . ' KM';
+        if ($this->attributes['distance']) {
+            // $temp = round($this->attributes['distance'] / 1000);
+            // if ($temp <= 0) {
+            //     return  $this->attributes['distance'] . ' M';
+            // } else {
+            //   return  $temp . ' KM';
+            // }
+            return  $this->attributes['distance'] . ' M';
+        }
+        return '';
+    }
+
+    public function getCvDurationAttribute()
+    {
+        if ($this->attributes['duration']) {
+            $temp = round($this->attributes['duration'] / 60);
+            $temp = $temp ? $temp : 1;
+            return  $temp . ' phút';
+        }
         return '';
     }
 
@@ -197,7 +215,7 @@ class Package extends \Eloquent
             $data['longitude'] = $legs->end_location->lng ? $legs->end_location->lng : '';
         }
 
-        $data['price'] = $data['distance'];
+        $data['price'] = $data['distance'] * 20;
         $data['steps'] = serialize($legs->steps);
 //print_r($data);exit;
         return $data;
