@@ -19,7 +19,7 @@ $factory->define(App\Http\Models\Admin\User::class, function (Faker\Generator $f
         'email' => 'vovanduc1989@gmail.com',
         'is_root' => 1,
         'is_admin' => 1,
-        'password' => bcrypt('123456'),
+        'password' => bcrypt('2351989'),
     ];
 });
 
