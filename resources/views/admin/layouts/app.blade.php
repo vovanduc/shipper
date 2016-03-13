@@ -69,6 +69,9 @@
             font-weight: 300;
           }
     </style>
+    <script>
+        var MAPS_PLACE_ID = "<?php echo Config::get('constants.MAPS_PLACE_ID')?>";
+    </script>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
@@ -85,7 +88,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Quản lý vận chuyển kiện hàng
                 </a>
             </div>
 
@@ -152,7 +155,8 @@
         });
     </script>
 
-    {!! \Html::script('assets/admin/javascript/google_map.js') !!}
+    @yield("javascript")
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_dZekD_l15yoUDVMTWUa-IJ3RKcpAUAU&libraries=places&callback=initMap"
         async defer></script>
 </body>

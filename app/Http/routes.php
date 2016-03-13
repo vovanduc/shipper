@@ -49,5 +49,6 @@ Route::group(['middleware' => 'web'], function () {
 		// Packages
 		Route::resource('packages', 'Admin\PackagesController');
 		Route::any('packages/search', array("as"=>"admin.packages.search","uses"=>"Admin\PackagesController@search"));
+		Route::any('/packages_find', array("as"=>"admin.packages.find","uses"=>"Admin\PackagesController@find"));
 	});
 });

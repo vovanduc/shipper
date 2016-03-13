@@ -12,7 +12,7 @@ class Package extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'uuid','address','label','status','customer_id','shipper_id','note',
+        'uuid','address','label','status','customer_id_from','customer_id_to','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps'
     ];
@@ -98,22 +98,22 @@ class Package extends \Eloquent
         return $this->belongsTo('\App\Http\Models\Admin\User', 'updated_by');
     }
 
-    public function customer()
+    public function customer_from()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id');
+        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id_from');
     }
 
-    public function shipper()
+    public function customer_to()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Shipper', 'shipper_id');
+        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id_to');
     }
 
     public static function convert($data)
     {
         $data->created_by = !empty($data->user_created->name) ? $data->user_created->name : '';
         $data->updated_by = !empty($data->user_updated->name) ? $data->user_updated->name : '';
-        $data->customer_id = !empty($data->customer->name) ? $data->customer->name : '';
-        $data->shipper_id = !empty($data->shipper->name) ? $data->shipper->name : '';
+        $data->customer_id_from = !empty($data->customer_from->name) ? $data->customer_from->name : '';
+        $data->customer_id_to = !empty($data->customer_to->name) ? $data->customer_to->name : '';
 
 
         return $data;
@@ -150,7 +150,7 @@ class Package extends \Eloquent
     {
         $data = array();
 
-        $data[0] = 'Chọn quận';
+        $data[''] = 'Chọn quận';
 
         for ($i=1; $i <= 12; $i++) {
             $data[$i] = 'Quận '.$i;
@@ -194,7 +194,7 @@ class Package extends \Eloquent
         $response = json_decode($response);
 
         if($response->status != 'OK') {
-            print 'Error';exit;
+            dd($response);exit;
         }
 
         $legs = $response->routes[0]->legs[0];
@@ -217,7 +217,21 @@ class Package extends \Eloquent
 
         $data['price'] = $data['distance'] * 20;
         $data['steps'] = serialize($legs->steps);
-//print_r($data);exit;
+
+        return $data;
+    }
+
+    public static function get_county_package()
+    {
+        $data = array();
+
+        for ($i=1; $i <=19 ; $i++) {
+            $result= \Package::where('deleted', 0)->where('county',$i)->where('status', 2);
+            if ($result->count() > 0) {
+                $data[$i] = \Package::get_county_option($i).' ('.$result->count().' kiện hàng)';
+            }
+        }
+
         return $data;
     }
 }

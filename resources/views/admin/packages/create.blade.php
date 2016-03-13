@@ -27,33 +27,33 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Khách hàng</label>
+                    <div class="form-group{{ $errors->has('customer_id_from') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Người gửi</label>
 
                         <div class="col-md-6">
-                            {{Form::select("customer_id",$customers,null,array('class' => 'form-control select_auto'))}}
+                            {{Form::select("customer_id_from",$customer_id_from,null,array('class' => 'form-control select_auto'))}}
 
-                            @if ($errors->has('customer_id'))
+                            @if ($errors->has('customer_id_from'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('customer_id') }}</strong>
+                                    <strong>{{ $errors->first('customer_id_from') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
-                    <!-- <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Người vận chuyển</label>
+                    <div class="form-group{{ $errors->has('customer_id_to') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Người nhận</label>
 
                         <div class="col-md-6">
-                            {{Form::select("shipper_id",$shippers,null,array('class' => 'form-control select_auto'))}}
+                            {{Form::select("customer_id_to",$customer_id_to,null,array('class' => 'form-control select_auto'))}}
 
-                            @if ($errors->has('shipper_id'))
+                            @if ($errors->has('customer_id_to'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('shipper_id') }}</strong>
+                                    <strong>{{ $errors->first('customer_id_to') }}</strong>
                                 </span>
                             @endif
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Địa chỉ</label>
@@ -65,7 +65,7 @@
 
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <div class="col-md-12">
-                            <input id="origin-input" class="controls" type="text" placeholder="Từ địa điểm" value="262 Bùi Viện, Hồ Chí Minh, Việt Nam" disabled>
+                            <input id="origin-input" class="controls" type="text" placeholder="Từ địa điểm" value="{{Config::get('constants.MAPS_ADDRESS')}}" disabled>
                             <input id="destination-input" class="controls" type="text" placeholder="Đến địa điểm" name="address">
                             <div id="map" style="width: 825px;height: 500px;"></div>
                             @if ($errors->has('address'))
@@ -112,3 +112,7 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+{!! \Html::script('assets/admin/javascript/google_map.js') !!}
+@stop

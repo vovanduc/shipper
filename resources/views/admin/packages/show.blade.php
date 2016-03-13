@@ -33,8 +33,12 @@
                                 <td style="width: 70%">{{$result->label}} </td>
                             </tr>
                             <tr>
-                                <td>Khách hàng</td>
-                                <td>{{$result->customer_id}} </td>
+                                <td>Người gửi</td>
+                                <td>{{$result->customer_id_from}} </td>
+                            </tr>
+                            <tr>
+                                <td>Người nhận</td>
+                                <td>{{$result->customer_id_to}} </td>
                             </tr>
                             <tr>
                                 <td>Địa chỉ</td>
@@ -117,3 +121,7 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+{!! \Html::script('assets/admin/javascript/google_map.js') !!}
+@stop

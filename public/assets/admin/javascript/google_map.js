@@ -3,12 +3,12 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_dZekD_l15yoUDVMTWUa-IJ3RKcpAUAU&libraries=places">
 
 function initMap() {
-  var origin_place_id = 'ChIJhQkbrxcvdTER67tD_GbKSMk';
+  var origin_place_id = MAPS_PLACE_ID;
   var destination_place_id = document.getElementById('place_id').value ? document.getElementById('place_id').value : null;
   var travel_mode = google.maps.TravelMode.DRIVING;
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
-    center: {lat: 10.765638, lng: 106.690449},
+    center: {lat: 10.781407, lng: 106.665561},
     zoom: 17
   });
 

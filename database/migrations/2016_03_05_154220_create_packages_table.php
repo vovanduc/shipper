@@ -15,8 +15,8 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->integer('customer_id');
-            $table->integer('shipper_id');
+            $table->integer('customer_id_from');
+            $table->integer('customer_id_to');
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('county')->default(1);
             $table->string('address');

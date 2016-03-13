@@ -42,16 +42,14 @@ class PackagesController extends Controller
 
 
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
         $result = $this->packages->all(10);
         return view('admin.packages.index', compact('result'))
-            ->with('customer_id')
-            ->with('shipper_id')
+            ->with('customer_id_from')
+            ->with('customer_id_to')
             ->with('status')
             ->with('county')
             ->with('label')
-            ->with('customers', $customers)
-            ->with('shippers', $shippers);
+            ->with('customers', $customers);
     }
 
     /**
@@ -61,13 +59,15 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customers = array(''=>'Chọn khách hàng') + $customers->toArray();
+        $customer_id_from = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customer_id_from = array(''=>'Chọn người gửi') + $customer_id_from->toArray();
 
-        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
+
         return view('admin.packages.create')
-            ->with('customers', $customers)
-            ->with('shippers', $shippers);
+            ->with('customer_id_from', $customer_id_from)
+            ->with('customer_id_to', $customer_id_to);
     }
 
     /**
@@ -79,8 +79,8 @@ class PackagesController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validator($this->request->all(), [
-                'customer_id' => 'required',
-                //'shipper_id' => 'required',
+                'customer_id_from' => 'required',
+                'customer_id_to' => 'required',
                 'address' => 'required',
                 'county' => 'required'
         ]);
@@ -140,16 +140,16 @@ class PackagesController extends Controller
      */
     public function edit($id)
     {
-        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customers = array(''=>'Chọn khách hàng') + $customers->toArray();
+        $customer_id_from = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customer_id_from = array(''=>'Chọn người gửi') + $customer_id_from->toArray();
 
-        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
+        $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
 
         $result = $this->packages->edit($id);
         return view('admin.packages.edit', compact('result'))
-            ->with('customers', $customers)
-            ->with('shippers', $shippers);
+            ->with('customer_id_from', $customer_id_from)
+            ->with('customer_id_to', $customer_id_to);
     }
 
     /**
@@ -162,9 +162,10 @@ class PackagesController extends Controller
     public function update($id)
     {
         $validator = $this->validator($this->request->all(), [
-            'customer_id' => 'required',
-            //'shipper_id' => 'required',
+            'customer_id_from' => 'required',
+            'customer_id_to' => 'required',
             'address' => 'required',
+            'county' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -212,8 +213,8 @@ class PackagesController extends Controller
 
     public function search()
     {
-        if (!$this->request->has('customer_id')
-            && !$this->request->has('shipper_id')
+        if (!$this->request->has('customer_id_from')
+            && !$this->request->has('customer_id_to')
             && !$this->request->has('status')
             && !$this->request->has('county')
             && !$this->request->has('label')
@@ -223,12 +224,12 @@ class PackagesController extends Controller
 
         $result = \Package::where('deleted',0);
 
-        if ($this->request->has('customer_id')) {
-            $result = $result->where('customer_id', $this->request->customer_id);
+        if ($this->request->has('customer_id_from')) {
+            $result = $result->where('customer_id_from', $this->request->customer_id_from);
         }
 
-        if ($this->request->has('shipper_id')) {
-            $result = $result->where('shipper_id', $this->request->shipper_id);
+        if ($this->request->has('customer_id_to')) {
+            $result = $result->where('customer_id_to', $this->request->customer_id_to);
         }
 
         if ($this->request->has('status')) {
@@ -246,15 +247,62 @@ class PackagesController extends Controller
         $result = $result->orderBy('id', 'DESC')->get();
 
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
 
         return view('admin.packages.index', compact('result'))
-            ->with('customer_id', $this->request->customer_id)
-            ->with('shipper_id', $this->request->shipper_id)
+            ->with('customer_id_from', $this->request->customer_id_from)
+            ->with('customer_id_to', $this->request->customer_id_to)
             ->with('status', $this->request->status)
             ->with('county', $this->request->county)
             ->with('label', $this->request->label)
-            ->with('customers', $customers)
-            ->with('shippers', $shippers);
+            ->with('customers', $customers);
+    }
+
+    public function find()
+    {
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $county = \Request::query('county') ? \Request::query('county') : 0;
+        $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
+
+        $result = [];
+        $random = 0;
+        $item = array();
+
+        // if ($shipper && !$this->request->session()->get('county_'.$shipper)) {
+        //     for ($i=1; $i <=19 ; $i++) {
+        //         $random = rand(1,19);
+        //         $data= \Package::where('deleted', 0)->where('county',$random)->where('status', 2);
+        //         //print $random.' - '.$data->count().'<br/>';
+        //         if ($data->count() > 0) {
+        //             $list = $data->get();
+        //             $item = $data->orderBy(\DB::raw('RAND()'))->first();
+        //             $this->request->session()->put('county_'.$shipper, $random);
+        //             break;
+        //         }
+        //     }
+        // }
+
+        $show_label = 'Tìm kiếm';
+
+        if (!$shipper || !$county) {
+            $show_label = 'Vui lòng chọn shipper và quận';
+        }
+
+        // if ($this->request->session()->has('county_'.$shipper)) {
+        //     $county = $this->request->session()->get('county_'.$shipper);
+        //     $show_label = 'Hệ thống chọn ngẫu nhiên '.\Package::get_county_option($county).'<br/>
+        //         Nhấn tiếp tục để chọn ngẫu nhiên các kiện hàng trong '.\Package::get_county_option($county);
+        // }
+
+        if ($shipper && $county) {
+            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 2)->get();
+        }
+
+        return view('admin.packages.find', compact('result'))
+            ->with('item', $item)
+            ->with('show_label', $show_label)
+            ->with('shippers', $shippers)
+            ->with('county', $county)
+            ->with('shipper', $shipper)
+            ;
     }
 }

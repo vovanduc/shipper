@@ -17,12 +17,12 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("customer_id",$customers,$customer_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo khách hàng'))}}
+                                {{Form::select("customer_id_from",$customers,$customer_id_from,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người gửi'))}}
                             </div>
                         </div>
                         <div class="col-xs-6" >
                             <div class="right-inner-addon">
-                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người vận chuyển'))}}
+                                {{Form::select("customer_id_to",$customers,$customer_id_to,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người nhận'))}}
                             </div>
                         </div>
                     </div>
@@ -63,8 +63,8 @@
           		<thead>
           			<tr>
           				<th class="text-center">#</th>
-          				<th class="text-center">Người vận chuyển</th>
-          				<th class="text-center">Khách hàng</th>
+          				<th class="text-center">Người gửi</th>
+          				<th class="text-center">Người nhận</th>
           				<th class="text-center">Trạng thái</th>
           				<th class="text-center">Ngày tạo</th>
           				<th class="text-center">Quản lý</th>
@@ -78,8 +78,8 @@
                           ?>
           	        			<tr class="text-center">
             	        				<th></th>
-            	        				<td>{{ $item->shipper_id }}</td>
-            	        				<td>{{ $item->customer_id }}</td>
+            	        				<td>{{ $item->customer_id_from }}</td>
+            	        				<td>{{ $item->customer_id_to }}</td>
             	        				<td>{!! $item->cv_status !!}</td>
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>
