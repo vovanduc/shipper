@@ -178,7 +178,7 @@ class Package extends \Eloquent
         $data = array();
 
         $response = \GoogleMaps::load('directions')
-               ->setParamByKey('origin', '262 Bùi Viện, Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam')
+               ->setParamByKey('origin', \Config::get('constants.MAPS_ADDRESS'))
                ->setParamByKey('destination', $value)
                ->setParamByKey('language', 'vi')
                ->setParamByKey('alternatives', true)
