@@ -56,7 +56,7 @@
 @section('javascript')
 <script>
 // function initMap() {
-//     var myLatLng = {lat: 10.781407, lng: 106.665561};
+//     var myLatLng = {lat: 10.779682, lng: 106.661464};
 //
 //     var map = new google.maps.Map(document.getElementById('map'), {
 //         zoom: 12,
@@ -88,7 +88,7 @@ function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 17,
-        center: {lat: 10.781407, lng: 106.665561}
+        center: {lat: 10.779682, lng: 106.661464}
     });
     directionsDisplay.setMap(map);
     calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -101,18 +101,19 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     <?php $count = 1?>
     var end_address = '';
     @foreach ($result as $item)
-        @if($count == 1)
-            end_address = '{!! $item->address !!}';
-        @endif
-
-        @if($count > 1)
+        @if($count != count($result))
             waypts.push({
                 location: '{!! $item->address !!}',
                 stopover: true
             });
         @endif
+        @if($count == count($result))
+            end_address = '{!! $item->address !!}';
+        @endif
         <?php $count++?>
     @endforeach
+
+
 
     directionsService.route({
     origin: "{!!Config::get('constants.MAPS_ADDRESS')!!}",

@@ -8,7 +8,7 @@ function initMap() {
   var travel_mode = google.maps.TravelMode.DRIVING;
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
-    center: {lat: 10.781407, lng: 106.665561},
+    center: {lat: 10.779682, lng: 106.661464},
     zoom: 17
   });
 

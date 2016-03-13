@@ -294,7 +294,7 @@ class PackagesController extends Controller
         // }
 
         if ($shipper && $county) {
-            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 2)->get();
+            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 2)->orderBy('distance')->get();
         }
 
         return view('admin.packages.find', compact('result'))

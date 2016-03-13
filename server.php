@@ -19,3 +19,23 @@ if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
 }
 
 require_once __DIR__.'/public/index.php';
+
+// email và số dt
+//
+// dài thêm input
+//
+// ghi chú bự thêm
+//
+// auto thêm quận
+//
+// thêm trạng thái tại kho
+//
+// tính năng cập nhật nhanh trạng thái tại kho -> đang gửi về việt nam
+//
+// số thùng của 1 kiện hàng
+//
+// số kg kiện hàng
+//
+// quản lý khu vực
+//
+// chuyển demo
