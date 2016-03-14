@@ -52,10 +52,10 @@
                                 <td>Người vận chuyển</td>
                                 <td>{{$result->shipper_id}} </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>Ước tính giá vận chuyển</td>
                                 <td>{{$result->cv_price}} </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>Ước tính khoảng cách</td>
                                 <td>{{$result->cv_distance}} </td>
