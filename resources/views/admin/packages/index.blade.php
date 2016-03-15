@@ -73,50 +73,58 @@
           		<tbody>
                   @if($result->count())
                 			@foreach( $result as $count => $item)
-                          <?php
-                              $item = Package::convert($item);
-                          ?>
+                                <?php
+                                    $item = Package::convert($item);
+                                ?>
           	        			<tr class="text-center">
-            	        				<th></th>
-            	        				<td>{{ $item->customer_id_from }}</td>
-            	        				<td>{{ $item->customer_id_to }}</td>
-            	        				<td>{!! $item->cv_status !!}</td>
-            	        				<td>{{ $item->created_at }}</td>
-            	        				<td>
-            	        					  @if (\Auth::user()->is_admin)
-            		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}">
-            		        						<i class="fa fa-search"></i> Xem
-            		        					</a>
-            		        					<a href="{{URL::route('admin.packages.edit', $item->uuid)}}">
-            		        						<i class="fa fa-pencil"></i> Sửa
-            									    </a>
-                									{!! Form::open(array('route' => array('admin.packages.destroy', $item->uuid), 'method' => 'delete')) !!}
-                										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
+        	        				<th></th>
+        	        				<td>{{ $item->customer_id_from }}</td>
+        	        				<td>{{ $item->customer_id_to }}</td>
+        	        				<td>{!! $item->cv_status !!}</td>
+        	        				<td>{{ $item->created_at }}</td>
+        	        				<td>
+        	        					@if (\Auth::user()->is_admin)
+        		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}">
+        		        						<i class="fa fa-search"></i> Xem
+        		        					</a>
+        		        					<a href="{{URL::route('admin.packages.edit', $item->uuid)}}">
+    		        						<i class="fa fa-pencil"></i> Sửa
+    									    </a>
+        									{!! Form::open(array('route' => array('admin.packages.destroy', $item->uuid), 'method' => 'delete')) !!}
+        										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
 
-                											<i class="fa fa-trash-o"></i> Xóa
+        											<i class="fa fa-trash-o"></i> Xóa
 
-                										</button>
-                										<script type="text/javascript">
+        										</button>
+        										<script type="text/javascript">
 
-                											function ConfirmDelete()
-                										    {
+        											function ConfirmDelete()
+        										    {
 
-                										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
+        										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
 
-                										      if (x)
+        										      if (x)
 
-                										        return true;
+        										        return true;
 
-                										      else
+        										      else
 
-                										        return false;
-                										    }
+        										        return false;
+        										    }
 
-                										</script>
-                									{!! Form::close() !!}
-            								      @endif
-            	        			  </td>
+        										</script>
+        									{!! Form::close() !!}
+    								    @endif
+        	        			  </td>
           	        			</tr>
+                                @if ($item->show_barcode)
+                                <tr class="text-center">
+                                    <th></th>
+                                    <td colspan="5">
+                                        {!!$item->show_barcode!!}
+                                    </td>
+                                </tr>
+                                @endif
                 			@endforeach
                   @else
                       <tr class="text-center">

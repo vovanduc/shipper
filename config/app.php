@@ -150,6 +150,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
+        Regulus\ActivityLog\ActivityLogServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -214,6 +217,9 @@ return [
         'Shipper' => App\Http\Models\Admin\Shipper::class,
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
         'Currency' => App\lib\Currency::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Activity' => Regulus\ActivityLog\Models\Activity::class,
     ],
 
 ];

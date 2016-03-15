@@ -56,6 +56,6 @@ $factory->define(App\Http\Models\Admin\Package::class, function (Faker\Generator
         'county' => $faker->numberBetween($min = 1, $max = 19),
         'delivery_at' => $faker->dateTime($startDate='now', $endDate='+90 days'),
         'note' => $faker->text($maxNbChars = 500),
-        'label' => 'auto',
+        'label' => $faker->numberBetween($min = 1, $max = 1000).'-'.$faker->numberBetween($min = 1, $max = 30).'-'.$faker->numberBetween($min = 1, $max = 12).'-16',
     ];
 });

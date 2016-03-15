@@ -29,6 +29,11 @@
                     <table class="table table-user-information">
                         <tbody>
                             <tr>
+                                <td colspan="2">
+                                    {!!$result->show_barcode!!}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="width: 30%">Label</td>
                                 <td style="width: 70%">{{$result->label}} </td>
                             </tr>

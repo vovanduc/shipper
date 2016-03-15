@@ -40,7 +40,6 @@ class PackagesController extends Controller
         //         ->get();
         // print_r($response);exit;
 
-
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
         $result = $this->packages->all(10);
         return view('admin.packages.index', compact('result'))

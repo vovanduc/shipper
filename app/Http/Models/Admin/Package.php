@@ -88,6 +88,14 @@ class Package extends \Eloquent
         return '';
     }
 
+    public function getShowBarcodeAttribute()
+    {
+        if ($this->attributes['label']) {
+            return '<img src="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128") . '" alt="barcode"   />';
+        }
+        return '';
+    }
+
     public function user_created()
     {
         return $this->belongsTo('\App\Http\Models\Admin\User', 'created_by');
@@ -123,7 +131,7 @@ class Package extends \Eloquent
         $from = date('Y-m-d H:i:s', strtotime('today', time()));
         $to = date('Y-m-d 24:00:00', strtotime('today', time()));
         $count = \Package::where('created_at', '>=', $from)->where('created_at', '<=', $to)->count();
-        $count++;
+        $count = $count + 1;
         $today = \Carbon::today();
         $result = $count.'-'.$today->format('d-m-y');
         return $result;
