@@ -13,12 +13,34 @@
             {{ Form::open(array('route' => array('admin.logs.search'), 'method' => 'POST')) }}
             <ul class="list-group">
                 <li class="list-group-item">
-                  <div class="row">
-                      <div class="col-xs-12" >
+                    <div class="row">
+                        <div class="col-xs-12" >
+                            <div class="left-inner-addon">
+                                {{Form::select("user_id",$users,$user_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo nhân viên'))}}
+                            </div>
+                        </div>
+                    </div><br/>
+                    <div class="row">
+                        <div class="col-xs-6" >
+                            <div class="left-inner-addon">
+                                {{Form::select("action_id",$actions,$action_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo hành động'))}}
+                            </div>
+                        </div>
+                        <div class="col-xs-6" >
+                            <div class="right-inner-addon">
+                                {{Form::select("module_id",$modules,$module_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo khu vực'))}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-12" >
                           <button type="submit" class="btn btn-primary btn-block">
                             Tìm kiếm
                           </button>
-                      </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
             {{ Form::close() }}
@@ -36,8 +58,9 @@
           		<tbody>
                   @if($result->count())
             			@foreach( $result as $count => $item)
+                            <?php $user = \User::where('uuid', $item->user_id)->first(); ?>
       	        			<tr class="text-center">
-    	        				<td>{{ $item->user->name }}</td>
+    	        				<td><a target="_blank" href="{{URL::route('admin.users.show',$user->uuid)}}">{{ $user->name }}</a></td>
     	        				<td>{!! $item->getIconMarkup() !!}</td>
     	        				<td>{!! $item->getLinkedDescription() !!}</td>
                                 <td>{{ $item->content_type }}</td>

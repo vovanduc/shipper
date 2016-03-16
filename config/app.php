@@ -212,6 +212,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Carbon' => Carbon\Carbon::class,
+        'User' => App\Http\Models\Admin\User::class,
         'Package' => App\Http\Models\Admin\Package::class,
         'Customer' => App\Http\Models\Admin\Customer::class,
         'Shipper' => App\Http\Models\Admin\Shipper::class,

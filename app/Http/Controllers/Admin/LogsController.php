@@ -29,7 +29,19 @@ class LogsController extends Controller
      */
     public function index()
     {
-        $result = \Activity::orderBy('id', 'DESC')->paginate(10);
-        return view('admin.logs.index', compact('result'));
+        $result = \Activity::orderBy('id', 'DESC')->paginate(20);
+        $users = \User::orderBy('id', 'DESC')->lists('name','uuid');
+
+        $actions = \Config::get('lib.ACTION');
+        $modules = \Config::get('lib.MODULE');
+
+        return view('admin.logs.index', compact('result'))
+        ->with('users', $users)
+        ->with('actions', $actions)
+        ->with('modules', $modules)
+        ->with('user_id')
+        ->with('action_id')
+        ->with('module_id')
+        ;
     }
 }

@@ -87,7 +87,7 @@ class UsersController extends Controller
                 'contentType' => 'user',
                 'action'      => 'add',
                 'description' => $mess,
-                'updated'     => (bool) \Auth::user()->id,
+                'userId'     => \Auth::user()->uuid,
             ]);
             return \Redirect::route('admin.users.index')->with('message_success', $mess);
         } else {
@@ -109,7 +109,7 @@ class UsersController extends Controller
             'contentType' => 'user',
             'action'      => 'view',
             'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.users.show', $id).'">'.$result->name.'</a></b>',
-            'updated'     => (bool) \Auth::user()->id,
+            'userId'     => \Auth::user()->uuid,
         ]);
         return view('admin.users.show', compact('result'));
     }
@@ -163,7 +163,7 @@ class UsersController extends Controller
                 'contentType' => 'user',
                 'action'      => 'update',
                 'description' => $mess,
-                'updated'     => (bool) \Auth::user()->id,
+                'userId'     => \Auth::user()->uuid,
             ]);
             return \Redirect::route('admin.users.index')->with('message_success', $mess);
         } else {
@@ -181,7 +181,6 @@ class UsersController extends Controller
     {
         if ($id) {
             $result = $this->users->delete($id);
-
             if ($result) {
                 return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.delete_success'));
             } else {
@@ -212,7 +211,7 @@ class UsersController extends Controller
                     'contentType' => 'user',
                     'action'      => 'update',
                     'description' => 'Thay đổi mật khẩu',
-                    'updated'     => (bool) \Auth::user()->id,
+                    'userId'     => \Auth::user()->uuid,
                 ]);
                 return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.message_success'));
             } else {

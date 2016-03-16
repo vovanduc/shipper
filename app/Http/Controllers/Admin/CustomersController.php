@@ -75,7 +75,15 @@ class CustomersController extends Controller
         $result = $this->customers->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.add_success'));
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $result->uuid).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $result->uuid,
+                'contentType' => 'customer',
+                'action'      => 'add',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.customers.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -96,7 +104,7 @@ class CustomersController extends Controller
             'contentType' => 'customer',
             'action'      => 'view',
             'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $id).'">'.$result->name.'</a></b>',
-            'updated'     => (bool) \Auth::user()->id,
+            'userId'     => \Auth::user()->uuid,
         ]);
         return view('admin.customers.show', compact('result'));
     }
@@ -138,7 +146,16 @@ class CustomersController extends Controller
         $result = $this->customers->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.update_success'));
+            $result = $this->customers->firstOrFail($id);
+            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $id).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $id,
+                'contentType' => 'customer',
+                'action'      => 'update',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.customers.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -153,10 +170,18 @@ class CustomersController extends Controller
     public function destroy($id)
     {
         if ($id) {
+            $data = $this->customers->firstOrFail($id);
             $result = $this->customers->update($id, ['deleted' => 1]);
-
             if ($result) {
-                return \Redirect::route('admin.customers.index')->with('message_success', trans('admin.global.delete_success'));
+                $mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $id).'">'.$data->name.'</a></b>';
+                \Activity::log([
+                    'contentId'   => $id,
+                    'contentType' => 'customer',
+                    'action'      => 'delete',
+                    'description' => $mess,
+                    'userId'     => \Auth::user()->uuid,
+                ]);
+                return \Redirect::route('admin.customers.index')->with('message_success', $mess);
             } else {
                 return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
             }

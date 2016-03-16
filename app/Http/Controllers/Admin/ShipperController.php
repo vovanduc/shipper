@@ -75,7 +75,15 @@ class ShippersController extends Controller
         $result = $this->shippers->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.add_success'));
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.shippers.show', $result->uuid).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $result->uuid,
+                'contentType' => 'shipper',
+                'action'      => 'add',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -91,6 +99,13 @@ class ShippersController extends Controller
     public function show($id)
     {
         $result = $this->shippers->firstOrFail($id);
+        \Activity::log([
+            'contentId'   => $id,
+            'contentType' => 'shipper',
+            'action'      => 'view',
+            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.shippers.show', $id).'">'.$result->name.'</a></b>',
+            'userId'     => \Auth::user()->uuid,
+        ]);
         return view('admin.shippers.show', compact('result'));
     }
 
@@ -131,7 +146,16 @@ class ShippersController extends Controller
         $result = $this->shippers->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.update_success'));
+            $result = $this->shippers->firstOrFail($id);
+            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.shippers.show', $id).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $id,
+                'contentType' => 'shipper',
+                'action'      => 'update',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -146,10 +170,18 @@ class ShippersController extends Controller
     public function destroy($id)
     {
         if ($id) {
+            $data = $this->shippers->firstOrFail($id);
             $result = $this->shippers->update($id, ['deleted' => 1]);
-
             if ($result) {
-                return \Redirect::route('admin.shippers.index')->with('message_success', trans('admin.global.delete_success'));
+                $mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.shippers.show', $id).'">'.$data->name.'</a></b>';
+                \Activity::log([
+                    'contentId'   => $id,
+                    'contentType' => 'shipper',
+                    'action'      => 'delete',
+                    'description' => $mess,
+                    'userId'     => \Auth::user()->uuid,
+                ]);
+                return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
             } else {
                 return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
             }

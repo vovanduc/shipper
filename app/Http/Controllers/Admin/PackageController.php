@@ -103,7 +103,15 @@ class PackagesController extends Controller
         $result = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.packages.show', $result->uuid)->with('message_success', trans('admin.global.add_success'));
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $result->uuid).'">'.$result->label.'</a></b>';
+            \Activity::log([
+                'contentId'   => $result->uuid,
+                'contentType' => 'package',
+                'action'      => 'add',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.packages.show', $result->uuid)->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -127,6 +135,14 @@ class PackagesController extends Controller
                 //dd($result->steps);
             }
         }
+
+        \Activity::log([
+            'contentId'   => $id,
+            'contentType' => 'package',
+            'action'      => 'view',
+            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $id).'">'.$result->label.'</a></b>',
+            'userId'     => \Auth::user()->uuid,
+        ]);
 
         return view('admin.packages.show', compact('result'));
     }
@@ -185,7 +201,16 @@ class PackagesController extends Controller
         $result = $this->packages->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.packages.show', $id)->with('message_success', trans('admin.global.update_success'));
+            $result = $this->packages->firstOrFail($id);
+            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $id).'">'.$result->label.'</a></b>';
+            \Activity::log([
+                'contentId'   => $id,
+                'contentType' => 'package',
+                'action'      => 'update',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+            return \Redirect::route('admin.packages.show', $id)->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -200,10 +225,19 @@ class PackagesController extends Controller
     public function destroy($id)
     {
         if ($id) {
+            $data = $this->packages->firstOrFail($id);
             $result = $this->packages->update($id, ['deleted' => 1]);
 
             if ($result) {
-                return \Redirect::route('admin.packages.index')->with('message_success', trans('admin.global.delete_success'));
+                $mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $id).'">'.$data->label.'</a></b>';
+                \Activity::log([
+                    'contentId'   => $id,
+                    'contentType' => 'package',
+                    'action'      => 'delete',
+                    'description' => $mess,
+                    'userId'     => \Auth::user()->uuid,
+                ]);
+                return \Redirect::route('admin.packages.index')->with('message_success', $mess);
             } else {
                 return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
             }
