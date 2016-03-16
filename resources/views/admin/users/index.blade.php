@@ -31,10 +31,11 @@
 	        				<td>{!! $item->cv_active !!}</td>
 	        				<td>{{ $item->created_at }}</td>
 	        				<td>
-	        					@if (\Auth::user()->is_admin)
-		        					<a href="{{URL::route('admin.users.show', $item->uuid)}}">
-		        						<i class="fa fa-search"></i> Xem
-		        					</a>
+
+	        					<a href="{{URL::route('admin.users.show', $item->uuid)}}">
+	        						<i class="fa fa-search"></i> Xem
+	        					</a>
+                                @if (\Auth::user()->uuid == $item->uuid)
 		        					<a href="{{URL::route('admin.users.edit', $item->uuid)}}">
 		        						<i class="fa fa-pencil"></i> Sửa
 									</a>

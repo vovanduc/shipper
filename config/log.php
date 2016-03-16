@@ -105,11 +105,11 @@ return [
 	*/
 	'content_types' => [
 
-		/* 'item' => [
+		'item' => [
 			'uri'       => 'view/:id',
 			'subdomain' => 'items',
 			'model'     => 'App\Models\Item',
-		], */
+		],
 
 	],
 

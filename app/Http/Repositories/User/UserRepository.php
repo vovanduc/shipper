@@ -21,7 +21,7 @@ class UserRepository implements IUserRepository
         $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         return $result;
     }
-    
+
     public function findBy($field, $value)
     {
         return User::where($field, $value);

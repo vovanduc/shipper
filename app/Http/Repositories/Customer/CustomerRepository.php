@@ -23,7 +23,7 @@ class CustomerRepository implements ICustomerRepository
         $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         return $result;
     }
-    
+
     public function findBy($field, $value)
     {
         return Customer::where($field, $value);

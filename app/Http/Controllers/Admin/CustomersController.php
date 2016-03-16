@@ -91,6 +91,13 @@ class CustomersController extends Controller
     public function show($id)
     {
         $result = $this->customers->firstOrFail($id);
+        \Activity::log([
+            'contentId'   => $id,
+            'contentType' => 'customer',
+            'action'      => 'view',
+            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $id).'">'.$result->name.'</a></b>',
+            'updated'     => (bool) \Auth::user()->id,
+        ]);
         return view('admin.customers.show', compact('result'));
     }
 

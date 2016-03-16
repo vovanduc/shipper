@@ -45,8 +45,9 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <a href="{{URL::route('admin.users.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                @if (\Auth::user()->uuid == $result->uuid)
+                    <a href="{{URL::route('admin.users.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                @endif
                 </div>
             </div>
         </div>

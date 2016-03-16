@@ -43,14 +43,7 @@ class PackageRepository implements IPackageRepository
         $result = \Package::where('uuid', $id)->update($input);
 
         if ($result) {
-            \Activity::log([
-                'contentId'   => $id,
-                'contentType' => 'package',
-                'action'      => 'update',
-                'description' => 'update',
-                'details'     => \Auth::user()->name,
-                'updated'     => (bool) \Auth::user()->id,
-            ]);
+
         }
 
         return $result;

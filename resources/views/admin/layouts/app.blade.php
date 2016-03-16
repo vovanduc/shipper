@@ -8,12 +8,12 @@
     <title>Shipper</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    {!! \Html::style('assets/admin/css/font-awesome.min.css') !!}
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> -->
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+    {!! \Html::style('assets/admin/css/bootstrap.min.css') !!}
+    {!! \Html::style('assets/admin/css/select2.min.css') !!}
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -124,7 +124,7 @@
         @if (Session::has('message_success'))
             <div class="col-md-12">
                 <div class="alert alert-success">
-                    <strong>{{ Session::get('message_success') }}</strong>
+                    <strong>{!! Session::get('message_success') !!}</strong>
                 </div>
             </div>
         @endif
@@ -132,7 +132,7 @@
         @if (Session::has('message_danger'))
             <div class="col-md-12">
                 <div class="alert alert-danger">
-                    <strong>{{ Session::get('message_danger') }}</strong>
+                    <strong>{!! Session::get('message_danger') !!}</strong>
                 </div>
             </div>
         @endif
@@ -145,9 +145,9 @@
     </div>
 
     <!-- JavaScripts -->
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+    {!! \Html::script('assets/admin/javascript/jquery-1.12.0.min.js') !!}
+    {!! \Html::script('assets/admin/javascript/bootstrap.min.js') !!}
+    {!! \Html::script('assets/admin/javascript/select2.min.js') !!}
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script type="text/javascript">
         $(document).ready(function() {

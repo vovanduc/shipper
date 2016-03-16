@@ -81,11 +81,18 @@ class UsersController extends Controller
         $result = $this->users->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.add_success'));
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.users.show', $result->uuid).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $result->uuid,
+                'contentType' => 'user',
+                'action'      => 'add',
+                'description' => $mess,
+                'updated'     => (bool) \Auth::user()->id,
+            ]);
+            return \Redirect::route('admin.users.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
-
     }
 
     /**
@@ -97,6 +104,13 @@ class UsersController extends Controller
     public function show($id)
     {
         $result = $this->users->firstOrFail($id);
+        \Activity::log([
+            'contentId'   => $id,
+            'contentType' => 'user',
+            'action'      => 'view',
+            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.users.show', $id).'">'.$result->name.'</a></b>',
+            'updated'     => (bool) \Auth::user()->id,
+        ]);
         return view('admin.users.show', compact('result'));
     }
 
@@ -142,7 +156,16 @@ class UsersController extends Controller
         $result = $this->users->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.update_success'));
+            $result = $this->users->firstOrFail($id);
+            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.users.show', $id).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $id,
+                'contentType' => 'user',
+                'action'      => 'update',
+                'description' => $mess,
+                'updated'     => (bool) \Auth::user()->id,
+            ]);
+            return \Redirect::route('admin.users.index')->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }
@@ -184,6 +207,13 @@ class UsersController extends Controller
             $result = $this->users->update(\Auth::user()->uuid, ['password' => bcrypt($password)]);
 
             if ($result) {
+                \Activity::log([
+                    'contentId'   => \Auth::user()->uuid,
+                    'contentType' => 'user',
+                    'action'      => 'update',
+                    'description' => 'Thay đổi mật khẩu',
+                    'updated'     => (bool) \Auth::user()->id,
+                ]);
                 return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.message_success'));
             } else {
                 return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
