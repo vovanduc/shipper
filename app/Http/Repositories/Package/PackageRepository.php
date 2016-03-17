@@ -40,13 +40,7 @@ class PackageRepository implements IPackageRepository
 
     public function update($id, $input)
     {
-        $result = \Package::where('uuid', $id)->update($input);
-
-        if ($result) {
-
-        }
-
-        return $result;
+        return \Package::where('uuid', $id)->update($input);
     }
 
     public function delete($id)

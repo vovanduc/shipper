@@ -72,7 +72,7 @@
                             <tr>
                                 <td>Ngày đã giao hàng</td>
                                 <td>
-                                    @if ($result->delivery_at && $result->status == 4)
+                                    @if ($result->delivery_at && $result->status == 5)
                                         {{$result->delivery_at}}
                                     @endif
                                 </td>

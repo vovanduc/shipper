@@ -29,7 +29,7 @@ class CreatePackagesTable extends Migration
             $table->string('place_id');
             $table->text('note');
             $table->string('label');
-            $table->timestamp('delivery_at');
+            $table->dateTime('delivery_at');
             $table->boolean('active')->default(true);
             $table->boolean('deleted')->default(false);
             $table->integer('created_by')->default(1);

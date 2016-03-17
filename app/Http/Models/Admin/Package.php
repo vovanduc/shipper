@@ -245,4 +245,9 @@ class Package extends \Eloquent
 
         return $data;
     }
+
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
 }

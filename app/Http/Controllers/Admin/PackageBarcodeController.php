@@ -34,21 +34,42 @@ class PackagesBarcodeController extends Controller
      */
     public function index()
     {
-        // $response = \GoogleMaps::load('distancematrix')
-        //         ->setParamByKey('origins', '262 Bùi Viện, Hồ Chí Minh, Việt Nam')
-        //         ->setParamByKey('destinations', '403 Nguyễn Trãi, Hồ Chí Minh, Việt Nam|90/18 Dương Bá Trạc, Hồ Chí Minh, Việt Nam|101 Nguyễn Thị Minh Khai, Hồ Chí Minh, Việt Nam')
-        //         ->get();
-        // print_r($response);exit;
+        $status_from = \Request::query('status_from') ? \Request::query('status_from') : 0;
+        $status_to = \Request::query('status_to') ? \Request::query('status_to') : 0;
+        $label = \Request::query('label') ? \Request::query('label') : '';
+        $message = '';
 
-        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $result = $this->packages->all(10);
-        return view('admin.packages.index', compact('result'))
-            ->with('customer_id_from')
-            ->with('customer_id_to')
-            ->with('status')
-            ->with('county')
-            ->with('label')
-            ->with('customers', $customers);
+        $result = array();
+        if ($status_from && $status_to && $label) {
+            $result = $this->packages->findBy('label', $label)->status($status_from)->first();
+
+            if ($result) {
+                $updated = $this->packages->update($result->uuid, array('status' => $status_to));
+
+                if ($updated) {
+                    // Refesh data -> show
+                    $result = $this->packages->findBy('label', $label)->status($status_to)->first();
+                    $message = 'Chuyển trạng thái từ <strong>'.\Package::get_status_option($status_from)
+                    .'</strong> đến <strong>'.\Package::get_status_option($status_to).'</strong>';
+
+                    \Activity::log([
+                        'contentId'   => $result->uuid,
+                        'contentType' => 'package',
+                        'action'      => 'update',
+                        'description' => $message,
+                        'userId'     => \Auth::user()->uuid,
+                    ]);
+
+                } else {
+                    print 'Lỗi hệ thống vui lòng liên hệ admin';
+                }
+            }
+        }
+
+        return view('admin.packages.barcode', compact('result'))
+            ->with('status_from', $status_from)
+            ->with('status_to', $status_to)
+            ->with('message', $message);
     }
 
 
