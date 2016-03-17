@@ -36,14 +36,16 @@ class Package extends \Eloquent
     public function getCvStatusAttribute($value)
     {
         if ($this->attributes['status'] == 1) {
-            return '<b>Đang gửi về việt nam</b>';
+            return '<b>Đang ở tại kho</b>';
         } else if ($this->attributes['status'] == 2) {
+            return '<b>Đang gửi về việt nam</b>';
+        } else if ($this->attributes['status'] == 3) {
             return '<b>Đã về việt nam - nội địa Tphcm</b';
-        }else if ($this->attributes['status'] == 3) {
+        } else if ($this->attributes['status'] == 4) {
             return '<b>Đang giao hàng</b';
-        }else if ($this->attributes['status'] == 4) {
+        } else if ($this->attributes['status'] == 5) {
             return '<b>Giao hàng thành công</b';
-        }else if ($this->attributes['status'] == 5) {
+        } else if ($this->attributes['status'] == 6) {
             return '<b>Đã hủy</b';
         }
     }
@@ -141,11 +143,12 @@ class Package extends \Eloquent
     {
         $data = array();
 
-        $data[1] = 'Đang gửi về việt nam';
-        $data[2] = 'Đã về việt nam - nội địa Tphcm';
-        $data[3] = 'Đang giao hàng';
-        $data[4] = 'Giao hàng thành công';
-        $data[5] = 'Đã hủy';
+        $data[1] = 'Đang ở tại kho';
+        $data[2] = 'Đang gửi về việt nam';
+        $data[3] = 'Đã về việt nam - nội địa Tphcm';
+        $data[4] = 'Đang giao hàng';
+        $data[5] = 'Giao hàng thành công';
+        $data[6] = 'Đã hủy';
 
         if ($index) {
             return $data[$index];

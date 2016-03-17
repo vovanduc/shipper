@@ -47,9 +47,10 @@ Route::group(['middleware' => 'web'], function () {
 		Route::any('shippers/search', array("as"=>"admin.shippers.search","uses"=>"Admin\ShippersController@search"));
 
 		// Packages
-		Route::resource('packages', 'Admin\PackagesController');
 		Route::any('packages/search', array("as"=>"admin.packages.search","uses"=>"Admin\PackagesController@search"));
-		Route::any('/packages_find', array("as"=>"admin.packages.find","uses"=>"Admin\PackagesController@find"));
+		Route::get('packages/find', array("as"=>"admin.packages.find","uses"=>"Admin\PackagesController@find"));
+		Route::get('packages/barcode', array("as"=>"admin.packages.bardcode","uses"=>"Admin\PackagesBarcodeController@index"));
+		Route::resource('packages', 'Admin\PackagesController');
 
 		// Logs
 		Route::resource('logs', 'Admin\LogsController');
