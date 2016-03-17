@@ -93,7 +93,7 @@ class Package extends \Eloquent
     public function getShowBarcodeAttribute()
     {
         if ($this->attributes['label']) {
-            return '<img src="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128") . '" alt="barcode"   />';
+            return '<img src="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128",1,50) . '" alt="barcode"   />';
         }
         return '';
     }
