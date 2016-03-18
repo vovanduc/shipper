@@ -120,8 +120,16 @@
                                 @if ($item->show_barcode)
                                 <tr class="text-center">
                                     <th></th>
-                                    <td colspan="5">
-                                        {!!$item->show_barcode!!}
+                                    <td colspan="5" style="border-top:0px">
+                                        @if($item->parent)
+                                            @if($item->uuid != $item->parent)
+                                                Thuộc label {{$item->package_parent->label}}<br/>
+                                            @endif
+                                            {!!$item->show_barcode!!}
+                                            <br/>{{$item->label}}
+                                        @else
+                                            <b>Label gốc</b><br/>{{$item->label}}
+                                        @endif
                                     </td>
                                 </tr>
                                 @endif

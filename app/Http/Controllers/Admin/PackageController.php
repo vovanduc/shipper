@@ -81,7 +81,8 @@ class PackagesController extends Controller
                 'customer_id_from' => 'required',
                 'customer_id_to' => 'required',
                 'address' => 'required',
-                'county' => 'required'
+                'county' => 'required',
+                'quantity' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -103,6 +104,18 @@ class PackagesController extends Controller
         $result = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
+
+            if ($result->quantity == 1) {
+                $this->packages->update($result->uuid, ['parent' => $result->uuid]);
+            } else {
+                for ($i=1; $i <= $result->quantity ; $i++) {
+                    $temp = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
+                    $this->packages->update($temp->uuid, ['parent' => $result->uuid]);
+                }
+            }
+
+
+
             $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $result->uuid).'">'.$result->label.'</a></b>';
             \Activity::log([
                 'contentId'   => $result->uuid,
@@ -180,7 +193,8 @@ class PackagesController extends Controller
             'customer_id_from' => 'required',
             'customer_id_to' => 'required',
             'address' => 'required',
-            'county' => 'required'
+            'county' => 'required',
+            'quantity' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {

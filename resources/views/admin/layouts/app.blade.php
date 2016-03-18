@@ -148,11 +148,13 @@
     {!! \Html::script('assets/admin/javascript/jquery-1.12.0.min.js') !!}
     {!! \Html::script('assets/admin/javascript/bootstrap.min.js') !!}
     {!! \Html::script('assets/admin/javascript/select2.min.js') !!}
+    <script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select_auto').select2();
         });
+        CKEDITOR.replace( 'ckeditor' );
     </script>
 
     @yield("javascript")

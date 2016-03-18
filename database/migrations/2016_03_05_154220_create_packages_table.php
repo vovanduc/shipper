@@ -15,10 +15,12 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
+            $table->uuid('parent');
             $table->integer('customer_id_from');
             $table->integer('customer_id_to');
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('county')->default(1);
+            $table->tinyInteger('quantity')->default(1);
             $table->string('address');
             $table->string('latitude');
             $table->string('longitude');
@@ -27,6 +29,7 @@ class CreatePackagesTable extends Migration
             $table->integer('duration');
             $table->text('steps');
             $table->string('place_id');
+            $table->text('content');
             $table->text('note');
             $table->string('label');
             $table->dateTime('delivery_at');

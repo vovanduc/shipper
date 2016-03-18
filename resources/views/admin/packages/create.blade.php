@@ -55,6 +55,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Số lượng</label>
+                        <div class="col-md-6">
+                            {{Form::text("quantity",1,null,array('class' => 'form-control'))}}
+                            @if ($errors->has('quantity'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('quantity') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Địa chỉ</label>
 
@@ -92,10 +104,17 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Nội dung</label>
+                        <div class="col-md-6">
+                            <textarea id="ckeditor" type="text" class="form-control" name="content" value="{{ old('content') }}"></textarea>
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Ghi chú</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="note" value="{{ old('note') }}">
+                            <textarea type="text" class="form-control" name="note" value="{{ old('note') }}"></textarea>
                         </div>
                     </div>
 

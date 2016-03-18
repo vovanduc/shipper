@@ -46,6 +46,10 @@
                                 <td>{{$result->customer_id_to}} </td>
                             </tr>
                             <tr>
+                                <td>Số lượng</td>
+                                <td>{{$result->quantity}} </td>
+                            </tr>
+                            <tr>
                                 <td>Địa chỉ</td>
                                 <td>{{$result->address}} </td>
                             </tr>
@@ -76,6 +80,10 @@
                                         {{$result->delivery_at}}
                                     @endif
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>Nội dung</td>
+                                <td>{!!$result->content!!} </td>
                             </tr>
                             <tr>
                                 <td>Ghi chú</td>
