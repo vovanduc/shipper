@@ -123,6 +123,11 @@ class Package extends \Eloquent
         return $this->hasOne('\App\Http\Models\Admin\Package', 'uuid','parent');
     }
 
+    public function packages_parent()
+    {
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'parent','uuid');
+    }
+
     public static function convert($data)
     {
         $data->created_by = !empty($data->user_created->name) ? $data->user_created->name : '';
@@ -249,6 +254,14 @@ class Package extends \Eloquent
         }
 
         return $data;
+    }
+
+    public function getCvLabelAttribute()
+    {
+        if ($this->attributes['label']) {
+            $temp = \URL::route('admin.packages.show',$this->attributes['uuid']);
+            return '<a href="'.$temp.'" target="_blank">'.$this->attributes['label'].'</a>';
+        }
     }
 
     public function scopeStatus($query, $status)

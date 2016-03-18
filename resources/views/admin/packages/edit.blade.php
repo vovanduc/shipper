@@ -51,7 +51,7 @@
                         <label class="col-md-4 control-label">Số lượng</label>
 
                         <div class="col-md-6">
-                            {{Form::text("quantity",null,array('class' => 'form-control'))}}
+                            {{Form::text("quantity",null,array('class' => 'form-control', 'disabled'))}}
                             @if ($errors->has('quantity'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('quantity') }}</strong>

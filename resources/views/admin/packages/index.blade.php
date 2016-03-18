@@ -123,12 +123,21 @@
                                     <td colspan="5" style="border-top:0px">
                                         @if($item->parent)
                                             @if($item->uuid != $item->parent)
-                                                Thuộc label {{$item->package_parent->label}}<br/>
+                                                Thuộc label {!!$item->package_parent->cv_label!!}<br/>
                                             @endif
                                             {!!$item->show_barcode!!}
                                             <br/>{{$item->label}}
                                         @else
                                             <b>Label gốc</b><br/>{{$item->label}}
+
+                                            @if($item->packages_parent()->where('deleted',0)->get()->count() > 0)
+                                                <br/><b>Label con</b> <br/>
+                                                @foreach($item->packages_parent()->where('deleted',0)->get() as $c)
+                                                    {!!$c->cv_label!!}
+                                                @endforeach
+                                            @else
+                                                <br/><b>Không có label con</b>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

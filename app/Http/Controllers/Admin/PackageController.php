@@ -109,8 +109,10 @@ class PackagesController extends Controller
                 $this->packages->update($result->uuid, ['parent' => $result->uuid]);
             } else {
                 for ($i=1; $i <= $result->quantity ; $i++) {
+                    \Input::merge(array('label' => \Package::create_label()));
+                    \Input::merge(array('parent' => $result->uuid));
+                    \Input::merge(array('quantity' => 1));
                     $temp = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
-                    $this->packages->update($temp->uuid, ['parent' => $result->uuid]);
                 }
             }
 
