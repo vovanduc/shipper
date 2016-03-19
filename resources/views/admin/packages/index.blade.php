@@ -19,6 +19,10 @@
                             <div class="left-inner-addon">
                                 {{Form::select("customer_id_from",$customers,$customer_id_from,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người gửi'))}}
                             </div>
+                            <br/>
+                            <div class="left-inner-addon">
+                                {{Form::text("customer_phone_from",$customer_phone_from,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người gửi'))}}
+                            </div>
                         </div>
                         <div class="col-xs-6" >
                             <div class="right-inner-addon">
@@ -119,8 +123,7 @@
           	        			</tr>
                                 @if ($item->show_barcode)
                                 <tr class="text-center">
-                                    <th></th>
-                                    <td colspan="5" style="border-top:0px">
+                                    <td colspan="6" style="border-top:0px">
                                         @if($item->parent)
                                             @if($item->uuid != $item->parent)
                                                 Thuộc label {!!$item->package_parent->cv_label!!}<br/>
@@ -131,10 +134,7 @@
                                             <b>Label gốc</b><br/>{{$item->label}}
 
                                             @if($item->packages_parent()->where('deleted',0)->get()->count() > 0)
-                                                <br/><b>Label con</b> <br/>
-                                                @foreach($item->packages_parent()->where('deleted',0)->get() as $c)
-                                                    {!!$c->cv_label!!}
-                                                @endforeach
+                                                <br/><b>Label con</b> ({{$item->packages_parent()->where('deleted',0)->get()->count()}})
                                             @else
                                                 <br/><b>Không có label con</b>
                                             @endif
@@ -145,7 +145,7 @@
                 			@endforeach
                   @else
                       <tr class="text-center">
-                          <td colspan="5">
+                          <td colspan="6">
                               {{Lang::get('admin.global.no_data')}}
                           </td>
                       </tr>

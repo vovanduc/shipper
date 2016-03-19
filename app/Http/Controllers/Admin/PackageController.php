@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Package\IPackageRepository;
+use App\Http\Repositories\Customer\ICustomerRepository;
 
 class PackagesController extends Controller
 {
     protected $packages;
 
-    public function __construct(IPackageRepository $packages, Request $request)
+    public function __construct(IPackageRepository $packages, Request $request, ICustomerRepository $customers)
     {
         $this->packages = $packages;
+        $this->customers = $customers;
         $this->request = $request;
 
         if(\Auth::user()->is_admin == false) {
@@ -44,6 +46,7 @@ class PackagesController extends Controller
         $result = $this->packages->all(10);
         return view('admin.packages.index', compact('result'))
             ->with('customer_id_from')
+            ->with('customer_phone_from')
             ->with('customer_id_to')
             ->with('status')
             ->with('county')
@@ -115,8 +118,6 @@ class PackagesController extends Controller
                     $temp = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
                 }
             }
-
-
 
             $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $result->uuid).'">'.$result->label.'</a></b>';
             \Activity::log([
@@ -196,7 +197,7 @@ class PackagesController extends Controller
             'customer_id_to' => 'required',
             'address' => 'required',
             'county' => 'required',
-            'quantity' => 'required|numeric',
+            //'quantity' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -253,6 +254,43 @@ class PackagesController extends Controller
                     'description' => $mess,
                     'userId'     => \Auth::user()->uuid,
                 ]);
+
+                // Remove package parent -> remove all children
+                if ($data->parent == '') {
+                    if ($data->packages_parent()->where('deleted',0)->get()->count() > 0) {
+                        foreach($data->packages_parent()->where('deleted',0)->get() as $item) {
+                            $temp_data = $this->packages->firstOrFail($item->uuid);
+                            $temp = $this->packages->update($item->uuid, ['deleted' => 1]);
+                            if ($temp) {
+                                $temp_mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $temp_data->uuid).'">'.$temp_data->label.'</a></b>';
+                                \Activity::log([
+                                    'contentId'   => $item->uuid,
+                                    'contentType' => 'package',
+                                    'action'      => 'delete',
+                                    'description' => $temp_mess,
+                                    'userId'     => \Auth::user()->uuid,
+                                ]);
+                                $mess .= '<br/>'.$temp_mess;
+                            }
+                        }
+                    }
+                } else { // Remove children -> count == 0 => remove parent
+                    if($data->package_parent->packages_parent()->where('deleted',0)->get()->count() == 0) {
+                        $temp = $this->packages->update($data->package_parent->uuid, ['deleted' => 1]);
+                        if ($temp) {
+                            $temp_mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $data->package_parent->uuid).'">'.$data->package_parent->label.'</a></b>';
+                            \Activity::log([
+                                'contentId'   => $data->package_parent->uuid,
+                                'contentType' => 'package',
+                                'action'      => 'delete',
+                                'description' => $temp_mess,
+                                'userId'     => \Auth::user()->uuid,
+                            ]);
+                            $mess .= '<br/>'.$temp_mess;
+                        }
+                    }
+                }
+
                 return \Redirect::route('admin.packages.index')->with('message_success', $mess);
             } else {
                 return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
@@ -263,6 +301,7 @@ class PackagesController extends Controller
     public function search()
     {
         if (!$this->request->has('customer_id_from')
+            && !$this->request->has('customer_phone_from')
             && !$this->request->has('customer_id_to')
             && !$this->request->has('status')
             && !$this->request->has('county')
@@ -275,6 +314,13 @@ class PackagesController extends Controller
 
         if ($this->request->has('customer_id_from')) {
             $result = $result->where('customer_id_from', $this->request->customer_id_from);
+        }
+
+        if ($this->request->has('customer_phone_from')) {
+            $search = $this->customers->findBy('phone', $this->request->customer_phone_from)->first();
+            if($search->id) {
+                $result = $result->where('customer_id_from', $search->id);
+            }
         }
 
         if ($this->request->has('customer_id_to')) {
@@ -299,6 +345,7 @@ class PackagesController extends Controller
 
         return view('admin.packages.index', compact('result'))
             ->with('customer_id_from', $this->request->customer_id_from)
+            ->with('customer_phone_from', $this->request->customer_phone_from)
             ->with('customer_id_to', $this->request->customer_id_to)
             ->with('status', $this->request->status)
             ->with('county', $this->request->county)

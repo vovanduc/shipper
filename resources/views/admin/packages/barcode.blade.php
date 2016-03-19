@@ -86,21 +86,55 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 col-lg-3 " align="center">
-                            <i class="fa fa-btn fa-user" style="font-size: 150px;"></i>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-info"><b>Label</b></li>
+                                <li class="list-group-item">
+                                    {!!$result->show_barcode!!} <br/>
+                                    {!!$result->cv_label!!} <br/>
+                                    {!!$result->cv_status!!}
+                                </li>
+
+                                @if($result->parent)
+
+                                    @if($result->package_parent->packages_parent()->where('deleted',0)->where('uuid','!=',$result->uuid)->get()->count() >0)
+                                        <li class="list-group-item list-group-item-info"><b>Các label khác</b></li>
+                                        @foreach($result->package_parent->packages_parent()->where('deleted',0)->where('uuid','!=',$result->uuid)->get() as $p)
+                                            <li class="list-group-item">
+                                                {!!$p->show_barcode!!} <br/>
+                                                {!!$p->cv_label!!} <br/>
+                                                {!!$p->cv_status!!}
+                                            </li>
+                                        @endforeach
+                                    @endif
+
+                                    @if($result->uuid != $result->parent)
+                                        <li class="list-group-item list-group-item-info"><b>Thuộc label</b></li>
+                                        <li class="list-group-item">
+                                            {!!$result->package_parent->show_barcode!!} <br/>
+                                            {!!$result->package_parent->cv_label!!}
+                                        </li>
+                                    @endif
+                                @else
+                                    @if($result->packages_parent()->where('deleted',0)->get()->count() > 0)
+                                        <li class="list-group-item list-group-item-info"><b>Label con</b></li>
+                                        @foreach($result->packages_parent()->where('deleted',0)->get() as $c)
+                                            <li class="list-group-item">
+                                                {!!$c->show_barcode!!} <br/>
+                                                {!!$c->cv_label!!} <br/>
+                                                {!!$c->cv_status!!}
+                                            </li>
+                                        @endforeach
+                                    @else
+                                        <br/><b>Không có label con</b>
+                                    @endif
+                                @endif
+
+                            </ul>
                         </div>
 
                         <div class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
-                                    <tr>
-                                        <td colspan="2">
-                                            {!!$result->show_barcode!!}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 30%">Label</td>
-                                        <td style="width: 70%">{{$result->label}} </td>
-                                    </tr>
                                     <tr>
                                         <td>Người gửi</td>
                                         <td>{{$result->customer_id_from}} </td>

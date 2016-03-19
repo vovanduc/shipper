@@ -51,6 +51,10 @@
             width: 200px;
           }
 
+          #destination-input {
+            width: 550px !important;
+          }
+
           #origin-input:focus,
           #destination-input:focus {
             border-color: #4d90fe;

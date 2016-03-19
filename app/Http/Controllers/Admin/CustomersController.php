@@ -38,7 +38,9 @@ class CustomersController extends Controller
         $result = $this->customers->all(10);
         return view('admin.customers.index', compact('result'))
             ->with('name')
-            ->with('email');
+            ->with('email')
+            ->with('phone')
+            ->with('address');
     }
 
     /**
@@ -190,10 +192,10 @@ class CustomersController extends Controller
 
     public function search()
     {
-        if (!$this->request->has('name') && !$this->request->has('email')) {
+        if (!$this->request->has('name') && !$this->request->has('email')
+        && !$this->request->has('phone') && !$this->request->has('address')) {
             return \Redirect::route('admin.customers.index');
         }
-
 
         $result = Customer::where('deleted',0);
 
@@ -205,12 +207,20 @@ class CustomersController extends Controller
             $result = $result->where('email', 'LIKE', '%'.$this->request->email.'%');
         }
 
+        if ($this->request->has('phone')) {
+            $result = $result->where('phone', 'LIKE', '%'.$this->request->phone.'%');
+        }
+
+        if ($this->request->has('address')) {
+            $result = $result->where('address', 'LIKE', '%'.$this->request->address.'%');
+        }
+
         $result = $result->orderBy('id', 'DESC')->get();
-
-
 
         return view('admin.customers.index', compact('result'))
             ->with('name', $this->request->name)
-            ->with('email', $this->request->email);
+            ->with('email', $this->request->email)
+            ->with('phone', $this->request->phone)
+            ->with('address', $this->request->address);
     }
 }

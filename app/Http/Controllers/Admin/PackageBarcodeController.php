@@ -41,7 +41,7 @@ class PackagesBarcodeController extends Controller
 
         $result = array();
         if ($status_from && $status_to && $label) {
-            $result = $this->packages->findBy('label', $label)->status($status_from)->first();
+            $result = $this->packages->findBy('label', $label)->deleted(0)->status($status_from)->first();
 
             if ($result) {
                 $updated = $this->packages->update($result->uuid, array('status' => $status_to));
@@ -49,6 +49,7 @@ class PackagesBarcodeController extends Controller
                 if ($updated) {
                     // Refesh data -> show
                     $result = $this->packages->findBy('label', $label)->status($status_to)->first();
+                    $result = \Package::convert($result);
                     $message = 'Chuyển trạng thái từ <strong>'.\Package::get_status_option($status_from)
                     .'</strong> đến <strong>'.\Package::get_status_option($status_to).'</strong>';
 

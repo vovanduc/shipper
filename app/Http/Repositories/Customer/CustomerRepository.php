@@ -20,7 +20,7 @@ class CustomerRepository implements ICustomerRepository
 
     public function edit($id)
     {
-        $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
+        $result = Customer::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         return $result;
     }
 

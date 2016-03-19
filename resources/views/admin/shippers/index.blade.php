@@ -26,6 +26,19 @@
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6" >
+                            <div class="left-inner-addon">
+                                <input type="text"  name="phone" class="form-control" placeholder="Điện thoại" value="{{ $phone }}"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6" >
+                            <div class="right-inner-addon">
+                                <input type="text" name="address" class="form-control" placeholder="Địa chỉ" value="{{ $address }}"/>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="list-group-item">
                   <div class="row">

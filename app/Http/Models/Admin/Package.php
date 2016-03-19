@@ -93,7 +93,8 @@ class Package extends \Eloquent
     public function getShowBarcodeAttribute()
     {
         if ($this->attributes['label']) {
-            return '<img src="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128",1,50) . '" alt="barcode"   />';
+            return '<a target="_blank" href="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128",1,50) . '">
+            <img src="' . \DNS1D::getBarcodePNGPath($this->attributes['label'], "C128",1,50) . '" alt="barcode"/></a>';
         }
         return '';
     }
@@ -267,5 +268,10 @@ class Package extends \Eloquent
     public function scopeStatus($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    public function scopeDeleted($query, $value)
+    {
+        return $query->where('deleted', $value);
     }
 }
