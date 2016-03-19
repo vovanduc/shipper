@@ -7,6 +7,7 @@ return [
             'customer' => 'Khách hàng',
             'shipper' => 'Người vận chuyển',
             'package' => 'Kiện hàng',
+			'location' => 'Vị trí'
 		],
     'ACTION' =>
 		[

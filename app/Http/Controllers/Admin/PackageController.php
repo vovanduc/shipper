@@ -48,6 +48,7 @@ class PackagesController extends Controller
             ->with('customer_id_from')
             ->with('customer_phone_from')
             ->with('customer_id_to')
+            ->with('customer_phone_to')
             ->with('status')
             ->with('county')
             ->with('label')
@@ -303,6 +304,7 @@ class PackagesController extends Controller
         if (!$this->request->has('customer_id_from')
             && !$this->request->has('customer_phone_from')
             && !$this->request->has('customer_id_to')
+            && !$this->request->has('customer_phone_to')
             && !$this->request->has('status')
             && !$this->request->has('county')
             && !$this->request->has('label')
@@ -327,6 +329,13 @@ class PackagesController extends Controller
             $result = $result->where('customer_id_to', $this->request->customer_id_to);
         }
 
+        if ($this->request->has('customer_phone_to')) {
+            $search = $this->customers->findBy('phone', $this->request->customer_phone_to)->first();
+            if($search->id) {
+                $result = $result->where('customer_id_to', $search->id);
+            }
+        }
+
         if ($this->request->has('status')) {
             $result = $result->where('status', $this->request->status);
         }
@@ -347,6 +356,7 @@ class PackagesController extends Controller
             ->with('customer_id_from', $this->request->customer_id_from)
             ->with('customer_phone_from', $this->request->customer_phone_from)
             ->with('customer_id_to', $this->request->customer_id_to)
+            ->with('customer_phone_to', $this->request->customer_phone_to)
             ->with('status', $this->request->status)
             ->with('county', $this->request->county)
             ->with('label', $this->request->label)

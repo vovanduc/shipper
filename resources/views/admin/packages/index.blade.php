@@ -28,6 +28,10 @@
                             <div class="right-inner-addon">
                                 {{Form::select("customer_id_to",$customers,$customer_id_to,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người nhận'))}}
                             </div>
+                            <br/>
+                            <div class="left-inner-addon">
+                                {{Form::text("customer_phone_to",$customer_phone_to,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người nhận'))}}
+                            </div>
                         </div>
                     </div>
                     <br/>

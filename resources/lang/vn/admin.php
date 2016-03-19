@@ -32,4 +32,11 @@ return [
 			'index' => 'Quản lý truy cập',
 			'info' => 'Thông tin truy cập',
 		],
+	'location' =>
+		[
+			'index' => 'Quản lý vị trí',
+			'add' => 'Thêm vị trí',
+			'edit' => 'Cập nhật vị trí',
+			'info' => 'Thông tin vị trí',
+		],
 ];

@@ -27,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Http\Repositories\Customer\ICustomerRepository', 'App\Http\Repositories\Customer\CustomerRepository');
         $this->app->bind('App\Http\Repositories\Shipper\IShipperRepository', 'App\Http\Repositories\Shipper\ShipperRepository');
         $this->app->bind('App\Http\Repositories\Package\IPackageRepository', 'App\Http\Repositories\Package\PackageRepository');
+        $this->app->bind('App\Http\Repositories\Location\ILocationRepository', 'App\Http\Repositories\Location\LocationRepository');
     }
 }
