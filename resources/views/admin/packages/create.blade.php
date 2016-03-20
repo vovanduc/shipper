@@ -67,6 +67,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('location_id') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Vị trí</label>
+
+                        <div class="col-md-6">
+                            {{Form::select("location_id",$location_id,null,array('class' => 'form-control select_auto'))}}
+
+                            @if ($errors->has('location_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('location_id') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Địa chỉ</label>
 

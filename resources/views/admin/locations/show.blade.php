@@ -29,6 +29,10 @@
                             <td>{{$result->quantity}} </td>
                         </tr>
                         <tr>
+                            <td>Kiện hàng</td>
+                            <td>{{$result->packages->count()}} </td>
+                        </tr>
+                        <tr>
                             <td>Ghi chú</td>
                             <td>{{$result->note}} </td>
                         </tr>

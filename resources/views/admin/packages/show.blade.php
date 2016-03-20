@@ -12,19 +12,22 @@
         </div>
 
         <div class="panel-body">
-
             <div class="row">
-                <div class="col-md-12 col-lg-12 " align="center">
-                    <div id="map" style="width: 800px;height: 500px;"></div>
-                    {{Form::hidden('place_id',$result->place_id,array('class' => 'form-control', 'id' => 'place_id'))}}
-                </div>
-            </div>
-
-            <br/>
-
-            <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center">
+                <div class="col-md-4 col-lg-4 " align="center">
                     <ul class="list-group">
+
+                        <li class="list-group-item list-group-item-info"><b>Vị trí</b></li>
+                        <li class="list-group-item">
+                            @if($result->location)
+                                <button class="btn btn-info" type="button">
+                                    {{$result->location->name}} <span class="badge">{{$result->location->quantity}}</span>
+                                </button><br/>
+                                Đang chứa: {{$result->location->packages->count()}}
+                            @else
+                                Chưa có
+                            @endif
+                        </li>
+
                         <li class="list-group-item list-group-item-info"><b>Label</b></li>
                         <li class="list-group-item">
                             {!!$result->show_barcode!!} <br/>
@@ -69,7 +72,7 @@
                     </ul>
                 </div>
 
-                <div class=" col-md-9 col-lg-9 ">
+                <div class=" col-md-8 col-lg-8 ">
                     <table class="table table-user-information">
                         <tbody>
                             <tr>
@@ -160,6 +163,13 @@
                 </div>
             @endif
 
+            <div class="row">
+                <div class="col-md-12 col-lg-12 " align="center">
+                    <div id="map" style="width: 800px;height: 500px;"></div>
+                    {{Form::hidden('place_id',$result->place_id,array('class' => 'form-control', 'id' => 'place_id'))}}
+                </div>
+            </div>
+            <br/>
             <div class="row">
                 <div class="col-md-12 col-lg-12 " align="center">
                     <a href="{{URL::route('admin.packages.edit', $result->uuid)}}" class="btn btn-primary btn-block">Sửa thông tin</a>

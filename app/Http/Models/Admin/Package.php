@@ -14,7 +14,7 @@ class Package extends \Eloquent
     protected $fillable = [
         'uuid','address','label','status','customer_id_from','customer_id_to','note',
         'county','place_id','latitude','longitude','price','distance','duration',
-        'steps','content','quantity','parent'
+        'steps','content','quantity','parent','location_id'
     ];
 
     /**
@@ -117,6 +117,11 @@ class Package extends \Eloquent
     public function customer_to()
     {
         return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id_to');
+    }
+
+    public function location()
+    {
+        return $this->hasOne('\App\Http\Models\Admin\Location', 'uuid', 'location_id');
     }
 
     public function package_parent()

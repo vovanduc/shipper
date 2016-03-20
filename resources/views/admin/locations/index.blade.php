@@ -18,6 +18,7 @@
           				<th class="text-center">#</th>
           				<th class="text-center">Tên</th>
           				<th class="text-center">Số lượng</th>
+                        <th class="text-center">Kiện hàng</th>
           				<th class="text-center">Trạng thái</th>
           				<th class="text-center">Ngày tạo</th>
           				<th class="text-center">Quản lý</th>
@@ -30,6 +31,7 @@
             	        				<th></th>
             	        				<td>{{ $item->name }}</td>
             	        				<td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->packages->count() }}</td>
             	        				<td>{!! $item->cv_active !!}</td>
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>

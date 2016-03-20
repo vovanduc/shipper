@@ -128,6 +128,13 @@
                                 @if ($item->show_barcode)
                                 <tr class="text-center">
                                     <td colspan="6" style="border-top:0px">
+
+                                        @if($item->location)
+                                            <button class="btn btn-info" type="button">
+                                                {{$item->location->name}} <span class="badge">{{$item->location->quantity}}</span>
+                                            </button><br/>
+                                        @endif
+
                                         @if($item->parent)
                                             @if($item->uuid != $item->parent)
                                                 Thuộc label {!!$item->package_parent->cv_label!!}<br/>

@@ -18,6 +18,7 @@ class CreatePackagesTable extends Migration
             $table->uuid('parent');
             $table->integer('customer_id_from');
             $table->integer('customer_id_to');
+            $table->uuid('location_id');
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('county')->default(1);
             $table->tinyInteger('quantity')->default(1);

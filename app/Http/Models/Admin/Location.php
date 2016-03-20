@@ -51,6 +51,11 @@ class Location extends \Eloquent
         return $this->belongsTo('\App\Http\Models\Admin\User', 'updated_by');
     }
 
+    public function packages()
+    {
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'location_id', 'uuid');
+    }
+
     public function setCreatedByAttribute($data)
     {
         $this->attributes['created_by'] = $data ? $data->name : '';

@@ -68,9 +68,13 @@ class PackagesController extends Controller
         $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
         $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
 
+        $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
+
         return view('admin.packages.create')
             ->with('customer_id_from', $customer_id_from)
-            ->with('customer_id_to', $customer_id_to);
+            ->with('customer_id_to', $customer_id_to)
+            ->with('location_id', $location_id);
     }
 
     /**
@@ -84,6 +88,7 @@ class PackagesController extends Controller
         $validator = $this->validator($this->request->all(), [
                 'customer_id_from' => 'required',
                 'customer_id_to' => 'required',
+                'location_id' => 'required',
                 'address' => 'required',
                 'county' => 'required',
                 'quantity' => 'required|numeric',
@@ -178,10 +183,14 @@ class PackagesController extends Controller
         $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
         $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
 
+        $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
+
         $result = $this->packages->edit($id);
         return view('admin.packages.edit', compact('result'))
             ->with('customer_id_from', $customer_id_from)
-            ->with('customer_id_to', $customer_id_to);
+            ->with('customer_id_to', $customer_id_to)
+            ->with('location_id', $location_id);
     }
 
     /**
@@ -196,6 +205,7 @@ class PackagesController extends Controller
         $validator = $this->validator($this->request->all(), [
             'customer_id_from' => 'required',
             'customer_id_to' => 'required',
+            'location_id' => 'required',
             'address' => 'required',
             'county' => 'required',
             //'quantity' => 'required|numeric',
