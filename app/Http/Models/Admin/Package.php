@@ -151,9 +151,12 @@ class Package extends \Eloquent
 
         $count = \Package::where('created_at', '>=', $from)->where('created_at', '<=', $to)->count();
 
-        print $from.'<br/>';
-        print $to.'<br/>';
-        print $count.'<br/>';  exit;  
+        $start = (new \Carbon('now'))->hour(0)->minute(0)->second(0);
+$end = (new \Carbon('now'))->hour(23)->minute(59)->second(59);
+
+        print $start.'<br/>';
+        print $end.'<br/>';
+        print $count.'<br/>';  exit;
 
         $count = $count + 1;
         $today = \Carbon::today();
