@@ -146,17 +146,9 @@ class Package extends \Eloquent
     }
 
     public static function create_label(){
-        $from = date('Y-m-d H:i:s', strtotime('today', time()));
-        $to = date('Y-m-d 24:00:00', strtotime('today', time()));
-
-        $count = \Package::where('created_at', '>=', $from)->where('created_at', '<=', $to)->count();
-
         $start = (new \Carbon('now'))->hour(0)->minute(0)->second(0);
-$end = (new \Carbon('now'))->hour(23)->minute(59)->second(59);
-$trans = \Package::whereBetween('created_at', [$start , $end])->get();
-
-        dd($trans);
-
+        $end = (new \Carbon('now'))->hour(23)->minute(59)->second(59);
+        $count = \Package::whereBetween('created_at', [$start , $end])->count();
         $count = $count + 1;
         $today = \Carbon::today();
         $result = $count.'-'.$today->format('d-m-y');
