@@ -53,7 +53,7 @@ class Location extends \Eloquent
 
     public function packages()
     {
-        return $this->hasMany('\App\Http\Models\Admin\Package', 'location_id', 'uuid');
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'location_id', 'uuid')->where('parent','!=','');
     }
 
     public function setCreatedByAttribute($data)
