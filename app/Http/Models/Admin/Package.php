@@ -153,10 +153,9 @@ class Package extends \Eloquent
 
         $start = (new \Carbon('now'))->hour(0)->minute(0)->second(0);
 $end = (new \Carbon('now'))->hour(23)->minute(59)->second(59);
+$trans = \Package::whereBetween('created_at', [$start , $end])->get();
 
-        print $start.'<br/>';
-        print $end.'<br/>';
-        print $count.'<br/>';  exit;
+        dd($trans);
 
         $count = $count + 1;
         $today = \Carbon::today();
