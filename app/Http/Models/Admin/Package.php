@@ -148,7 +148,13 @@ class Package extends \Eloquent
     public static function create_label(){
         $from = date('Y-m-d H:i:s', strtotime('today', time()));
         $to = date('Y-m-d 24:00:00', strtotime('today', time()));
+
         $count = \Package::where('created_at', '>=', $from)->where('created_at', '<=', $to)->count();
+
+        print $from.'<br/>';
+        print $to.'<br/>';
+        print $count.'<br/>';  exit;  
+
         $count = $count + 1;
         $today = \Carbon::today();
         $result = $count.'-'.$today->format('d-m-y');
