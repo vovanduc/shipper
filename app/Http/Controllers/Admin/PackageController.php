@@ -22,6 +22,14 @@ class PackagesController extends Controller
         if(\Auth::user()->is_admin == false) {
             return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
         }
+        
+        require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
+        $excel = new \SimpleExcel\SimpleExcel('CSV');
+        $excel->parser->loadFile(base_path('CARGO MANIFEST_ 03082016.xls - Sheet1.csv'));
+        
+
+       // dd($excel->parser->getColumn(6));
+        dd($excel->parser->getCell(9,9));
     }
 
     protected function validator(array $data, array $rules)
