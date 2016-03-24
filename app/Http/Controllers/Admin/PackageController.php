@@ -25,25 +25,118 @@ class PackagesController extends Controller
 
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
-        $excel->parser->loadFile(base_path('CARGO MANIFEST_ 03082016.xls - Sheet1.csv'));
-        //$excel->parser->loadFile(base_path('CARGO MANIFEST_ 03152016.xls - Sheet1.csv'));
+        //$excel->parser->loadFile(base_path('CARGO MANIFEST_ 03082016.xls - Sheet1.csv'));
+        $excel->parser->loadFile(base_path('CARGO MANIFEST_ 03152016.xls - Sheet1.csv'));
+
+        // Save packages
+        //for ($i=9; $i <= 255 ; $i++) {
+        for ($i=9; $i <= 277 ; $i++) {
+
+            $check = \Package::where('label', 'label-'.$i)->first();
+            if ($check) continue;
+
+            $status = 5;
+            for ($k=1; $k <= 15 ; $k++) {
+                $string = $excel->parser->getCell($i,$k);
+                if ($k==1) $delivery_at = $excel->parser->getCell($i,$k);
+                if ($k==2) $invoice = $excel->parser->getCell($i,$k);
+                if ($k==3) $service_type = $excel->parser->getCell($i,$k);
+                if ($k==5) $weight = $excel->parser->getCell($i,$k);
+                if ($k==6) $shipper_id = $excel->parser->getCell($i,$k);
+                if ($k==7) $shipper_address = $excel->parser->getCell($i,$k);
+                if ($k==8) $customer_id = $excel->parser->getCell($i,$k);
+                if ($k==9) $customer_address = $excel->parser->getCell($i,$k);
+                if ($k==10) $content = $excel->parser->getCell($i,$k);
+                if ($k==15) $kgs = $excel->parser->getCell($i,$k);
+            }
+
+            if ($shipper_id) {
+                $shipper_data = \Shipper::where('name', $shipper_id)->first();
+                if ($shipper_data) {
+                    $shipper_id = $shipper_data->uuid;
+                } else {
+                    $input =  array(
+                        'uuid' => \Uuid::generate(4)->string,
+                        'email' => time().'@gmail.com'.$i,
+                        'name' => $shipper_id,
+                        'address' => $shipper_address,
+                    );
+                    \Shipper::create($input);
+                    $shipper_id = '';
+                }
+            }
+            if ($customer_id) {
+                $customer_data = \Customer::where('name', $customer_id)->first();
+                if ($customer_data) {
+                    $customer_id = $customer_data->uuid;
+                } else {
+                    $input =  array(
+                        'uuid' => \Uuid::generate(4)->string,
+                        'email' => time().'@gmail.com'.$i,
+                        'name' => $customer_id,
+                        'address' => $customer_address,
+                    );
+                    \Customer::create($input);
+                    $customer_id = '';
+                }
+            }
+
+            // Convert delivery
+            $date = '';
+            if($delivery_at) {
+                $date = \Carbon\Carbon::createFromFormat('m/d/y H:i', $delivery_at)
+                ->format('Y-m-d H:i');
+            }
+
+            $uuid = \Uuid::generate(4)->string;
+            $input =  array(
+                'uuid' => $uuid,
+                'parent' => $uuid,
+                'shipper_id' => $shipper_id,
+                'customer_id' => $customer_id,
+                'delivery_at' => $date,
+                'invoice' => $invoice,
+                'service_type' => $service_type,
+                'weight' => $weight,
+                'content' => $content,
+                'kgs' => $kgs,
+                'address' => $customer_address,
+                'label' => 'label-'.$i,
+                'status' => $status,
+            );
+            //dd($input);
+            if ($shipper_id && $customer_id) {
+                $result = \Package::create($input);
+                if ($result) {
+                    print 'ok '.$i.'<br/>';
+                } else {
+                    print 'error '.$i.'<br/>';
+                }
+            }
+
+            print '############################# <br/>';
+        }
+
+
 
         // Save shippers - customers
         // $shipp_name = $excel->parser->getColumn(6);
         // $shipp_address = $excel->parser->getColumn(7);
         //
-        // for ($i=8; $i <= 248 ; $i++) {
+        // //for ($i=8; $i <= 255 ; $i++) {
+        // for ($i=8; $i <= 277 ; $i++) {
         //     if ($shipp_name[$i]) {
         //         $email = time().'@gmail.com'.$i;
         //         $name = $shipp_name[$i];
         //         $address= $shipp_address[$i];
+        //         //print $name.'<br/>';continue;
         //         $input =  array(
         //             'uuid' => \Uuid::generate(4)->string,
         //             'email' => $email,
         //             'name' => $name,
         //             'address' => $address,
         //         );
-        //         \Shipper::create($input);
+        //         \Customer::create($input);
         //     }
         // }
 

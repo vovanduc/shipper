@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserTableSeeder::class);
         factory(App\Http\Models\Admin\User::class)->create();
-        factory(App\Http\Models\Admin\Customer::class, 100)->create();
-        factory(App\Http\Models\Admin\Shipper::class, 10)->create();
-        factory(App\Http\Models\Admin\Package::class, 100)->create();
+        // factory(App\Http\Models\Admin\Customer::class, 100)->create();
+        // factory(App\Http\Models\Admin\Shipper::class, 10)->create();
+        // factory(App\Http\Models\Admin\Package::class, 100)->create();
     }
 }

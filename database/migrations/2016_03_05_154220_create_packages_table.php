@@ -16,8 +16,8 @@ class CreatePackagesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->uuid('parent');
-            $table->integer('customer_id_from');
-            $table->integer('customer_id_to');
+            $table->uuid('customer_id');
+            $table->uuid('shipper_id');
             $table->uuid('location_id');
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('county')->default(1);
@@ -32,6 +32,10 @@ class CreatePackagesTable extends Migration
             $table->string('place_id');
             $table->text('content');
             $table->text('note');
+            $table->text('invoice');
+            $table->string('service_type');
+            $table->string('weight');
+            $table->string('kgs');
             $table->string('label');
             $table->dateTime('delivery_at');
             $table->boolean('active')->default(true);

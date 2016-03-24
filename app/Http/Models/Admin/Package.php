@@ -12,9 +12,10 @@ class Package extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'uuid','address','label','status','customer_id_from','customer_id_to','note',
+        'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
-        'steps','content','quantity','parent','location_id'
+        'steps','content','quantity','parent','location_id','delivery_at','invoice',
+        'service_type','weight','content','kgs'
     ];
 
     /**
@@ -109,14 +110,14 @@ class Package extends \Eloquent
         return $this->belongsTo('\App\Http\Models\Admin\User', 'updated_by');
     }
 
-    public function customer_from()
+    public function customer()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id_from');
+        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id');
     }
 
-    public function customer_to()
+    public function shipper()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id_to');
+        return $this->belongsTo('\App\Http\Models\Admin\Shipper', 'shipper_id');
     }
 
     public function location()
@@ -138,8 +139,8 @@ class Package extends \Eloquent
     {
         $data->created_by = !empty($data->user_created->name) ? $data->user_created->name : '';
         $data->updated_by = !empty($data->user_updated->name) ? $data->user_updated->name : '';
-        $data->customer_id_from = !empty($data->customer_from->name) ? $data->customer_from->name : '';
-        $data->customer_id_to = !empty($data->customer_to->name) ? $data->customer_to->name : '';
+        $data->customer = !empty($data->customer->name) ? $data->customer->name : '';
+        $data->shipper = !empty($data->shipper->name) ? $data->shipper->name : '';
 
 
         return $data;
