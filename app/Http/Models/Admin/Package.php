@@ -112,12 +112,12 @@ class Package extends \Eloquent
 
     public function customer()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id');
+        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id','uuid');
     }
 
     public function shipper()
     {
-        return $this->belongsTo('\App\Http\Models\Admin\Shipper', 'shipper_id');
+        return $this->belongsTo('\App\Http\Models\Admin\Shipper', 'shipper_id','uuid');
     }
 
     public function location()

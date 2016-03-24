@@ -71,8 +71,8 @@
           		<thead>
           			<tr>
           				<th class="text-center">#</th>
-          				<th class="text-center">Người gửi</th>
-          				<th class="text-center">Người nhận</th>
+          				<th class="text-center">Shipper</th>
+          				<th class="text-center">Khách hàng</th>
           				<th class="text-center">Trạng thái</th>
           				<th class="text-center">Ngày tạo</th>
           				<th class="text-center">Quản lý</th>
@@ -86,8 +86,8 @@
                                 ?>
           	        			<tr class="text-center">
         	        				<th></th>
-        	        				<td>{{ $item->customer_id_from }}</td>
-        	        				<td>{{ $item->customer_id_to }}</td>
+        	        				<td>{{ $item->shipper }}</td>
+        	        				<td>{{ $item->customer }}</td>
         	        				<td>{!! $item->cv_status !!}</td>
         	        				<td>{{ $item->created_at }}</td>
         	        				<td>
