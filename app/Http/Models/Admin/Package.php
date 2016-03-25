@@ -39,9 +39,9 @@ class Package extends \Eloquent
         if ($this->attributes['status'] == 1) {
             return '<h4><span class="label" style="background-color:#743C08">Đang ở tại kho Mỹ</span></h4>';
         } else if ($this->attributes['status'] == 2) {
-            return '<h4><span class="label" style="background-color:#FF2E63">Đang gửi về việt nam</span></h4>';
+            return '<h4><span class="label" style="background-color:#FF2E63">Đang gửi về Việt Nam</span></h4>';
         } else if ($this->attributes['status'] == 3) {
-            return '<h4><span class="label" style="background-color:#8DC6FF">Đã về việt nam - nội địa Tphcm</span></h4>';
+            return '<h4><span class="label" style="background-color:#8DC6FF">Đã về Việt Nam - nội địa Tphcm</span></h4>';
         } else if ($this->attributes['status'] == 4) {
             return '<h4><span class="label" style="background-color:#4F1C4C">Đang giao hàng</span></h4>';
         } else if ($this->attributes['status'] == 5) {

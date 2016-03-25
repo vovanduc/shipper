@@ -1,6 +1,15 @@
 <div class="col-md-3">
 
     <div class="panel panel-default">
+        <div class="panel-heading">Thống kê</div>
+        <div class="panel-body">
+            <ol>
+            	<li><a href="{{URL::route('admin.index')}}">Trang chủ</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
         <div class="panel-heading">Quản lý hệ thống</div>
         <div class="panel-body">
             <ol>
