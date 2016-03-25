@@ -99,7 +99,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/admin') }}">Admin</a></li>
+                    <li><a href="{{ url('/admin') }}"><b style="color:red">Phiên bản 1.0.0</b></a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

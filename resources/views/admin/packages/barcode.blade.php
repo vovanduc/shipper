@@ -148,12 +148,28 @@
                             <table class="table table-user-information">
                                 <tbody>
                                     <tr>
-                                        <td>Người gửi</td>
-                                        <td>{{$result->customer_id_from}} </td>
+                                        <td>Invoice</td>
+                                        <td>{{$result->invoice}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Service type</td>
+                                        <td>{{$result->service_type}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Người vận chuyển</td>
+                                        <td>{{$result->shipper}} </td>
                                     </tr>
                                     <tr>
                                         <td>Người nhận</td>
-                                        <td>{{$result->customer_id_to}} </td>
+                                        <td>{{$result->customer}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Actual weight</td>
+                                        <td>{{$result->weight}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>LBS TO KGS</td>
+                                        <td>{{$result->kgs}} </td>
                                     </tr>
                                     <tr>
                                         <td>Số lượng</td>
@@ -166,10 +182,6 @@
                                     <tr>
                                         <td>Quận</td>
                                         <td>{{\Package::get_county_option($result->county)}} </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Người vận chuyển</td>
-                                        <td>{{$result->shipper_id}} </td>
                                     </tr>
                                     <!-- <tr>
                                         <td>Ước tính giá vận chuyển</td>

@@ -17,20 +17,20 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("customer_id_from",$customers,$customer_id_from,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người gửi'))}}
+                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm người vận chuyển'))}}
                             </div>
                             <br/>
                             <div class="left-inner-addon">
-                                {{Form::text("customer_phone_from",$customer_phone_from,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người gửi'))}}
+                                {{Form::text("shipper_phone",$shipper_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người vận chuyển'))}}
                             </div>
                         </div>
                         <div class="col-xs-6" >
                             <div class="right-inner-addon">
-                                {{Form::select("customer_id_to",$customers,$customer_id_to,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người nhận'))}}
+                                {{Form::select("customer_id",$customers,$customer_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người nhận'))}}
                             </div>
                             <br/>
                             <div class="left-inner-addon">
-                                {{Form::text("customer_phone_to",$customer_phone_to,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người nhận'))}}
+                                {{Form::text("customer_phone",$customer_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người nhận'))}}
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,6 @@
           				<th class="text-center">Shipper</th>
           				<th class="text-center">Khách hàng</th>
           				<th class="text-center">Trạng thái</th>
-          				<th class="text-center">Ngày tạo</th>
           				<th class="text-center">Quản lý</th>
           			</tr>
           		</thead>
@@ -89,7 +88,6 @@
         	        				<td>{{ $item->shipper }}</td>
         	        				<td>{{ $item->customer }}</td>
         	        				<td>{!! $item->cv_status !!}</td>
-        	        				<td>{{ $item->created_at }}</td>
         	        				<td>
         	        					@if (\Auth::user()->is_admin)
         		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}">

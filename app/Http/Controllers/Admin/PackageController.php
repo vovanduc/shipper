@@ -8,15 +8,21 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Package\IPackageRepository;
 use App\Http\Repositories\Customer\ICustomerRepository;
+use App\Http\Repositories\Shipper\IShipperRepository;
 
 class PackagesController extends Controller
 {
     protected $packages;
 
-    public function __construct(IPackageRepository $packages, Request $request, ICustomerRepository $customers)
+    public function __construct(
+        IPackageRepository $packages,
+        Request $request,
+        ICustomerRepository $customers,
+        IShipperRepository $shippers)
     {
         $this->packages = $packages;
         $this->customers = $customers;
+        $this->shippers = $shippers;
         $this->request = $request;
 
         if(\Auth::user()->is_admin == false) {
@@ -46,10 +52,10 @@ class PackagesController extends Controller
         //         if ($k==10) $content = $excel->parser->getCell($i,$k);
         //         if ($k==15) $kgs = $excel->parser->getCell($i,$k);
         //     }
-            
+
         //     $check = \Package::where('invoice',$invoice)->first();
         //     if ($check) continue;
-            
+
         //     if ($shipper_id) {
         //         $shipper_data = \Shipper::where('name', $shipper_id)->first();
         //         if ($shipper_data) {
@@ -159,17 +165,20 @@ class PackagesController extends Controller
         //         ->get();
         // print_r($response);exit;
 
-        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+
         $result = $this->packages->all(10);
         return view('admin.packages.index', compact('result'))
-            ->with('customer_id_from')
-            ->with('customer_phone_from')
-            ->with('customer_id_to')
-            ->with('customer_phone_to')
+            ->with('customer_id')
+            ->with('customer_phone')
+            ->with('shipper_id')
+            ->with('shipper_phone')
             ->with('status')
             ->with('county')
             ->with('label')
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('shippers', $shippers);
     }
 
     /**
@@ -179,18 +188,18 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        $customer_id_from = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customer_id_from = array(''=>'Chọn người gửi') + $customer_id_from->toArray();
+        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $customers = array(''=>'Chọn người nhận') + $customers->toArray();
 
-        $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
 
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
 
         return view('admin.packages.create')
-            ->with('customer_id_from', $customer_id_from)
-            ->with('customer_id_to', $customer_id_to)
+            ->with('customers', $customers)
+            ->with('shippers', $shippers)
             ->with('location_id', $location_id);
     }
 
@@ -203,8 +212,8 @@ class PackagesController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validator($this->request->all(), [
-                'customer_id_from' => 'required',
-                'customer_id_to' => 'required',
+                'customer_id' => 'required',
+                'shipper_id' => 'required',
                 'location_id' => 'required',
                 'address' => 'required',
                 'county' => 'required',
@@ -294,19 +303,19 @@ class PackagesController extends Controller
      */
     public function edit($id)
     {
-        $customer_id_from = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customer_id_from = array(''=>'Chọn người gửi') + $customer_id_from->toArray();
+        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $customers = array(''=>'Chọn người nhận') + $customers->toArray();
 
-        $customer_id_to = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
-        $customer_id_to = array(''=>'Chọn người nhận') + $customer_id_to->toArray();
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
 
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
 
         $result = $this->packages->edit($id);
         return view('admin.packages.edit', compact('result'))
-            ->with('customer_id_from', $customer_id_from)
-            ->with('customer_id_to', $customer_id_to)
+            ->with('customers', $customers)
+            ->with('shippers', $shippers)
             ->with('location_id', $location_id);
     }
 
@@ -320,8 +329,8 @@ class PackagesController extends Controller
     public function update($id)
     {
         $validator = $this->validator($this->request->all(), [
-            'customer_id_from' => 'required',
-            'customer_id_to' => 'required',
+            'customer_id' => 'required',
+            'shipper_id' => 'required',
             'location_id' => 'required',
             'address' => 'required',
             'county' => 'required',
@@ -428,10 +437,10 @@ class PackagesController extends Controller
 
     public function search()
     {
-        if (!$this->request->has('customer_id_from')
-            && !$this->request->has('customer_phone_from')
-            && !$this->request->has('customer_id_to')
-            && !$this->request->has('customer_phone_to')
+        if (!$this->request->has('customer_id')
+            && !$this->request->has('customer_phone')
+            && !$this->request->has('shipper_id')
+            && !$this->request->has('shipper_phone')
             && !$this->request->has('status')
             && !$this->request->has('county')
             && !$this->request->has('label')
@@ -441,25 +450,25 @@ class PackagesController extends Controller
 
         $result = \Package::where('deleted',0);
 
-        if ($this->request->has('customer_id_from')) {
-            $result = $result->where('customer_id_from', $this->request->customer_id_from);
+        if ($this->request->has('customer_id')) {
+            $result = $result->where('customer_id', $this->request->customer_id);
         }
 
-        if ($this->request->has('customer_phone_from')) {
-            $search = $this->customers->findBy('phone', $this->request->customer_phone_from)->first();
-            if($search->id) {
-                $result = $result->where('customer_id_from', $search->id);
+        if ($this->request->has('customer_phone')) {
+            $search = $this->customers->findBy('phone', $this->request->customer_phone)->first();
+            if($search->uuid) {
+                $result = $result->where('customer_id', $search->uuid);
             }
         }
 
-        if ($this->request->has('customer_id_to')) {
-            $result = $result->where('customer_id_to', $this->request->customer_id_to);
+        if ($this->request->has('shipper_id')) {
+            $result = $result->where('shipper_id', $this->request->shipper_id);
         }
 
-        if ($this->request->has('customer_phone_to')) {
-            $search = $this->customers->findBy('phone', $this->request->customer_phone_to)->first();
-            if($search->id) {
-                $result = $result->where('customer_id_to', $search->id);
+        if ($this->request->has('shipper_phone')) {
+            $search = $this->shippers->findBy('phone', $this->request->shipper_phone)->first();
+            if($search->uuid) {
+                $result = $result->where('shipper_id', $search->uuid);
             }
         }
 
@@ -477,17 +486,19 @@ class PackagesController extends Controller
 
         $result = $result->orderBy('id', 'DESC')->get();
 
-        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
 
         return view('admin.packages.index', compact('result'))
-            ->with('customer_id_from', $this->request->customer_id_from)
-            ->with('customer_phone_from', $this->request->customer_phone_from)
-            ->with('customer_id_to', $this->request->customer_id_to)
-            ->with('customer_phone_to', $this->request->customer_phone_to)
+            ->with('customer_id', $this->request->customer_id)
+            ->with('customer_phone', $this->request->customer_phone)
+            ->with('shipper_id', $this->request->shipper_id)
+            ->with('shipper_phone', $this->request->shipper_phone)
             ->with('status', $this->request->status)
             ->with('county', $this->request->county)
             ->with('label', $this->request->label)
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('shippers', $shippers);
     }
 
     public function find()

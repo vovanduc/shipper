@@ -21,32 +21,61 @@
                                               'route' => array('admin.packages.update', $result->uuid))) !!}
                     {!! csrf_field() !!}
 
-                    <div class="form-group{{ $errors->has('customer_id_from') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Người gửi</label>
+                    <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Người vận chuyển</label>
 
                         <div class="col-md-6">
-                            {{Form::select("customer_id_from",$customer_id_from,null,array('class' => 'form-control select_auto'))}}
-                            @if ($errors->has('customer_id_from'))
+                            {{Form::select("shipper_id",$shippers,null,array('class' => 'form-control select_auto'))}}
+                            @if ($errors->has('shipper_id'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('customer_id_from') }}</strong>
+                                    <strong>{{ $errors->first('shipper_id') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('customer_id_to') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Người nhận</label>
 
                         <div class="col-md-6">
-                            {{Form::select("customer_id_to",$customer_id_to,null,array('class' => 'form-control select_auto'))}}
-                            @if ($errors->has('customer_id_to'))
+                            {{Form::select("customer_id",$customers,null,array('class' => 'form-control select_auto'))}}
+                            @if ($errors->has('customer_id'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('customer_id_to') }}</strong>
+                                    <strong>{{ $errors->first('customer_id') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('invoice') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Invoice</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('invoice',null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('service_type') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Service type</label>
+                        <div class="col-md-6">
+                            {{Form::text("service_type",null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('weight') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Weight</label>
+                        <div class="col-md-6">
+                            {{Form::text("weight",null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('kgs') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Kgs</label>
+                        <div class="col-md-6">
+                            {{Form::text("kgs",null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+                    
                     <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Số lượng</label>
 
@@ -61,7 +90,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('location_id') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Người nhận</label>
+                        <label class="col-md-4 control-label">Vị trí</label>
 
                         <div class="col-md-6">
                             {{Form::select("location_id",$location_id,null,array('class' => 'form-control select_auto'))}}
