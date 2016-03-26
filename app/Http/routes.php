@@ -33,6 +33,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function()
 	{
 		Route::get('/', array("as"=>"admin.index","uses"=>"Admin\HomeController@index"));
+        Route::get('/statistics/shippers', array("as"=>"admin.statistics.shippers","uses"=>"Admin\StatisticsController@statistics"));
+		Route::get('/statistics/customers', array("as"=>"admin.statistics.customers","uses"=>"Admin\StatisticsController@customers"));
 
 		// Users
 		Route::resource('users', 'Admin\UsersController');

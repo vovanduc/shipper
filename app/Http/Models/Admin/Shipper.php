@@ -69,6 +69,6 @@ class Shipper extends \Eloquent
     }
 
     public function packages(){
-        return $this->hasMany('\App\Http\Models\Admin\Package', 'shipper_id');
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'shipper_id', 'uuid');
     }
 }

@@ -1,10 +1,12 @@
 <div class="col-md-3">
 
     <div class="panel panel-default">
-        <div class="panel-heading">Thống kê</div>
+        <div class="panel-heading">Thống kê theo kiện hàng</div>
         <div class="panel-body">
             <ol>
-            	<li><a href="{{URL::route('admin.index')}}">Trang chủ</a></li>
+            	<li><a href="{{URL::route('admin.index')}}">Tổng quản</a></li>
+                <li><a href="{{URL::route('admin.statistics.shippers')}}">Người vận chuyển</a></li>
+                <li><a href="{{URL::route('admin.statistics.customers')}}">Khách hàng</a></li>
             </ol>
         </div>
     </div>

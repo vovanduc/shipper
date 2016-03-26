@@ -69,6 +69,6 @@ class Customer extends \Eloquent
     }
 
     public function packages(){
-        return $this->hasMany('\App\Http\Models\Admin\Package', 'customer_id');
+        return $this->hasMany('\App\Http\Models\Admin\Package', 'customer_id', 'uuid');
     }
 }
