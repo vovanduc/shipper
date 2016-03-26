@@ -152,7 +152,8 @@ return [
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Regulus\ActivityLog\ActivityLogServiceProvider::class,
-
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */

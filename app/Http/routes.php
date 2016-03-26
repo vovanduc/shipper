@@ -35,6 +35,7 @@ Route::group(['middleware' => 'web'], function () {
 		Route::get('/', array("as"=>"admin.index","uses"=>"Admin\HomeController@index"));
         Route::get('/statistics/shippers', array("as"=>"admin.statistics.shippers","uses"=>"Admin\StatisticsController@statistics"));
 		Route::get('/statistics/customers', array("as"=>"admin.statistics.customers","uses"=>"Admin\StatisticsController@customers"));
+		Route::get('/statistics/chart', array("as"=>"admin.statistics.chart","uses"=>"Admin\StatisticsController@chart"));
 
 		// Users
 		Route::resource('users', 'Admin\UsersController');
