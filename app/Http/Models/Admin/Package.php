@@ -254,7 +254,7 @@ class Package extends \Eloquent
         $data = array();
 
         for ($i=1; $i <=19 ; $i++) {
-            $result= \Package::where('deleted', 0)->where('county',$i)->where('status', 2);
+            $result= \Package::where('deleted', 0)->where('county',$i)->where('status', 3);
             if ($result->count() > 0) {
                 $data[$i] = \Package::get_county_option($i).' ('.$result->count().' kiện hàng)';
             }

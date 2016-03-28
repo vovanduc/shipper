@@ -39,7 +39,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-xs-12" >
-                                <div id="map" style="width: 100%;height: 500px;"></div>
+                                <!-- <div id="map" style="width: 100%;height: 500px;"></div> -->
                             </div>
                         </div>
                     </li>

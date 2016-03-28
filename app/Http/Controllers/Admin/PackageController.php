@@ -503,7 +503,12 @@ class PackagesController extends Controller
 
     public function find()
     {
-        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','id');
+        // $abc = \Package::where('deleted',0)->get();
+        // foreach($abc as $item) {
+        //     $this->packages->update($item->uuid, ['county' => rand(1,19)]);
+        // }
+
+        $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $county = \Request::query('county') ? \Request::query('county') : 0;
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
 
@@ -538,7 +543,7 @@ class PackagesController extends Controller
         // }
 
         if ($shipper && $county) {
-            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 2)->orderBy('distance')->get();
+            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->orderBy('distance')->get();
         }
 
         return view('admin.packages.find', compact('result'))
