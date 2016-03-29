@@ -208,6 +208,10 @@
                                         <td>{!!$result->content!!} </td>
                                     </tr>
                                     <tr>
+                                        <td>Điện thoại</td>
+                                        <td>{!!$result->phone!!} </td>
+                                    </tr>
+                                    <tr>
                                         <td>Ghi chú</td>
                                         <td>{{$result->note}} </td>
                                     </tr>

@@ -12,5 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.browserSync({
+        port: 8000,
+        injectChanges: true,
+    });
 });

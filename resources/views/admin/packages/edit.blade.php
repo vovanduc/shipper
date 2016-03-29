@@ -21,6 +21,19 @@
                                               'route' => array('admin.packages.update', $result->uuid))) !!}
                     {!! csrf_field() !!}
 
+                    <div class="form-group{{ $errors->has('label') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Label</label>
+
+                        <div class="col-md-6">
+                            {{Form::text("label",null,array('class' => 'form-control'))}}
+                            @if ($errors->has('label'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('label') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Người vận chuyển</label>
 
@@ -75,7 +88,7 @@
                             {{Form::text("kgs",null,array('class' => 'form-control'))}}
                         </div>
                     </div>
-                    
+
                     <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Số lượng</label>
 
@@ -142,6 +155,13 @@
 
                         <div class="col-md-6">
                             {{Form::textarea('content',null,array('class' => 'form-control', 'id' => 'ckeditor'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Điện thoại</label>
+                        <div class="col-md-6">
+                            {{Form::text("phone",null,array('class' => 'form-control'))}}
                         </div>
                     </div>
 

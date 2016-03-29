@@ -212,12 +212,13 @@ class PackagesController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validator($this->request->all(), [
+                'label' => 'required|unique:packages',
                 'customer_id' => 'required',
                 'shipper_id' => 'required',
                 'location_id' => 'required',
                 'address' => 'required',
                 'county' => 'required',
-                'quantity' => 'required|numeric',
+                //'quantity' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -240,16 +241,16 @@ class PackagesController extends Controller
 
         if ($result) {
 
-            if ($result->quantity == 1) {
+            // if ($result->quantity == 1) {
                 $this->packages->update($result->uuid, ['parent' => $result->uuid]);
-            } else {
-                for ($i=1; $i <= $result->quantity ; $i++) {
-                    \Input::merge(array('label' => \Package::create_label()));
-                    \Input::merge(array('parent' => $result->uuid));
-                    \Input::merge(array('quantity' => 1));
-                    $temp = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
-                }
-            }
+            // } else {
+            //     for ($i=1; $i <= $result->quantity ; $i++) {
+            //         \Input::merge(array('label' => \Package::create_label()));
+            //         \Input::merge(array('parent' => $result->uuid));
+            //         \Input::merge(array('quantity' => 1));
+            //         $temp = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
+            //     }
+            // }
 
             $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.packages.show', $result->uuid).'">'.$result->label.'</a></b>';
             \Activity::log([
@@ -329,6 +330,7 @@ class PackagesController extends Controller
     public function update($id)
     {
         $validator = $this->validator($this->request->all(), [
+            'label'=>'required|unique:packages,label,'.$id.',uuid',
             'customer_id' => 'required',
             'shipper_id' => 'required',
             'location_id' => 'required',
@@ -505,9 +507,9 @@ class PackagesController extends Controller
     {
         // $abc = \Package::where('deleted',0)->get();
         // foreach($abc as $item) {
-        //     $this->packages->update($item->uuid, ['county' => rand(1,19)]);
+        //     $this->packages->update($item->uuid, ['county' => rand(1,19), 'status' => rand(1,6)]);
         // }
-
+//dd(123);
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $county = \Request::query('county') ? \Request::query('county') : 0;
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;

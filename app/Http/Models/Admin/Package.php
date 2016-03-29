@@ -15,7 +15,7 @@ class Package extends \Eloquent
         'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps','content','quantity','parent','location_id','delivery_at','invoice',
-        'service_type','weight','content','kgs'
+        'service_type','weight','content','kgs','phone'
     ];
 
     /**

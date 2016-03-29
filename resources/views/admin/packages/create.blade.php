@@ -21,9 +21,13 @@
 
                     <div class="form-group{{ $errors->has('label') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Label</label>
-
                         <div class="col-md-6">
-                            <b>Tự động tạo khi thêm kiện hàng</b>
+                            {{Form::text("label",null,array('class' => 'form-control'))}}
+                            @if ($errors->has('label'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('label') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 
@@ -83,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Số lượng</label>
                         <div class="col-md-6">
                             {{Form::text("quantity",1,null,array('class' => 'form-control'))}}
@@ -93,7 +97,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('location_id') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Vị trí</label>
@@ -150,6 +154,13 @@
                         <label class="col-md-4 control-label">Nội dung</label>
                         <div class="col-md-6">
                             <textarea id="ckeditor" type="text" class="form-control" name="content" value="{{ old('content') }}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Điện thoại</label>
+                        <div class="col-md-6">
+                            {{Form::text("phone",null,array('class' => 'form-control'))}}
                         </div>
                     </div>
 
