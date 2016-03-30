@@ -513,6 +513,8 @@ class PackagesController extends Controller
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $county = \Request::query('county') ? \Request::query('county') : 0;
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
+        $package_id = \Request::query('package_id') ? \Request::query('package_id') : 0;
+        $mess = \Request::query('mess') ? \Request::query('mess') : '';
 
         $result = [];
         $random = 0;
@@ -548,12 +550,31 @@ class PackagesController extends Controller
             $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->orderBy('distance')->get();
         }
 
+        if($shipper && $county && $package_id) {
+            $temp = $this->packages->update($package_id,['status'=>4, 'shipper_id'=>$shipper]);
+            if($temp) {
+                $data = $this->packages->firstOrFail($package_id);
+                $mess = 'Người vận chuyển: <b>'.\Shipper::whereUuid($shipper)->first()->name.'</b>. Kiện hàng: <a target="_blank" href="'.\URL::route('admin.packages.show', $package_id).'">'.$data->label.'</a>';
+
+                \Activity::log([
+                    'contentId'   => $package_id,
+                    'contentType' => 'package',
+                    'action'      => 'update',
+                    'description' => $mess,
+                    'userId'     => \Auth::user()->uuid,
+                ]);
+
+                return \Redirect::route('admin.packages.find',['shipper' =>$shipper, 'county' =>$county, 'mess' =>$mess]);
+            }
+        }
+
         return view('admin.packages.find', compact('result'))
             ->with('item', $item)
             ->with('show_label', $show_label)
             ->with('shippers', $shippers)
             ->with('county', $county)
             ->with('shipper', $shipper)
+            ->with('mess', $mess)
             ;
     }
 }

@@ -51,7 +51,7 @@ class PackagesBarcodeController extends Controller
                     $result = $this->packages->findBy('label', $label)->status($status_to)->first();
                     $result = \Package::convert($result);
                     $message = 'Chuyển trạng thái từ <strong>'.\Package::get_status_option($status_from)
-                    .'</strong> đến <strong>'.\Package::get_status_option($status_to).'</strong>';
+                    .'</strong> đến <strong>'.\Package::get_status_option($status_to).'</strong> <a target="_blank" href="'.\URL::route('admin.packages.show', $result->uuid).'">'.$result->label.'</a>';
 
                     \Activity::log([
                         'contentId'   => $result->uuid,

@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("county",\Package::get_county_package(),$county,array('class' => 'form-control'))}}
+                                {{Form::select("county",\Package::get_county_package(),$county,array('class' => 'form-control select_auto'))}}
                             </div>
                         </div>
                     </div>
@@ -35,19 +35,44 @@
                         </div>
                     </div>
                 </li>
-                @if($result)
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-xs-12" >
-                                <!-- <div id="map" style="width: 100%;height: 500px;"></div> -->
-                            </div>
-                        </div>
-                    </li>
-                @endif
-            </ul>
+                <!-- <div id="map" style="width: 100%;height: 500px;"></div> -->
             {{ Form::close() }}
 
+            @if($mess)
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            {!!$mess!!}
+                        </div>
+                    </div>
+                </li>
+            @endif
 
+            @if($result)
+                @foreach($result as $item)
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-12" >
+                            {{$item->address}}<br/>
+                            <a href="{{URL::route('admin.packages.show', $item->uuid)}}" target="_blank">
+                                Xem chi tiết
+                            </a>
+                            {{ Form::open(array('route' => array('admin.packages.find'), 'method' => 'get')) }}
+                                {{Form::hidden("shipper",$shipper,array('class' => 'form-control'))}}
+                                {{Form::hidden("county",$county,array('class' => 'form-control'))}}
+                                {{Form::hidden("package_id",$item->uuid,array('class' => 'form-control'))}}
+                                <span class="pull-right">
+                                    <button class="btn btn-primary" type="submit" href="{{URL::route('admin.packages.show', $item->uuid)}}" target="_blank">
+                                    Chọn kiện hàng
+                                    </button>
+                                </span>
+                            {{ Form::close() }}
+                        </div>
+                    </div>
+                </li>
+                @endforeach
+            @endif
+            </ul>
         </div>
     </div>
 </div>
@@ -55,6 +80,13 @@
 
 @section('javascript')
 <script>
+
+$(function() {
+    $('.select_auto').change(function() {
+        this.form.submit();
+    });
+});
+
 // function initMap() {
 //     var myLatLng = {lat: 10.779682, lng: 106.661464};
 //
