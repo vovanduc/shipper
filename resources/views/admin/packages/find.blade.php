@@ -25,6 +25,14 @@
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-12" >
+                            <div class="left-inner-addon">
+                                {{Form::text("label",$label,array('class' => 'form-control', 'placeholder' => 'Nhập label'))}}
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">

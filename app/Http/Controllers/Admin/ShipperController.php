@@ -101,6 +101,11 @@ class ShippersController extends Controller
     public function show($id)
     {
         $result = $this->shippers->firstOrFail($id);
+
+        $price_day = $result->packages()->whereStatus(5)->sum('price');
+        $price_day = \Currency::format($price_day);
+        //dd($price_day);
+
         \Activity::log([
             'contentId'   => $id,
             'contentType' => 'shipper',

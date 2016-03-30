@@ -532,6 +532,7 @@ class PackagesController extends Controller
         $county = \Request::query('county') ? \Request::query('county') : 0;
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
         $package_id = \Request::query('package_id') ? \Request::query('package_id') : 0;
+        $label = \Request::query('label') ? \Request::query('label') : '';
         $mess = \Request::query('mess') ? \Request::query('mess') : '';
 
         $result = [];
@@ -565,7 +566,11 @@ class PackagesController extends Controller
         // }
 
         if ($shipper && $county) {
-            $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->orderBy('distance')->get();
+            if($label) {
+                $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->where('label', $label)->orderBy('distance')->get();
+            } else {
+                $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->orderBy('distance')->get();
+            }
         }
 
         if($shipper && $county && $package_id) {
@@ -593,6 +598,7 @@ class PackagesController extends Controller
             ->with('county', $county)
             ->with('shipper', $shipper)
             ->with('mess', $mess)
+            ->with('label', $label)
             ;
     }
 }
