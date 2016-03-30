@@ -60,7 +60,11 @@
             			@foreach( $result as $count => $item)
                             <?php $user = \User::where('uuid', $item->user_id)->first(); ?>
       	        			<tr class="text-center">
-    	        				<td><a target="_blank" href="{{URL::route('admin.users.show',$user->uuid)}}">{{ $user->name }}</a></td>
+    	        				<td>
+                                    @if($user)
+                                        <a target="_blank" href="{{URL::route('admin.users.show',$user->uuid)}}">{{ $user->name }}</a>
+                                    @endif
+                                </td>
     	        				<td>{!! $item->getIconMarkup() !!}</td>
     	        				<td>{!! $item->getLinkedDescription() !!}</td>
                                 <td>{{ $item->content_type }}</td>

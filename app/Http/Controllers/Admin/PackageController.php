@@ -218,6 +218,7 @@ class PackagesController extends Controller
                 'location_id' => 'required',
                 'address' => 'required',
                 'county' => 'required',
+                'kgs' => 'required',
                 //'quantity' => 'required|numeric',
         ]);
 
@@ -226,16 +227,24 @@ class PackagesController extends Controller
         }
 
         \Input::merge(array('created_by' => \Auth::user()->id));
-        \Input::merge(array('label' => \Package::create_label()));
+        //\Input::merge(array('label' => \Package::create_label()));
 
         $response = \Package::convert_address_to_lat_long($this->request->address);
 
         \Input::merge(array('latitude' => $response['latitude']));
         \Input::merge(array('longitude' => $response['longitude']));
-        \Input::merge(array('price' => $response['price']));
+        //\Input::merge(array('price' => $response['price']));
         \Input::merge(array('distance' => $response['distance']));
         \Input::merge(array('duration' => $response['duration']));
         \Input::merge(array('steps' => $response['steps']));
+
+        // Calculate price
+        if ($response['distance']) {
+            $price = $response['distance'] * \Input::get('kgs') * 5;
+            \Input::merge(array('price' => $price ));
+        } else {
+            return \Redirect::route('admin.packages.edit', $id)->with('message_danger', 'Không thể lấy được khoảng cách chính xác, vui lòng nhập đúng địa chỉ theo gợi ý của hệ thống.');
+        }
 
         $result = $this->packages->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
@@ -262,7 +271,7 @@ class PackagesController extends Controller
             ]);
             return \Redirect::route('admin.packages.show', $result->uuid)->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.packages.index')->with('message_danger', trans('admin.global.message_danger'));
         }
 
     }
@@ -336,6 +345,7 @@ class PackagesController extends Controller
             'location_id' => 'required',
             'address' => 'required',
             'county' => 'required',
+            'kgs' => 'required',
             //'quantity' => 'required|numeric',
         ]);
 
@@ -349,10 +359,18 @@ class PackagesController extends Controller
 
         \Input::merge(array('latitude' => $response['latitude']));
         \Input::merge(array('longitude' => $response['longitude']));
-        \Input::merge(array('price' => $response['price']));
+        //\Input::merge(array('price' => $response['price']));
         \Input::merge(array('distance' => $response['distance']));
         \Input::merge(array('duration' => $response['duration']));
         \Input::merge(array('steps' => $response['steps']));
+
+        // Calculate price
+        if ($response['distance']) {
+            $price = $response['distance'] * \Input::get('kgs') * 5;
+            \Input::merge(array('price' => $price ));
+        } else {
+            return \Redirect::route('admin.packages.edit', $id)->with('message_danger', 'Không thể lấy được khoảng cách chính xác, vui lòng nhập đúng địa chỉ theo gợi ý của hệ thống.');
+        }
 
         $result = $this->packages->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
@@ -368,7 +386,7 @@ class PackagesController extends Controller
             ]);
             return \Redirect::route('admin.packages.show', $id)->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.packages.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -432,7 +450,7 @@ class PackagesController extends Controller
 
                 return \Redirect::route('admin.packages.index')->with('message_success', $mess);
             } else {
-                return \Redirect::route('admin.packages.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.packages.index')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }

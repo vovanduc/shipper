@@ -86,6 +86,11 @@
                         <label class="col-md-4 control-label">Kgs</label>
                         <div class="col-md-6">
                             {{Form::text("kgs",null,array('class' => 'form-control'))}}
+                            @if ($errors->has('kgs'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('kgs') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 

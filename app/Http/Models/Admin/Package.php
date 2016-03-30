@@ -63,7 +63,9 @@ class Package extends \Eloquent
 
     public function getCvPriceAttribute()
     {
-        if ($this->attributes['price']) return \Currency::format($this->attributes['price']);
+        if ($this->attributes['price']) {
+            return \Currency::format($this->attributes['price']);
+        }
         return '';
     }
 
@@ -243,7 +245,6 @@ class Package extends \Eloquent
             $data['longitude'] = $legs->end_location->lng ? $legs->end_location->lng : '';
         }
 
-        $data['price'] = $data['distance'] * 20;
         $data['steps'] = serialize($legs->steps);
 
         return $data;

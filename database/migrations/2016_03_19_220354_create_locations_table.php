@@ -12,18 +12,20 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->uuid('uuid');
-            $table->string('name')->unique();
-            $table->integer('quantity')->default(1);
-            $table->text('note');
-            $table->boolean('active')->default(true);
-            $table->boolean('deleted')->default(false);
-            $table->integer('created_by')->default(1);
-            $table->integer('updated_by')->default(1);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('locations')) {
+            Schema::create('locations', function (Blueprint $table) {
+                $table->increments('id');
+                $table->uuid('uuid');
+                $table->string('name')->unique();
+                $table->integer('quantity')->default(1);
+                $table->text('note');
+                $table->boolean('active')->default(true);
+                $table->boolean('deleted')->default(false);
+                $table->integer('created_by')->default(1);
+                $table->integer('updated_by')->default(1);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -33,6 +35,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('locations');
+        //Schema::drop('locations');
     }
 }
