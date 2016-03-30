@@ -13,11 +13,29 @@
         <div class="panel-body">
 
             <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center">
+                <div class="col-md-4 col-lg-4 " align="center">
                     <i class="fa fa-btn fa-user" style="font-size: 150px;"></i>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong ngày</b></li>
+                        <li class="list-group-item">
+                            0 VND
+                        </li>
+                        <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong tuần</b></li>
+                        <li class="list-group-item">
+                            0 VND
+                        </li>
+                        <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong tháng</b></li>
+                        <li class="list-group-item">
+                            0 VND
+                        </li>
+                        <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong năm</b></li>
+                        <li class="list-group-item">
+                            0 VND
+                        </li>
+                    </ul>
                 </div>
 
-                <div class=" col-md-9 col-lg-9 ">
+                <div class=" col-md-8 col-lg-8 ">
                 <table class="table table-user-information">
                     <tbody>
                         <tr>
