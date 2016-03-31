@@ -240,7 +240,7 @@ class PackagesController extends Controller
 
         // Calculate price
         if ($response['distance']) {
-            $price = $response['distance'] * \Input::get('kgs') * 5;
+            $price = $response['distance'] * \Input::get('kgs') * 0.5;
             \Input::merge(array('price' => $price ));
         } else {
             return \Redirect::route('admin.packages.edit', $id)->with('message_danger', 'Không thể lấy được khoảng cách chính xác, vui lòng nhập đúng địa chỉ theo gợi ý của hệ thống.');
@@ -366,7 +366,7 @@ class PackagesController extends Controller
 
         // Calculate price
         if ($response['distance']) {
-            $price = $response['distance'] * \Input::get('kgs') * 5;
+            $price = $response['distance'] * \Input::get('kgs') * 0.5;
             \Input::merge(array('price' => $price ));
         } else {
             return \Redirect::route('admin.packages.edit', $id)->with('message_danger', 'Không thể lấy được khoảng cách chính xác, vui lòng nhập đúng địa chỉ theo gợi ý của hệ thống.');
