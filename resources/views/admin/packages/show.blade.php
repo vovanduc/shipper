@@ -111,10 +111,14 @@
                                 <td>Quận</td>
                                 <td>{{\Package::get_county_option($result->county)}} </td>
                             </tr>
-                            <!-- <tr>
+
+                            @if(Auth::user()->uuid == 'dbc6b6f8-5dab-43c5-b2eb-bf147f938ed2')
+                            <tr>
                                 <td>Ước tính giá vận chuyển</td>
                                 <td>{{$result->cv_price}} </td>
-                            </tr> -->
+                            </tr>
+                            @endif
+
                             <tr>
                                 <td>Ước tính khoảng cách</td>
                                 <td>{{$result->cv_distance}} </td>
