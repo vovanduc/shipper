@@ -10,7 +10,7 @@ return [
 			'home' => 'Trang chủ',
 			'users' => 'Nhân viên',
             'customers' => 'Khách hàng',
-            'shippers' => 'Người vận chuyển',
+            'shippers' => 'Người đi giao hàng',
             'packages' => 'Kiện hàng',
 			'locations' => 'Vị trí',
 			'logs' => 'Lịch sử truy cập',

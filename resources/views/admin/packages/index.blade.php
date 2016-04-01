@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm người vận chuyển'))}}
+                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm người đi giao hàng'))}}
                             </div>
                             <br/>
                             <div class="left-inner-addon">
-                                {{Form::text("shipper_phone",$shipper_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người vận chuyển'))}}
+                                {{Form::text("shipper_phone",$shipper_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người đi giao hàng'))}}
                             </div>
                         </div>
                         <div class="col-xs-6" >

@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Người vận chuyển</label>
+                        <label class="col-md-4 control-label">Người đi giao hàng</label>
 
                         <div class="col-md-6">
                             {{Form::select("shipper_id",$shippers,null,array('class' => 'form-control select_auto'))}}

@@ -156,7 +156,7 @@
                                         <td>{{$result->service_type}} </td>
                                     </tr>
                                     <tr>
-                                        <td>Người vận chuyển</td>
+                                        <td>Người đi giao hàng</td>
                                         <td>{{$result->shipper}} </td>
                                     </tr>
                                     <tr>

@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("shipper",$shippers,$shipper,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn người vận chuyển'))}}
+                                {{Form::select("shipper",$shippers,$shipper,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn người đi giao hàng'))}}
                             </div>
                         </div>
                         <div class="col-xs-6" >

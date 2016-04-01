@@ -192,7 +192,7 @@ class PackagesController extends Controller
         $customers = array(''=>'Chọn người nhận') + $customers->toArray();
 
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
-        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
+        $shippers = array(''=>'Chọn người đi giao hàng') + $shippers->toArray();
 
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
@@ -317,7 +317,7 @@ class PackagesController extends Controller
         $customers = array(''=>'Chọn người nhận') + $customers->toArray();
 
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
-        $shippers = array(''=>'Chọn người vận chuyển') + $shippers->toArray();
+        $shippers = array(''=>'Chọn người đi giao hàng') + $shippers->toArray();
 
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
@@ -577,7 +577,7 @@ class PackagesController extends Controller
             $temp = $this->packages->update($package_id,['status'=>4, 'shipper_id'=>$shipper]);
             if($temp) {
                 $data = $this->packages->firstOrFail($package_id);
-                $mess = 'Người vận chuyển: <b>'.\Shipper::whereUuid($shipper)->first()->name.'</b>. Kiện hàng: <a target="_blank" href="'.\URL::route('admin.packages.show', $package_id).'">'.$data->label.'</a>';
+                $mess = 'người đi giao hàng: <b>'.\Shipper::whereUuid($shipper)->first()->name.'</b>. Kiện hàng: <a target="_blank" href="'.\URL::route('admin.packages.show', $package_id).'">'.$data->label.'</a>';
 
                 \Activity::log([
                     'contentId'   => $package_id,

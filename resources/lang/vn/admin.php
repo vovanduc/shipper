@@ -26,10 +26,10 @@ return [
 		],
 	'shipper' =>
 		[
-			'index' => 'Quản lý người vận chuyển',
-			'add' => 'Thêm người vận chuyển',
-			'edit' => 'Cập nhật người vận chuyển',
-			'info' => 'Thông tin người vận chuyển',
+			'index' => 'Quản lý người đi giao hàng',
+			'add' => 'Thêm người đi giao hàng',
+			'edit' => 'Cập nhật người đi giao hàng',
+			'info' => 'Thông tin người đi giao hàng',
 		],
 	'package' =>
 		[

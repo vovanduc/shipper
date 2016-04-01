@@ -5,7 +5,7 @@
         <div class="panel-body">
             <ol>
             	<li><a href="{{URL::route('admin.home.index')}}">Tổng quản</a></li>
-                <li><a href="{{URL::route('admin.statistics.shippers')}}">Người vận chuyển</a></li>
+                <li><a href="{{URL::route('admin.statistics.shippers')}}">Người đi giao hàng</a></li>
                 <li><a href="{{URL::route('admin.statistics.customers')}}">Khách hàng</a></li>
                 <li><a href="{{URL::route('admin.statistics.chart')}}">Biểu đồ</a></li>
             </ol>
