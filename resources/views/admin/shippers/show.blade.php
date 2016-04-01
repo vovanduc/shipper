@@ -18,19 +18,19 @@
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong ngày</b></li>
                         <li class="list-group-item">
-                            0 VND
+                            {{$money['day']}}
                         </li>
                         <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong tuần</b></li>
                         <li class="list-group-item">
-                            0 VND
+                            {{$money['week']}}
                         </li>
                         <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong tháng</b></li>
                         <li class="list-group-item">
-                            0 VND
+                            {{$money['month']}}
                         </li>
                         <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong năm</b></li>
                         <li class="list-group-item">
-                            0 VND
+                            {{$money['year']}}
                         </li>
                     </ul>
                 </div>

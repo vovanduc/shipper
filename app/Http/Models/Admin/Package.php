@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Models\Admin;
-
+use Illuminate\Events\Dispatcher;
 class Package extends \Eloquent
 {
     protected $table = 'packages';
@@ -59,6 +59,11 @@ class Package extends \Eloquent
     public function getUpdatedAtAttribute($date)
     {
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('H:i d-m-Y');
+    }
+
+    public function getDeliveryAtAttribute($date)
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
     }
 
     public function getCvPriceAttribute()
@@ -193,6 +198,11 @@ class Package extends \Eloquent
         $data[17] = 'Quận Tân Phú';
         $data[18] = 'Quận Phú Nhuận';
         $data[19] = 'Quận Bình Tân';
+        $data[20] = 'Huyện Củ Chi';
+        $data[21] = 'Huyện Hóc Môn';
+        $data[22] = 'Huyện Bình Chánh';
+        $data[23] = 'Huyện Nhà Bè';
+        $data[24] = 'Huyện Cần Giờ';
 
         if ($index) {
             return $data[$index];

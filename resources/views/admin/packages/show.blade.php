@@ -111,8 +111,11 @@
                                 <td>Quận</td>
                                 <td>{{\Package::get_county_option($result->county)}} </td>
                             </tr>
-
-                            @if(Auth::user()->uuid == 'dbc6b6f8-5dab-43c5-b2eb-bf147f938ed2')
+                            <?php
+                                $permissions = unserialize(Auth::user()->permissions);
+                                $permissions = $permissions['packages']['money'];
+                            ?>
+                            @if($permissions)
                             <tr>
                                 <td>Ước tính giá vận chuyển</td>
                                 <td>{{$result->cv_price}} </td>

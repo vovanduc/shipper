@@ -28,6 +28,10 @@ class CreateUsersTable extends Migration
                 $table->boolean('is_root')->default(false);
                 $table->timestamps();
             });
+        } else {
+            Schema::table('users', function (Blueprint $table) {
+                if (!Schema::hasColumn('users', 'permissions')) $table->text('permissions');
+            });
         }
     }
 

@@ -17,9 +17,9 @@ class UsersController extends Controller
         $this->users = $users;
         $this->request = $request;
 
-        if(\Auth::user()->is_admin == false) {
-            return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
-        }
+        // if(\Auth::user()->is_admin == false) {
+        //     return \Redirect::route('admin.home.index')->with('message_danger', trans('admin.global.no_permission'));
+        // }
     }
 
     protected function validator(array $data, array $rules)
@@ -78,6 +78,20 @@ class UsersController extends Controller
 
         \Input::merge(array('password' => bcrypt($password)));
 
+        if($this->request->input('permissions')) {
+            $temp_permissions = \Config::get('lib.PERMISSIONS');
+            $get_permissions = $this->request->input('permissions');
+            foreach($get_permissions as $key =>$permission) {
+                foreach($permission as $key_temp =>$value) {
+                    if($get_permissions[$key][$key_temp] == 1) {
+                        $temp_permissions[$key][$key_temp] = true;
+                    }
+                }
+            }
+
+            \Input::merge(array('permissions' => serialize($temp_permissions)));
+        }
+
         $result = $this->users->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
@@ -104,6 +118,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $result = $this->users->firstOrFail($id);
+        $result->permissions = unserialize($result->permissions);
         \Activity::log([
             'contentId'   => $id,
             'contentType' => 'user',
@@ -123,6 +138,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $result = $this->users->firstOrFail($id);
+
+        $result->permissions = unserialize($result->permissions);
+
         return view('admin.users.edit', compact('result'));
     }
 
@@ -151,6 +169,20 @@ class UsersController extends Controller
             \Input::merge(array('password' => bcrypt($this->request->input('password'))));
         } else {
             \Input::merge(array('password' => $data->password));
+        }
+
+        if($this->request->input('permissions')) {
+            $temp_permissions = \Config::get('lib.PERMISSIONS');
+            $get_permissions = $this->request->input('permissions');
+            foreach($get_permissions as $key =>$permission) {
+                foreach($permission as $key_temp =>$value) {
+                    if($get_permissions[$key][$key_temp] == 1) {
+                        $temp_permissions[$key][$key_temp] = true;
+                    }
+                }
+            }
+
+            \Input::merge(array('permissions' => serialize($temp_permissions)));
         }
 
         $result = $this->users->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));

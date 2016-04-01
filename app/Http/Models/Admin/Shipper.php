@@ -71,4 +71,34 @@ class Shipper extends \Eloquent
     public function packages(){
         return $this->hasMany('\App\Http\Models\Admin\Package', 'shipper_id', 'uuid');
     }
+
+    public function scopeMoney($query, $uuid, $type)
+    {
+        $date = array();
+        if ($type == 1) { // Day
+            $date = array(\Carbon::now()->startOfDay(), \Carbon::now()->endOfDay());
+        } else if ($type == 2) { // Week
+            $date = array(\Carbon::now()->startOfWeek(), \Carbon::now()->endOfWeek());
+        } else if ($type == 3) { // Month
+            $date = array(\Carbon::now()->startOfMonth(), \Carbon::now()->endOfMonth());
+        } else if ($type == 4) { // Year
+            $date = array(\Carbon::now()->startOfYear(), \Carbon::now()->endOfYear());
+        }
+
+        //$q->whereDate('created_at', '=', date('Y-m-d'));
+
+        $money = \Package::where('deleted', 0)
+        ->whereShipperId($uuid)
+        ->whereStatus(\Config::get('lib.PACKAGE.delivery_success'))
+        ->whereBetween('delivery_at', $date)
+        ->sum('price');
+
+        if($money) {
+            $money = \Currency::format($money);
+        } else {
+            $money = '0 VND';
+        }
+
+        return $money;
+    }
 }

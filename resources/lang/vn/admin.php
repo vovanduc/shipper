@@ -13,6 +13,17 @@ return [
 			'no_data' => 'Không có dữ liệu',
 			'view' => 'Xem thông tin',
 		],
+	'permissions' =>
+		[
+			'index' => 'Xem danh sách',
+			'show' => 'Xem chi tiết',
+			'search' => 'Tìm kiếm',
+			'add' => 'Thêm',
+			'update' => 'Cập nhật',
+			'delete' => 'Xóa',
+			'permission' => 'Phân quyền',
+			'money' => 'Xem giá tiền'
+		],
 	'shipper' =>
 		[
 			'index' => 'Quản lý người vận chuyển',

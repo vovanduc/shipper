@@ -14,6 +14,7 @@
     <!-- Styles -->
     {!! \Html::style('assets/admin/css/bootstrap.min.css') !!}
     {!! \Html::style('assets/admin/css/select2.min.css') !!}
+    {!! \Html::style('assets/admin/css/jquery-ui.css') !!}
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -99,7 +100,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/admin') }}"><b style="color:red">Phiên bản 1.0.0</b></a></li>
+                    <li><a href="{{ url('/admin') }}"><b style="color:red">Phiên bản 1.1.0</b></a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -150,6 +151,7 @@
 
     <!-- JavaScripts -->
     {!! \Html::script('assets/admin/javascript/jquery-1.12.0.min.js') !!}
+    {!! \Html::script('assets/admin/javascript/jquery-ui.js') !!}
     {!! \Html::script('assets/admin/javascript/bootstrap.min.js') !!}
     {!! \Html::script('assets/admin/javascript/select2.min.js') !!}
     <script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
@@ -157,6 +159,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select_auto').select2();
+            $('.datepicker').datepicker({
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-mm-yy'
+            });
         });
         CKEDITOR.replace( 'ckeditor' );
     </script>

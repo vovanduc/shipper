@@ -23,7 +23,7 @@ class ShipperRepository implements IShipperRepository
         $result = \Package::where('uuid', $id)->where('deleted', 0)->firstOrFail();
         return $result;
     }
-    
+
     public function findBy($field, $value)
     {
         return Shipper::where($field, $value);

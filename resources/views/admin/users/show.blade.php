@@ -35,13 +35,33 @@
                             <td>Ngày tạo</td>
                             <td>{{$result->created_at}} </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>Admin</td>
                             <td>{{$result->cv_is_admin}} </td>
                         </tr>
                         <tr>
                             <td>Root</td>
                             <td>{{$result->cv_is_root}} </td>
+                        </tr> -->
+                        <tr>
+                            <td>Phân quyền</td>
+                            <td>
+                                @foreach(\Config::get('lib.PERMISSIONS') as $key => $value)
+                                    <li class="list-group-item list-group-item-info"><b>{{\Config::get('lib.MODULE.'.$key)}}</b></li>
+                                    @foreach($value as $key_temp => $permision)
+                                    <li class="list-group-item">
+                                        {{Lang::get('admin.permissions.'.$key_temp)}}
+                                        <span class="pull-right">
+                                            @if($result->permissions[$key][$key_temp])
+                                                Có
+                                            @else
+                                                Không
+                                            @endif
+                                        </span>
+                                    </li>
+                                    @endforeach
+                                @endforeach
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -102,9 +102,11 @@ class ShippersController extends Controller
     {
         $result = $this->shippers->firstOrFail($id);
 
-        $price_day = $result->packages()->whereStatus(5)->sum('price');
-        $price_day = \Currency::format($price_day);
-        //dd($price_day);
+        $money = array();
+        $money['day'] = \Shipper::money($id, 1);
+        $money['week'] = \Shipper::money($id, 2);
+        $money['month'] = \Shipper::money($id, 3);
+        $money['year'] = \Shipper::money($id, 4);
 
         \Activity::log([
             'contentId'   => $id,
@@ -113,7 +115,7 @@ class ShippersController extends Controller
             'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.shippers.show', $id).'">'.$result->name.'</a></b>',
             'userId'     => \Auth::user()->uuid,
         ]);
-        return view('admin.shippers.show', compact('result'));
+        return view('admin.shippers.show', compact('result'))->with('money', $money);
     }
 
     /**

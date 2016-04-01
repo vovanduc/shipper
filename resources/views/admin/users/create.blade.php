@@ -83,6 +83,33 @@
                         </div>
                     </div>
 
+                    <?php
+                        $permissions = unserialize(Auth::user()->permissions);
+                        $permissions = $permissions['users']['permission'];
+                    ?>
+                    @if($permissions)
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Phân quyền</label>
+
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                @foreach(\Config::get('lib.PERMISSIONS') as $key => $value)
+                                    <li class="list-group-item list-group-item-info"><b>{{\Config::get('lib.MODULE.'.$key)}}</b></li>
+                                    @foreach($value as $key_temp => $permision)
+                                    <li class="list-group-item">
+                                        {{Lang::get('admin.permissions.'.$key_temp)}}
+                                        <span class="pull-right">
+                                            {{ Form::checkbox('permissions['.$key.']['.$key_temp.']', true, true) }}
+                                        </span>
+                                    </li>
+                                    @endforeach
+                                @endforeach
+                            </ul>
+
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">

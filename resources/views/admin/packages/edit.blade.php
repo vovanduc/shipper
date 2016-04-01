@@ -178,6 +178,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Ngày giao hàng thành công</label>
+
+                        <div class="col-md-6">
+
+                            {{ Form::text('delivery_at',null, array('class' => 'datepicker')) }}
+
+                            <span class="help-block">
+                                <strong style="color:red">Lưu ý: ngày giao hàng thành công chỉ có hiệu lực khi có trạng thái là
+                                <b>{{\Package::get_status_option(\Config::get('lib.PACKAGE.delivery_success'))}}</b></strong>
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-md-4 control-label">Trạng thái</label>
 
@@ -205,5 +219,12 @@
 @endsection
 
 @section('javascript')
+<script>
+    $(document).ready(function() {
+        @if($result->delivery_at)
+            $(".datepicker").datepicker('setDate', '{{$result->delivery_at}}');
+        @endif
+    });
+</script>
 {!! \Html::script('assets/admin/javascript/google_map.js') !!}
 @stop
