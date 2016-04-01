@@ -178,7 +178,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Ngày giao hàng thành công</label>
 
                         <div class="col-md-6">
@@ -190,7 +190,7 @@
                                 <b>{{\Package::get_status_option(\Config::get('lib.PACKAGE.delivery_success'))}}</b></strong>
                             </span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="col-md-4 control-label">Trạng thái</label>

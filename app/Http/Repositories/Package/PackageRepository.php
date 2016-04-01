@@ -43,13 +43,12 @@ class PackageRepository implements IPackageRepository
 
         $data = $this->firstOrFail($id);
         if(\Config::get('lib.PACKAGE.delivery_success') == $data->status) {
-            if ($input['delivery_at'] == '') {
-                $input['delivery_at'] = new \DateTime();
-            } else {
-                $input['delivery_at'] = \Carbon::parse($input['delivery_at'])->format('Y-m-d');
-            }
-        } else {
-            $input['delivery_at'] = '';
+            // if ($input['delivery_at'] == '') {
+            //     $input['delivery_at'] = new \DateTime();
+            // } else {
+            //     $input['delivery_at'] = \Carbon::parse($input['delivery_at'])->format('Y-m-d');
+            // }
+            $input['delivery_at'] = new \DateTime();
         }
 
         return \Package::where('uuid', $id)->update($input);
