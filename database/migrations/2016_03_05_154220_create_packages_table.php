@@ -48,6 +48,7 @@ class CreatePackagesTable extends Migration
         } else {
             Schema::table('packages', function (Blueprint $table) {
                 if (!Schema::hasColumn('packages', 'phone')) $table->string('phone');
+                if (!Schema::hasColumn('packages', 'customer_from')) $table->uuid('customer_from');
             });
         }
     }

@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm người đi giao hàng'))}}
+                                {{Form::select("customer_from",$customers,$customer_from,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo người gửi'))}}
                             </div>
                             <br/>
                             <div class="left-inner-addon">
-                                {{Form::text("shipper_phone",$shipper_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người đi giao hàng'))}}
+                                {{Form::text("customer_from_phone",$customer_from_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người gửi'))}}
                             </div>
                         </div>
                         <div class="col-xs-6" >
@@ -49,7 +49,16 @@
                     </div>
                     <br/>
                     <div class="row">
-                        <div class="col-xs-12" >
+                        <div class="col-xs-6" >
+                            <div class="left-inner-addon">
+                                {{Form::select("shipper_id",$shippers,$shipper_id,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm người đi giao hàng'))}}
+                            </div>
+                            <br/>
+                            <div class="left-inner-addon">
+                                {{Form::text("shipper_phone",$shipper_phone,array('class' => 'form-control', 'placeholder' => 'Tìm theo phone người đi giao hàng'))}}
+                            </div>
+                        </div>
+                        <div class="col-xs-6" >
                             <div class="left-inner-addon">
                                 <input type="text"  name="label" class="form-control" placeholder="Tìm theo label" value="{{ $label }}"/>
                             </div>
@@ -71,8 +80,8 @@
           		<thead>
           			<tr>
           				<th class="text-center">#</th>
-          				<th class="text-center">Shipper</th>
-          				<th class="text-center">Khách hàng</th>
+          				<th class="text-center">Người gửi</th>
+          				<th class="text-center">Người nhận</th>
           				<th class="text-center">Trạng thái</th>
           				<th class="text-center">Quản lý</th>
           			</tr>
@@ -85,7 +94,7 @@
                                 ?>
           	        			<tr class="text-center">
         	        				<th></th>
-        	        				<td>{{ $item->shipper }}</td>
+        	        				<td>{{ $item->from_customer }}</td>
         	        				<td>{{ $item->customer }}</td>
         	        				<td>{!! $item->cv_status !!}</td>
         	        				<td>

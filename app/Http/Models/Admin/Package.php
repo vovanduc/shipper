@@ -15,7 +15,7 @@ class Package extends \Eloquent
         'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps','content','quantity','parent','location_id','delivery_at','invoice',
-        'service_type','weight','content','kgs','phone'
+        'service_type','weight','content','kgs','phone','customer_from'
     ];
 
     /**
@@ -117,6 +117,11 @@ class Package extends \Eloquent
         return $this->belongsTo('\App\Http\Models\Admin\User', 'updated_by');
     }
 
+    public function from_customer()
+    {
+        return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_from','uuid');
+    }
+
     public function customer()
     {
         return $this->belongsTo('\App\Http\Models\Admin\Customer', 'customer_id','uuid');
@@ -148,7 +153,7 @@ class Package extends \Eloquent
         $data->updated_by = !empty($data->user_updated->name) ? $data->user_updated->name : '';
         $data->customer = !empty($data->customer->name) ? $data->customer->name : '';
         $data->shipper = !empty($data->shipper->name) ? $data->shipper->name : '';
-
+        $data->from_customer = !empty($data->from_customer->name) ? $data->from_customer->name : '';
 
         return $data;
     }

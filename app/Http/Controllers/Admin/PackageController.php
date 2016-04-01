@@ -172,6 +172,8 @@ class PackagesController extends Controller
         return view('admin.packages.index', compact('result'))
             ->with('customer_id')
             ->with('customer_phone')
+            ->with('customer_from')
+            ->with('customer_from_phone')
             ->with('shipper_id')
             ->with('shipper_phone')
             ->with('status')
@@ -214,6 +216,7 @@ class PackagesController extends Controller
         $validator = $this->validator($this->request->all(), [
                 'label' => 'required|unique:packages',
                 'customer_id' => 'required',
+                'customer_from' => 'required',
                 //'shipper_id' => 'required',
                 'location_id' => 'required',
                 'address' => 'required',
@@ -340,6 +343,7 @@ class PackagesController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
             'label'=>'required|unique:packages,label,'.$id.',uuid',
+            'customer_from' => 'required',
             'customer_id' => 'required',
             //'shipper_id' => 'required',
             'location_id' => 'required',
@@ -459,6 +463,8 @@ class PackagesController extends Controller
     {
         if (!$this->request->has('customer_id')
             && !$this->request->has('customer_phone')
+            && !$this->request->has('customer_from')
+            && !$this->request->has('customer_from_phone')
             && !$this->request->has('shipper_id')
             && !$this->request->has('shipper_phone')
             && !$this->request->has('status')
@@ -476,8 +482,19 @@ class PackagesController extends Controller
 
         if ($this->request->has('customer_phone')) {
             $search = $this->customers->findBy('phone', $this->request->customer_phone)->first();
-            if($search->uuid) {
+            if(isset($search->uuid)) {
                 $result = $result->where('customer_id', $search->uuid);
+            }
+        }
+
+        if ($this->request->has('customer_from')) {
+            $result = $result->where('customer_from', $this->request->customer_from);
+        }
+
+        if ($this->request->has('customer_from_phone')) {
+            $search = $this->customers->findBy('phone', $this->request->customer_from_phone)->first();
+            if(isset($search->uuid)) {
+                $result = $result->where('customer_from', $search->uuid);
             }
         }
 
@@ -512,6 +529,8 @@ class PackagesController extends Controller
         return view('admin.packages.index', compact('result'))
             ->with('customer_id', $this->request->customer_id)
             ->with('customer_phone', $this->request->customer_phone)
+            ->with('customer_from', $this->request->customer_from)
+            ->with('customer_from_phone', $this->request->customer_from_phone)
             ->with('shipper_id', $this->request->shipper_id)
             ->with('shipper_phone', $this->request->shipper_phone)
             ->with('status', $this->request->status)

@@ -34,14 +34,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Người đi giao hàng</label>
+                    <div class="form-group{{ $errors->has('customer_from') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Người gửi</label>
 
                         <div class="col-md-6">
-                            {{Form::select("shipper_id",$shippers,null,array('class' => 'form-control select_auto'))}}
-                            @if ($errors->has('shipper_id'))
+                            {{Form::select("customer_from",$customers,null,array('class' => 'form-control select_auto'))}}
+                            @if ($errors->has('customer_from'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('shipper_id') }}</strong>
+                                    <strong>{{ $errors->first('customer_from') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -57,6 +57,16 @@
                                     <strong>{{ $errors->first('customer_id') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('shipper_id') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Người đi giao hàng</label>
+
+                        <div class="col-md-6">
+                            {{Form::select("shipper_id",$shippers,null,array('class' => 'form-control select_auto'))}}
+
+                            <b style="color: red">Có thể không cần chọn</b>
                         </div>
                     </div>
 

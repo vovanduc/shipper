@@ -84,12 +84,16 @@
                                 <td>{{$result->service_type}} </td>
                             </tr>
                             <tr>
-                                <td>Người đi giao hàng</td>
-                                <td>{{$result->shipper}} </td>
+                                <td>Người gửi</td>
+                                <td>{{$result->from_customer}} </td>
                             </tr>
                             <tr>
                                 <td>Người nhận</td>
                                 <td>{{$result->customer}} </td>
+                            </tr>
+                            <tr>
+                                <td>Người đi giao hàng</td>
+                                <td>{{$result->shipper}} </td>
                             </tr>
                             <tr>
                                 <td>Actual weight</td>
