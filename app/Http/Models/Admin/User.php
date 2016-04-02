@@ -56,4 +56,13 @@ class User extends Authenticatable
             return 'Không';
         }
     }
+
+    public static function hasAccess($module, $action) {
+        $permissions = \Auth::user()->permissions;
+        $permissions = unserialize($permissions);
+
+
+
+        return $permissions['customers']['index'];
+    }
 }

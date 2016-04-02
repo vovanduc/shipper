@@ -180,9 +180,17 @@
                                         <td>{{$result->address}} </td>
                                     </tr>
                                     <tr>
+                                        <td>Tỉnh/Thành phố</td>
+                                        <td>{{$result->province}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quận/Huyện</td>
+                                        <td>{{$result->district}} </td>
+                                    </tr>
+                                    <!-- <tr>
                                         <td>Quận</td>
                                         <td>{{\Package::get_county_option($result->county)}} </td>
-                                    </tr>
+                                    </tr> -->
                                     <!-- <tr>
                                         <td>Ước tính giá vận chuyển</td>
                                         <td>{{$result->cv_price}} </td>

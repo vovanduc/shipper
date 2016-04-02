@@ -141,7 +141,7 @@
 
                     <input type="hidden" class="form-control" name="place_id" id="place_id">
 
-                    <div class="form-group{{ $errors->has('county') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('county') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Quận</label>
 
                         <div class="col-md-6">
@@ -152,6 +152,26 @@
                                     <strong>{{ $errors->first('county') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Tỉnh/Thành phố</label>
+
+                        <div class="col-md-6">
+                            <?php
+                                $province = \Province::lists("name","provinceid");
+                            ?>
+                            {{Form::select("province_id",$province,null,array('class' => 'form-control province select_auto', 'placeholder' => 'Chọn tỉnh/Thành phố'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Quận/Huyện</label>
+
+                        <div class="col-md-6">
+                            {{Form::hidden('district_id',null,array('id' => 'get_district_id'))}}
+                            {{Form::select("district_id",array(),null,array('class' => 'form-control ', 'placeholder' => 'Quận/Huyện', 'id' => 'district'))}}
                         </div>
                     </div>
 

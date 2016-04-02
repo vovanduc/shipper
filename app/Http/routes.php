@@ -65,5 +65,9 @@ Route::group(['middleware' => 'web'], function () {
 
 		// Import excel
 		Route::get('import/excel', array("as"=>"admin.import.excel","uses"=>"Admin\ImportsController@excel"));
+
+		Route::get('errors/permission', array("as"=>"admin.errors.permission","uses"=>"Admin\ErrorsController@permission"));
+
+		Route::get('get_district', array("as"=>"admin.system.get_district","uses"=>"Admin\SystemController@get_district"));
 	});
 });

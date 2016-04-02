@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Models\Admin;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Shipper extends \Eloquent
+class Shipper extends Authenticatable
 {
     protected $table = 'shippers';
 
@@ -100,5 +101,13 @@ class Shipper extends \Eloquent
         }
 
         return $money;
+    }
+
+    public static function hasAccess($module, $action) {
+
+
+
+
+        return 'ok';
     }
 }

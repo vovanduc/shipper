@@ -70,10 +70,10 @@ return [
             'model' => App\Http\Models\Admin\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'shippers' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\Admin\Shipper::class,
+        ],
     ],
 
     /*

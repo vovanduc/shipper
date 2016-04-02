@@ -165,6 +165,42 @@
                 changeYear: true,
                 dateFormat: 'dd-mm-yy'
             });
+
+            if($( ".province" ).val()) {
+                get_district($( ".province" ).val());
+            }
+
+            $( ".province" ).change(function()
+            {
+                var value = $( this ).val();
+                if (value) {
+                    get_district(value);
+                }
+            });
+
+            function get_district(value) {
+                $.ajax({
+                    "url":"{{\URL::route("admin.system.get_district")}}",
+                    "type":"get",
+                    "data":{"id":value},
+                    "success":function(data)
+                    {
+                        if(data.value)
+                        {
+                            $('#district').find('option').remove();
+                            $.each(data.value, function (key, item) {
+                                $('#district').append($('<option>', {
+                                    value: key,
+                                    text : item
+                                }));
+                            });
+                            if ($( "#get_district_id" ).val()) {
+                                $('#district option[value='+$( "#get_district_id" ).val()+']').attr('selected','selected');
+                            }
+                        }
+                    }
+                })
+            }
         });
         CKEDITOR.replace( 'ckeditor' );
     </script>

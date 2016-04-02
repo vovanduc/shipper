@@ -45,17 +45,19 @@ class Authenticate
             $request_permissions[2] = 'delete';
         }
 
-        // foreach(\Config::get('lib.PERMISSIONS') as $key => $value) {
-        //     foreach($value as $key_temp => $value_temp) {
-        //         if($request_permissions[1] == $key) {
-        //             if($key_temp == 'index' || $key_temp == 'show') {
-        //                 if(!$permissions[$key][$key_temp]){
-        //                     return response('Bạn không có quyền vào trang này.', 401);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        view()->share('permission_accept_'.$request_permissions[2], true);
+
+        foreach(\Config::get('lib.PERMISSIONS') as $key => $value) {
+            foreach($value as $key_temp => $value_temp) {
+                if($request_permissions[1] == $key) {
+                    // if($key_temp == $request_permissions[2]) {
+                    //     if(!$permissions[$key][$key_temp]){
+                            view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
+                        //}
+                    //}
+                }
+            }
+        }
 
         return $next($request);
     }

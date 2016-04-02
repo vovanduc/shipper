@@ -153,7 +153,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Regulus\ActivityLog\ActivityLogServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
-        
+
         /*
          * Application Service Providers...
          */
@@ -218,6 +218,8 @@ return [
         'Customer' => App\Http\Models\Admin\Customer::class,
         'Shipper' => App\Http\Models\Admin\Shipper::class,
         'Location' => App\Http\Models\Admin\Location::class,
+        'District' => App\Http\Models\Admin\District::class,
+        'Province' => App\Http\Models\Admin\Province::class,
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
         'Currency' => App\lib\Currency::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,

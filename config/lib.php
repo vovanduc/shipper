@@ -24,9 +24,6 @@ return [
 		],
 	'PERMISSIONS' =>
 		[
-			'home' => [
-				'index' => false,
-			],
 			'users' => [
 				'index' => false,
 				'show' => false,

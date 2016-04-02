@@ -179,6 +179,8 @@ class PackagesController extends Controller
             ->with('status')
             ->with('county')
             ->with('label')
+            ->with('province_id')
+            ->with('district_id')
             ->with('customers', $customers)
             ->with('shippers', $shippers);
     }
@@ -220,7 +222,7 @@ class PackagesController extends Controller
                 //'shipper_id' => 'required',
                 //'location_id' => 'required',
                 'address' => 'required',
-                'county' => 'required',
+                //'county' => 'required',
                 'kgs' => 'required',
                 //'quantity' => 'required|numeric',
         ]);
@@ -348,7 +350,7 @@ class PackagesController extends Controller
             //'shipper_id' => 'required',
             //'location_id' => 'required',
             'address' => 'required',
-            'county' => 'required',
+            //'county' => 'required',
             'kgs' => 'required',
             //'quantity' => 'required|numeric',
         ]);
@@ -470,6 +472,8 @@ class PackagesController extends Controller
             && !$this->request->has('status')
             && !$this->request->has('county')
             && !$this->request->has('label')
+            && !$this->request->has('province_id')
+            && !$this->request->has('district_id')
         ) {
             return \Redirect::route('admin.packages.index');
         }
@@ -482,8 +486,10 @@ class PackagesController extends Controller
 
         if ($this->request->has('customer_phone')) {
             $search = $this->customers->findBy('phone', $this->request->customer_phone)->first();
-            if(isset($search->uuid)) {
+            if($search) {
                 $result = $result->where('customer_id', $search->uuid);
+            } else {
+                $result = $result->where('customer_id', 'none');
             }
         }
 
@@ -493,8 +499,10 @@ class PackagesController extends Controller
 
         if ($this->request->has('customer_from_phone')) {
             $search = $this->customers->findBy('phone', $this->request->customer_from_phone)->first();
-            if(isset($search->uuid)) {
+            if($search) {
                 $result = $result->where('customer_from', $search->uuid);
+            } else {
+                $result = $result->where('customer_id', 'none');
             }
         }
 
@@ -521,6 +529,14 @@ class PackagesController extends Controller
             $result = $result->where('label', $this->request->label);
         }
 
+        if ($this->request->has('province_id')) {
+            $result = $result->where('province_id', $this->request->province_id);
+        }
+
+        if ($this->request->has('district_id')) {
+            $result = $result->where('district_id', $this->request->district_id);
+        }
+
         $result = $result->orderBy('id', 'DESC')->get();
 
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
@@ -536,6 +552,8 @@ class PackagesController extends Controller
             ->with('status', $this->request->status)
             ->with('county', $this->request->county)
             ->with('label', $this->request->label)
+            ->with('province_id', $this->request->province_id)
+            ->with('district_id', $this->request->district_id)
             ->with('customers', $customers)
             ->with('shippers', $shippers);
     }
@@ -548,7 +566,8 @@ class PackagesController extends Controller
         // }
 //dd(123);
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
-        $county = \Request::query('county') ? \Request::query('county') : 0;
+        $province_id = \Request::query('province_id') ? \Request::query('province_id') : 0;
+        $district_id = \Request::query('district_id') ? \Request::query('district_id') : 0;
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
         $package_id = \Request::query('package_id') ? \Request::query('package_id') : 0;
         $label = \Request::query('label') ? \Request::query('label') : '';
@@ -574,8 +593,8 @@ class PackagesController extends Controller
 
         $show_label = 'Tìm kiếm';
 
-        if (!$shipper || !$county) {
-            $show_label = 'Vui lòng chọn shipper và quận';
+        if (!$shipper || !$province_id || !$district_id) {
+            $show_label = 'Vui lòng chọn người giao hàng và tỉnh thành phố quận huyện';
         }
 
         // if ($this->request->session()->has('county_'.$shipper)) {
@@ -584,15 +603,17 @@ class PackagesController extends Controller
         //         Nhấn tiếp tục để chọn ngẫu nhiên các kiện hàng trong '.\Package::get_county_option($county);
         // }
 
-        if ($shipper && $county) {
+        if ($shipper && $province_id && $district_id) {
             if($label) {
-                $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->where('label', $label)->orderBy('distance')->get();
+                $result = \Package::where('deleted', 0)->where('province_id',$province_id)->where('district_id',$district_id)
+                ->where('status', 3)->where('label', $label)->orderBy('distance')->get();
             } else {
-                $result = \Package::where('deleted', 0)->where('county',$county)->where('status', 3)->orderBy('distance')->get();
+                $result = \Package::where('deleted', 0)->where('province_id',$province_id)->where('district_id',$district_id)
+                ->where('status', 3)->orderBy('distance')->get();
             }
         }
 
-        if($shipper && $county && $package_id) {
+        if($shipper && $province_id && $district_id && $package_id) {
             $temp = $this->packages->update($package_id,['status'=>4, 'shipper_id'=>$shipper]);
             if($temp) {
                 $data = $this->packages->firstOrFail($package_id);
@@ -614,10 +635,11 @@ class PackagesController extends Controller
             ->with('item', $item)
             ->with('show_label', $show_label)
             ->with('shippers', $shippers)
-            ->with('county', $county)
             ->with('shipper', $shipper)
             ->with('mess', $mess)
             ->with('label', $label)
+            ->with('province_id', $province_id)
+            ->with('district_id', $district_id)
             ;
     }
 }

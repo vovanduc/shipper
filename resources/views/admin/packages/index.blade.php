@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("county",\Package::get_county_option(),$county,array('class' => 'form-control select_auto', 'placeholder' => 'Tìm theo quận'))}}
+                                <input type="text"  name="label" class="form-control" placeholder="Tìm theo label" value="{{ $label }}"/>
                             </div>
                         </div>
                     </div>
@@ -60,18 +60,27 @@
                         </div>
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                <input type="text"  name="label" class="form-control" placeholder="Tìm theo label" value="{{ $label }}"/>
+                                <?php
+                                    $province = \Province::lists("name","provinceid");
+                                ?>
+                                {{Form::select("province_id",$province,$province_id,array('class' => 'form-control province select_auto', 'placeholder' => 'Chọn tỉnh/Thành phố'))}}
+                            </div>
+                            <br/>
+                            <div class="left-inner-addon">
+                                <input type="hidden"  name="abc" id="get_district_id" value="{{ $district_id }}"/>
+                                {{Form::select("district_id",array(),$district_id,array('class' => 'form-control ', 'placeholder' => 'Quận/Huyện', 'id' => 'district'))}}
                             </div>
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item">
-                  <div class="row">
-                      <div class="col-xs-12" >
+                    <div class="row">
+                        <div class="col-xs-12" >
                           <button type="submit" class="btn btn-primary btn-block">
                             Tìm kiếm
                           </button>
-                      </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
             {{ Form::close() }}

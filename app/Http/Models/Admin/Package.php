@@ -15,7 +15,7 @@ class Package extends \Eloquent
         'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps','content','quantity','parent','location_id','delivery_at','invoice',
-        'service_type','weight','content','kgs','phone','customer_from'
+        'service_type','weight','content','kgs','phone','customer_from','province_id','district_id'
     ];
 
     /**
@@ -48,6 +48,10 @@ class Package extends \Eloquent
             return '<h4><span class="label" style="background-color:#08D9D6">Giao hàng thành công</span></h4>';
         } else if ($this->attributes['status'] == 6) {
             return '<h4><span class="label" style="background-color:#A42127">Đã hủy</span></h4>';
+        } else if ($this->attributes['status'] == 7) {
+            return '<h4><span class="label" style="background-color:#4F1C4C">Đang giao hàng tại Tphcm</span></h4>';
+        } else if ($this->attributes['status'] == 8) {
+            return '<h4><span class="label" style="background-color:#4F1C4C">Đang giao hàng ngoại thành</span></h4>';
         }
     }
 
@@ -147,6 +151,16 @@ class Package extends \Eloquent
         return $this->hasMany('\App\Http\Models\Admin\Package', 'parent','uuid');
     }
 
+    public function province()
+    {
+        return $this->hasOne('\App\Http\Models\Admin\Province', 'provinceid','province_id');
+    }
+
+    public function district()
+    {
+        return $this->hasOne('\App\Http\Models\Admin\District', 'districtid','district_id');
+    }
+
     public static function convert($data)
     {
         $data->created_by = !empty($data->user_created->name) ? $data->user_created->name : '';
@@ -154,7 +168,8 @@ class Package extends \Eloquent
         $data->customer = !empty($data->customer->name) ? $data->customer->name : '';
         $data->shipper = !empty($data->shipper->name) ? $data->shipper->name : '';
         $data->from_customer = !empty($data->from_customer->name) ? $data->from_customer->name : '';
-
+        $data->province = !empty($data->province->name) ? $data->province->name : '';
+        $data->district = !empty($data->district->name) ? $data->district->name : '';
         return $data;
     }
 
@@ -178,6 +193,8 @@ class Package extends \Eloquent
         $data[4] = 'Đang giao hàng';
         $data[5] = 'Giao hàng thành công';
         $data[6] = 'Đã hủy';
+        $data[7] = 'Đang giao hàng tại Tphcm';
+        $data[8] = 'Đang giao hàng ngoại thành';
 
         if ($index) {
             return $data[$index];
@@ -273,6 +290,19 @@ class Package extends \Eloquent
             $result= \Package::where('deleted', 0)->where('county',$i)->where('status', 3);
             if ($result->count() > 0) {
                 $data[$i] = \Package::get_county_option($i).' ('.$result->count().' kiện hàng)';
+            }
+        }
+
+        return $data;
+    }
+
+    public static function get_province_package()
+    {
+        $data = array();
+        $province = \Province::get();
+        foreach($province as $item) {
+            if($item->packages()->count()) {
+                $data[$item->provinceid] = $item->name;
             }
         }
 

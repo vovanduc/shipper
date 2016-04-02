@@ -197,7 +197,7 @@ class UsersController extends Controller
                 'description' => $mess,
                 'userId'     => \Auth::user()->uuid,
             ]);
-            return \Redirect::route('admin.users.index')->with('message_success', $mess);
+            return \Redirect::route('admin.users.edit', $id)->with('message_success', $mess);
         } else {
             return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
         }

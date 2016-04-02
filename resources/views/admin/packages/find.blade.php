@@ -21,7 +21,14 @@
                         </div>
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("county",\Package::get_county_package(),$county,array('class' => 'form-control select_auto'))}}
+                                <div class="left-inner-addon">
+                                    {{Form::select("province_id",\Package::get_province_package(),$province_id,array('class' => 'form-control province select_auto', 'placeholder' => 'Chọn tỉnh/Thành phố'))}}
+                                </div>
+                                <br/>
+                                <div class="left-inner-addon">
+                                    <input type="hidden" id="get_district_id" value="{{ $district_id }}"/>
+                                    {{Form::select("district_id",array(),$district_id,array('class' => 'form-control', 'placeholder' => 'Quận/Huyện', 'id' => 'district'))}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,7 +74,8 @@
                             </a>
                             {{ Form::open(array('route' => array('admin.packages.find'), 'method' => 'get')) }}
                                 {{Form::hidden("shipper",$shipper,array('class' => 'form-control'))}}
-                                {{Form::hidden("county",$county,array('class' => 'form-control'))}}
+                                {{Form::hidden("province_id",$province_id,array('class' => 'form-control'))}}
+                                {{Form::hidden("district_id",$district_id,array('class' => 'form-control'))}}
                                 {{Form::hidden("package_id",$item->uuid,array('class' => 'form-control'))}}
                                 <span class="pull-right">
                                     <button class="btn btn-primary" type="submit" href="{{URL::route('admin.packages.show', $item->uuid)}}" target="_blank">
@@ -91,6 +99,9 @@
 
 $(function() {
     $('.select_auto').change(function() {
+        this.form.submit();
+    });
+    $('#district').change(function() {
         this.form.submit();
     });
 });
