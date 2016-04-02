@@ -301,7 +301,7 @@ class Package extends \Eloquent
         $data = array();
         $province = \Province::get();
         foreach($province as $item) {
-            if($item->packages()->count()) {
+            if($item->packages()->whereStatus(3)->count()) {
                 $data[$item->provinceid] = $item->name;
             }
         }

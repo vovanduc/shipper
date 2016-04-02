@@ -627,7 +627,7 @@ class PackagesController extends Controller
                     'userId'     => \Auth::user()->uuid,
                 ]);
 
-                return \Redirect::route('admin.packages.find',['shipper' =>$shipper, 'county' =>$county, 'mess' =>$mess]);
+                return \Redirect::route('admin.packages.find',['shipper' =>$shipper, 'province_id' =>$province_id, 'district_id' =>$district_id, 'mess' =>$mess]);
             }
         }
 

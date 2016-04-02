@@ -119,10 +119,10 @@
                                 <td>Quận/Huyện</td>
                                 <td>{{$result->district}} </td>
                             </tr>
-                            <!-- <tr>
+                            <tr>
                                 <td>Quận</td>
                                 <td>{{\Package::get_county_option($result->county)}} </td>
-                            </tr> -->
+                            </tr>
                             <?php
                                 $permissions = unserialize(Auth::user()->permissions);
                                 $permissions = $permissions['packages']['money'];
