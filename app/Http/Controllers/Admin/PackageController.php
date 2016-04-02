@@ -25,9 +25,9 @@ class PackagesController extends Controller
         $this->shippers = $shippers;
         $this->request = $request;
 
-        if(\Auth::user()->is_admin == false) {
-            return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
-        }
+        // if(\Auth::user()->is_admin == false) {
+        //     return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
+        // }
 
         // require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         // $excel = new \SimpleExcel\SimpleExcel('CSV');
@@ -218,7 +218,7 @@ class PackagesController extends Controller
                 'customer_id' => 'required',
                 'customer_from' => 'required',
                 //'shipper_id' => 'required',
-                'location_id' => 'required',
+                //'location_id' => 'required',
                 'address' => 'required',
                 'county' => 'required',
                 'kgs' => 'required',
@@ -346,7 +346,7 @@ class PackagesController extends Controller
             'customer_from' => 'required',
             'customer_id' => 'required',
             //'shipper_id' => 'required',
-            'location_id' => 'required',
+            //'location_id' => 'required',
             'address' => 'required',
             'county' => 'required',
             'kgs' => 'required',

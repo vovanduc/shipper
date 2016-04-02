@@ -62,5 +62,8 @@ Route::group(['middleware' => 'web'], function () {
 		// Logs
 		Route::resource('logs', 'Admin\LogsController');
 		Route::any('logs/search', array("as"=>"admin.logs.search","uses"=>"Admin\LogsController@search"));
+
+		// Import excel
+		Route::get('import/excel', array("as"=>"admin.import.excel","uses"=>"Admin\ImportsController@excel"));
 	});
 });
