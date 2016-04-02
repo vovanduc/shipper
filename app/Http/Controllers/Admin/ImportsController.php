@@ -18,6 +18,8 @@ class ImportsController extends Controller
 
     public function excel()
     {
+        print 'Hello';exit;
+
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
 
