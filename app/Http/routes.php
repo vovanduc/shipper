@@ -70,4 +70,26 @@ Route::group(['middleware' => 'web'], function () {
 
 		Route::get('get_district', array("as"=>"admin.system.get_district","uses"=>"Admin\SystemController@get_district"));
 	});
+
+	// Route::group(array('prefix' => 'shipper', 'middleware' => 'shippers'), function()
+	// {
+	// 	Route::get('/', array("as"=>"shipper.home.index","uses"=>"Shipper\HomeController@index"));
+	//
+	// });
+});
+
+Route::group(array('prefix' => 'shipper', 'middleware' => 'shippers'), function () {
+
+	Route::group(['middleware' => 'auth.shippers'], function () {
+		Route::get('/', array("as"=>"shipper.home.index","uses"=>"Shipper\HomeController@index"));
+		Route::get('/packages', array("as"=>"shipper.packages.index","uses"=>"Shipper\PackagesController@index"));
+		Route::get('/packages/search', array("as"=>"shipper.packages.search","uses"=>"Shipper\PackagesController@search"));
+		Route::get('/packages/{uuid}/show', array("as"=>"shipper.packages.show","uses"=>"Shipper\PackagesController@show"));
+		Route::get('/packages/find', array("as"=>"shipper.packages.find","uses"=>"Shipper\PackagesController@find"));
+		Route::get('/packages/barcode', array("as"=>"shipper.packages.barcode","uses"=>"Shipper\PackagesController@barcode"));
+	});
+
+	Route::get('/login', array("as"=>"shipper.auth.login","uses"=>"Shipper\AuthController@login"));
+	Route::post('/login', array("as"=>"shipper.auth.login","uses"=>"Shipper\AuthController@postLogin"));
+	Route::get('/logout', array("as"=>"shipper.auth.logout","uses"=>"Shipper\AuthController@logout"));
 });

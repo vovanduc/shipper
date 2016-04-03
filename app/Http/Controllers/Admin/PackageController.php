@@ -618,7 +618,7 @@ class PackagesController extends Controller
             $temp = $this->packages->update($package_id,['status'=>4, 'shipper_id'=>$shipper]);
             if($temp) {
                 $data = $this->packages->firstOrFail($package_id);
-                $mess = 'người đi giao hàng: <b>'.\Shipper::whereUuid($shipper)->first()->name.'</b>. Kiện hàng: <a target="_blank" href="'.\URL::route('admin.packages.show', $package_id).'">'.$data->label.'</a>';
+                $mess = 'Người đi giao hàng: <b>'.\Shipper::whereUuid($shipper)->first()->name.'</b>. Kiện hàng: <a target="_blank" href="'.\URL::route('admin.packages.show', $package_id).'">'.$data->label.'</a>';
 
                 \Activity::log([
                     'contentId'   => $package_id,

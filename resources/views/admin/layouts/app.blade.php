@@ -100,23 +100,33 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/admin') }}"><b style="color:red">Phiên bản 1.1.0</b></a></li>
+                    <li><a href="{{ url('/admin') }}"><b style="color:red">Phiên bản 1.2.0</b></a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Đăng nhập</a></li>
-                    @else
+                    @if (Auth::user() && Request::is('admin*'))
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->username }} <span class="caret"></span>
+                                {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{URL::route('admin.users.change_pass')}}"><i class="fa fa-btn fa-user"></i>Thay đổi mật khẩu</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                    @if (Auth::guard('shippers')->user() && Request::is('shipper*'))
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::guard('shippers')->user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- <li><a href="{{URL::route('admin.users.change_pass')}}"><i class="fa fa-btn fa-user"></i>Thay đổi mật khẩu</a></li> -->
+                                <li><a href="{{ url('/shipper/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Đăng xuất</a></li>
                             </ul>
                         </li>
                     @endif
@@ -142,8 +152,12 @@
             </div>
         @endif
 
-        @if (Auth::user())
+        @if (Auth::user() && Request::is('admin*'))
             @include('admin.layouts.menu')
+        @endif
+
+        @if (Auth::guard('shippers')->user() && Request::is('shipper*'))
+            @include('shipper.layouts.menu')
         @endif
 
         @yield('content')

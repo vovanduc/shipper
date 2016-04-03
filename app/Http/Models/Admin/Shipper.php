@@ -13,7 +13,7 @@ class Shipper extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'uuid','phone', 'email', 'name', 'address'
+        'uuid','phone', 'email', 'name', 'address','username','password'
     ];
 
     /**
@@ -21,7 +21,9 @@ class Shipper extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [];
+     protected $hidden = [
+         'password',
+     ];
 
     public function getCvActiveAttribute($value)
     {
@@ -101,6 +103,34 @@ class Shipper extends Authenticatable
         }
 
         return $money;
+    }
+
+    public function scopeCountPackages($query, $uuid, $type)
+    {
+        $date = array();
+        if ($type == 1) { // Day
+            $date = array(\Carbon::now()->startOfDay(), \Carbon::now()->endOfDay());
+        } else if ($type == 2) { // Week
+            $date = array(\Carbon::now()->startOfWeek(), \Carbon::now()->endOfWeek());
+        } else if ($type == 3) { // Month
+            $date = array(\Carbon::now()->startOfMonth(), \Carbon::now()->endOfMonth());
+        } else if ($type == 4) { // Year
+            $date = array(\Carbon::now()->startOfYear(), \Carbon::now()->endOfYear());
+        }
+
+        //$q->whereDate('created_at', '=', date('Y-m-d'));
+
+        $count = \Package::where('deleted', 0)
+        ->whereShipperId($uuid)
+        ->whereStatus(\Config::get('lib.PACKAGE.delivery_success'))
+        ->whereBetween('delivery_at', $date)
+        ->count();
+
+        if ($count == 0) {
+            return 'Không có ';
+        }
+
+        return $count;
     }
 
     public static function hasAccess($module, $action) {

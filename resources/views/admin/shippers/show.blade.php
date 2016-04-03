@@ -43,6 +43,18 @@
                             <td>{{$result->uuid}} </td>
                         </tr>
                         <tr>
+                            <td>Username</td>
+                            <td>{{$result->username}} </td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>
+                                @if($result->password)
+                                    ******
+                                @endif    
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Tên</td>
                             <td>{{$result->name}} </td>
                         </tr>

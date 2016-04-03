@@ -63,6 +63,11 @@
     	        				<td>
                                     @if($user)
                                         <a target="_blank" href="{{URL::route('admin.users.show',$user->uuid)}}">{{ $user->name }}</a>
+                                    @else
+                                        <?php $shipper = \Shipper::where('uuid', $item->user_id)->first(); ?>
+                                        @if($shipper)
+                                            <a target="_blank" href="{{URL::route('admin.shippers.show',$shipper->uuid)}}">{{ $shipper->name }}</a>
+                                        @endif
                                     @endif
                                 </td>
     	        				<td>{!! $item->getIconMarkup() !!}</td>

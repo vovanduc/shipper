@@ -21,6 +21,27 @@
                                               'route' => array('admin.shippers.update', $result->uuid))) !!}
                     {!! csrf_field() !!}
 
+                    <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Username</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('username',null,array('class' => 'form-control'))}}
+                            @if ($errors->has('username'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Password</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('password','',array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Tên</label>
 

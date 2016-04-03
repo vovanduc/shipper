@@ -64,6 +64,7 @@ class ShippersController extends Controller
         $validator = $this->validator($this->request->all(), [
                 'name' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:shippers',
+                'username' => 'unique:shippers',
                 'phone' => 'required',
                 'address' => 'required',
         ]);
@@ -71,6 +72,10 @@ class ShippersController extends Controller
         if ($validator->fails()) {
             return \Redirect::route('admin.shippers.create')->withErrors($validator)->withInput();
         }
+
+        $password = $this->request->input('password');
+
+        \Input::merge(array('password' => bcrypt($password)));
 
         \Input::merge(array('created_by' => \Auth::user()->id));
 
@@ -142,12 +147,21 @@ class ShippersController extends Controller
         $validator = $this->validator($this->request->all(), [
               'name' => 'required|max:255',
               'email'=>'required|email|unique:shippers,email,'.$id.',uuid',
+              'username'=>'unique:shippers,username,'.$id.',uuid',
               'phone' => 'required',
               'address' => 'required',
         ]);
 
         if ($validator->fails()) {
             return \Redirect::route('admin.shippers.edit', $id)->withErrors($validator);
+        }
+
+        $data = $this->shippers->firstOrFail($id);
+
+        if ($this->request->has('password')) {
+            \Input::merge(array('password' => bcrypt($this->request->input('password'))));
+        } else {
+            \Input::merge(array('password' => $data->password));
         }
 
         \Input::merge(array('updated_by' => \Auth::user()->id));

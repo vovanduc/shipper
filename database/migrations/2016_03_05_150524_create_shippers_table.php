@@ -26,6 +26,12 @@ class CreateShippersTable extends Migration
               $table->integer('updated_by')->default(1);
               $table->timestamps();
             });
+        } else {
+            Schema::table('shippers', function (Blueprint $table) {
+                if (!Schema::hasColumn('shippers', 'username')) $table->string('username')->unique();
+                if (!Schema::hasColumn('shippers', 'password')) $table->string('password')->unique();
+                if (!Schema::hasColumn('shippers', 'remember_token')) $table->rememberToken();
+            });
         }
     }
 

@@ -40,14 +40,7 @@ class PackageRepository implements IPackageRepository
 
     public function update($id, $input)
     {
-
-        $data = $this->firstOrFail($id);
-        if(\Config::get('lib.PACKAGE.delivery_success') == $data->status) {
-            // if ($input['delivery_at'] == '') {
-            //     $input['delivery_at'] = new \DateTime();
-            // } else {
-            //     $input['delivery_at'] = \Carbon::parse($input['delivery_at'])->format('Y-m-d');
-            // }
+        if(\Config::get('lib.PACKAGE.delivery_success') == $input['status']) {
             $input['delivery_at'] = new \DateTime();
         }
 
