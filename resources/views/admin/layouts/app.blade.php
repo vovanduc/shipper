@@ -179,10 +179,16 @@
             });
 
             function get_district(value) {
+
+                var count_packages = '';
+                if($( "#district_count_packages" ).val()) {
+                    count_packages = 1;
+                }
+
                 $.ajax({
                     "url":"{{\URL::route("admin.system.get_district")}}",
                     "type":"get",
-                    "data":{"id":value},
+                    "data":{"id":value, "count_packages":count_packages},
                     "success":function(data)
                     {
                         if(data.value)

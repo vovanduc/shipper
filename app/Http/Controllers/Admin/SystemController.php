@@ -17,9 +17,21 @@ class SystemController extends Controller
     public function get_district()
     {
         $id = \Input::get('id');
+        $count_packages = \Input::get('count_packages');
+
         if ($id)
         {
-            $data = \District::where('provinceid',$id)->lists("name","districtid");
+            if ($count_packages) {
+                $data = array();
+                $district = \District::where('provinceid',$id)->get();
+                foreach($district as $item) {
+                    if($item->packages()->whereStatus(3)->count()) {
+                        $data[$item->districtid] = $item->name.' ('.$item->packages()->whereStatus(3)->count().')';
+                    }
+                }
+            } else {
+                $data = \District::where('provinceid',$id)->lists("name","districtid");
+            }
 
             return \Response::Json(array("value"=>$data));
         }

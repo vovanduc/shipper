@@ -26,6 +26,7 @@
                                 </div>
                                 <br/>
                                 <div class="left-inner-addon">
+                                    <input type="hidden" id="district_count_packages" value="1"/>
                                     <input type="hidden" id="get_district_id" value="{{ $district_id }}"/>
                                     {{Form::select("district_id",array(),$district_id,array('class' => 'form-control', 'placeholder' => 'Quận/Huyện', 'id' => 'district'))}}
                                 </div>
