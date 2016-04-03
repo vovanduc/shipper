@@ -241,7 +241,7 @@ class PackagesController extends Controller
         //\Input::merge(array('price' => $response['price']));
         \Input::merge(array('distance' => $response['distance']));
         \Input::merge(array('duration' => $response['duration']));
-        \Input::merge(array('steps' => $response['steps']));
+        //\Input::merge(array('steps' => $response['steps']));
 
         // Calculate price
         if ($response['distance']) {
@@ -291,13 +291,14 @@ class PackagesController extends Controller
     {
         $result = $this->packages->firstOrFail($id);
 
-        if ($result->steps) {
-            $steps = unserialize($result->steps);
-            if (count($steps) > 0) {
-                $result->steps = $steps;
-                //dd($result->steps);
-            }
-        }
+        $result->steps = '';
+        // if ($result->steps) {
+        //     $steps = unserialize($result->steps);
+        //     if (count($steps) > 0) {
+        //         $result->steps = $steps;
+        //         //dd($result->steps);
+        //     }
+        // }
 
         \Activity::log([
             'contentId'   => $id,
@@ -368,7 +369,7 @@ class PackagesController extends Controller
         //\Input::merge(array('price' => $response['price']));
         \Input::merge(array('distance' => $response['distance']));
         \Input::merge(array('duration' => $response['duration']));
-        \Input::merge(array('steps' => $response['steps']));
+        //\Input::merge(array('steps' => $response['steps']));
 
         // Calculate price
         if ($response['distance']) {

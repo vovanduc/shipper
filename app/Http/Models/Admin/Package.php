@@ -277,7 +277,7 @@ class Package extends \Eloquent
             $data['longitude'] = $legs->end_location->lng ? $legs->end_location->lng : '';
         }
 
-        $data['steps'] = serialize($legs->steps);
+        //$data['steps'] = serialize($legs->steps);
 
         return $data;
     }
