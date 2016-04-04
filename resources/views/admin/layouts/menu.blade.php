@@ -16,7 +16,7 @@
         //$permissions = unserialize(Auth::user()->permissions);
         //$permissions = $permissions['reports']['shippers'];
     ?>
-    @if($permissions)
+    @if(isset($permissions))
     <!-- <div class="panel panel-default">
         <div class="panel-heading">Báo cáo</div>
         <div class="panel-body">
