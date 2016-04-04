@@ -115,42 +115,40 @@
         	        				<td>{{ $item->customer }}</td>
         	        				<td>{!! $item->cv_status !!}</td>
         	        				<td>
-        	        					@if (\Auth::user()->is_admin)
-        		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
-        		        						<i class="fa fa-search"></i> Xem
-        		        					</a>
-        		        					<a href="{{URL::route('admin.packages.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
-    		        						<i class="fa fa-pencil"></i> Sửa
-    									    </a>
-        									{!! Form::open(array('route' => array('admin.packages.destroy', $item->uuid), 'method' => 'delete')) !!}
-        										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
+    		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
+    		        						<i class="fa fa-search"></i> Xem
+    		        					</a>
+    		        					<a href="{{URL::route('admin.packages.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
+		        						<i class="fa fa-pencil"></i> Sửa
+									    </a>
+    									{!! Form::open(array('route' => array('admin.packages.destroy', $item->uuid), 'method' => 'delete')) !!}
+    										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
 
-        											<i class="fa fa-trash-o"></i> Xóa
+    											<i class="fa fa-trash-o"></i> Xóa
 
-        										</button>
-        										<script type="text/javascript">
+    										</button>
+    										<script type="text/javascript">
 
-        											function ConfirmDelete()
-        										    {
+    											function ConfirmDelete()
+    										    {
 
-                                                        @if(!$permission_accept_delete)
-                                                            return false;
-                                                        @endif
+                                                    @if(!$permission_accept_delete)
+                                                        return false;
+                                                    @endif
 
-        										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
+    										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
 
-        										      if (x)
+    										      if (x)
 
-        										        return true;
+    										        return true;
 
-        										      else
+    										      else
 
-        										        return false;
-        										    }
+    										        return false;
+    										    }
 
-        										</script>
-        									{!! Form::close() !!}
-    								    @endif
+    										</script>
+    									{!! Form::close() !!}
         	        			  </td>
           	        			</tr>
                                 @if ($item->show_barcode)
