@@ -132,7 +132,7 @@
                                 $permissions = unserialize(Auth::user()->permissions);
                                 $permissions = $permissions['packages']['money'];
                             ?>
-                            @if($permissions)
+                            @if($permission_accept_money)
                             <tr>
                                 <td>Ước tính giá vận chuyển</td>
                                 <td>{{$result->cv_price}} </td>
