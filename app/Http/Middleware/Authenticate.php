@@ -51,8 +51,10 @@ class Authenticate
             foreach($value as $key_temp => $value_temp) {
                 if($request_permissions[1] == $key) {
 
-                        view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
-
+                        if(isset($permissions[$key][$key_temp])) {
+                            view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
+                        }
+                        
                         // Module users
                         if ($key == 'users') {
                             if (Auth::user()->is_root) {
