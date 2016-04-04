@@ -14,6 +14,7 @@ return [
             'packages' => 'Kiện hàng',
 			'locations' => 'Vị trí',
 			'statistics' => 'Thống kê',
+			'reports' => 'Báo cáo',
 			'logs' => 'Lịch sử truy cập',
 		],
     'ACTION' =>
@@ -73,6 +74,9 @@ return [
 				'shippers' => false,
 				'customers' => false,
 				'chart' => false,
+			],
+			'reports' => [
+				'shippers' => false,
 			],
 			'logs' => [
 				'index' => false,

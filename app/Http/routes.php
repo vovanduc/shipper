@@ -33,9 +33,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function()
 	{
 		Route::get('/', array("as"=>"admin.home.index","uses"=>"Admin\HomeController@index"));
-        Route::get('/statistics/shippers', array("as"=>"admin.statistics.shippers","uses"=>"Admin\StatisticsController@statistics"));
-		Route::get('/statistics/customers', array("as"=>"admin.statistics.customers","uses"=>"Admin\StatisticsController@customers"));
-		Route::get('/statistics/chart', array("as"=>"admin.statistics.chart","uses"=>"Admin\StatisticsController@chart"));
 
 		// Users
 		Route::resource('users', 'Admin\UsersController');
@@ -59,6 +56,14 @@ Route::group(['middleware' => 'web'], function () {
 		Route::resource('locations', 'Admin\LocationsController');
 		Route::any('locations/search', array("as"=>"admin.locations.search","uses"=>"Admin\LocationsController@search"));
 
+		// Statistics
+        Route::get('/statistics/shippers', array("as"=>"admin.statistics.shippers","uses"=>"Admin\StatisticsController@statistics"));
+		Route::get('/statistics/customers', array("as"=>"admin.statistics.customers","uses"=>"Admin\StatisticsController@customers"));
+		Route::get('/statistics/chart', array("as"=>"admin.statistics.chart","uses"=>"Admin\StatisticsController@chart"));
+
+		// Report
+		Route::get('/reports/shippers', array("as"=>"admin.reports.shippers","uses"=>"Admin\ReportsController@shippers"));
+
 		// Logs
 		Route::resource('logs', 'Admin\LogsController');
 		Route::any('logs/search', array("as"=>"admin.logs.search","uses"=>"Admin\LogsController@search"));
@@ -70,12 +75,6 @@ Route::group(['middleware' => 'web'], function () {
 
 		Route::get('get_district', array("as"=>"admin.system.get_district","uses"=>"Admin\SystemController@get_district"));
 	});
-
-	// Route::group(array('prefix' => 'shipper', 'middleware' => 'shippers'), function()
-	// {
-	// 	Route::get('/', array("as"=>"shipper.home.index","uses"=>"Shipper\HomeController@index"));
-	//
-	// });
 });
 
 Route::group(array('prefix' => 'shipper', 'middleware' => 'shippers'), function () {

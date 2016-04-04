@@ -342,7 +342,7 @@ class PackagesController extends Controller
     {
         $validator = $this->validator($this->request->all(), [
             'label'=>'required|unique:packages,label,'.$id.',uuid',
-            'customer_from' => 'required',
+            //'customer_from' => 'required',
             'customer_id' => 'required',
             //'shipper_id' => 'required',
             //'location_id' => 'required',

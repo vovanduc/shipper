@@ -25,9 +25,9 @@ return [
 			'money' => 'Xem giá tiền',
 			'find' => 'Tìm kiện hàng vận chuyển',
 			'barcode' => 'Quét mã vạch',
-			'shippers' => 'Xem thống kê người đi giao hàng',
-			'customers' => 'Xem thống kê khách hàng',
-			'chart' => 'Xem thống kê biểu đồ',
+			'shippers' => 'Người đi giao hàng',
+			'customers' => 'Khách hàng',
+			'chart' => 'Biểu đồ',
 		],
 	'shipper' =>
 		[

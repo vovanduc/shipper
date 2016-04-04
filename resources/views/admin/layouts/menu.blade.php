@@ -13,6 +13,15 @@
     </div>
 
     <div class="panel panel-default">
+        <div class="panel-heading">Báo cáo</div>
+        <div class="panel-body">
+            <ol>
+            	<li><a href="{{URL::route('admin.reports.shippers')}}">Người đi giao hàng</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
         <div class="panel-heading">Quản lý hệ thống</div>
         <div class="panel-body">
             <ol>
