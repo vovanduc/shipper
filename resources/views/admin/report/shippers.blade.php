@@ -36,6 +36,21 @@
                                 {{Form::select("time",$times,$time,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn tất cả'))}}
                         </div>
                     </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6" >
+                            <div class="left-inner-addon">
+                                Chọn theo trạng thái
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6" >
+                            <div class="left-inner-addon">
+                                {{Form::select("status",\Package::get_status_option(),$status,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn tất cả'))}}
+                            </div>
+                        </div>
+                    </div>
                 </li>
             {{ Form::close() }}
             <br/>
@@ -44,7 +59,13 @@
 					<thead>
                         <tr>
 							<td class="text-center"><strong>Tên</strong></td>
-							<td class="text-center"><strong>Kiện hàng</strong></td>
+							<td class="text-center">
+                                @if($status)
+                                    <strong>Kiện hàng ( {{\Package::get_status_option($status)}} )</strong>
+                                @else
+                                    <strong>Kiện hàng ở tất cả trạng thái</strong>
+                                @endif
+                            </td>
 							<td class="text-center"><strong>Tiền</strong></td>
                         </tr>
 					</thead>
@@ -53,7 +74,11 @@
 						@foreach($result as $item)
                             <?php
 
-                                $packages = $item->packages()->where('status', \Config::get('lib.PACKAGE.delivery_success'));
+                                if ($status) {
+                                    $packages = $item->packages()->where('status', $status);
+                                } else {
+                                    $packages = $item->packages();
+                                }
 
                                 if ($time > 0) {
                                     $packages = $packages->where('delivery_at','>=',$date[0])->where('delivery_at','<=',$date[1]);

@@ -28,6 +28,7 @@ class ReportsController extends Controller
     {
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $shipper = \Request::query('shipper') ? \Request::query('shipper') : 0;
+        $status = \Request::query('status') ? \Request::query('status') : 0;
 
         $times = array(
             1=>'Trong ngày',
@@ -60,20 +61,13 @@ class ReportsController extends Controller
             return $shipper->packages->count();
         });
 
-        // if ($time > 0) {
-        //     $result = $result->packages->where('status', \Config::get('lib.PACKAGE.delivery_success'))
-        //     ->where('delivery_at',' >=',$date[0])->where('delivery_at',' <=',$date[1])
-        //     ->count();
-        // } else {
-        //     $result =  $result->packages->where('status', \Config::get('lib.PACKAGE.delivery_success'))->count();
-        // }
-
         return view('admin.report.shippers', compact('result'))
         ->with('shippers', $shippers)
         ->with('shipper', $shipper)
         ->with('times', $times)
         ->with('time', $time)
-        ->with('date',$date);
+        ->with('date',$date)
+        ->with('status',$status);
     }
 
 
