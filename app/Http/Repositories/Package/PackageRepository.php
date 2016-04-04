@@ -40,8 +40,10 @@ class PackageRepository implements IPackageRepository
 
     public function update($id, $input)
     {
-        if(\Config::get('lib.PACKAGE.delivery_success') == $input['status']) {
-            $input['delivery_at'] = new \DateTime();
+        if(isset($input['status'])) {
+            if(\Config::get('lib.PACKAGE.delivery_success') == $input['status']) {
+                $input['delivery_at'] = new \DateTime();
+            }
         }
 
         return \Package::where('uuid', $id)->update($input);

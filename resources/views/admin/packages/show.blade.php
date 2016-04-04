@@ -85,6 +85,10 @@
                                 <td>{{$result->invoice}} </td>
                             </tr>
                             <tr>
+                                <td>Thông tin</td>
+                                <td>{{$result->info}} </td>
+                            </tr>
+                            <tr>
                                 <td>Service type</td>
                                 <td>{{$result->service_type}} </td>
                             </tr>

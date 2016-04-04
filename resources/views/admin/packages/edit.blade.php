@@ -84,6 +84,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('info') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Thông tin</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('info',null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('service_type') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Service type</label>
                         <div class="col-md-6">
