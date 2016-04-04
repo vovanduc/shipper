@@ -12,6 +12,11 @@
         </div>
     </div>
 
+    <?php
+        $permissions = unserialize(Auth::user()->permissions);
+        $permissions = $permissions['reports']['shippers'];
+    ?>
+    @if($permissions)
     <div class="panel panel-default">
         <div class="panel-heading">Báo cáo</div>
         <div class="panel-body">
@@ -20,6 +25,7 @@
             </ol>
         </div>
     </div>
+    @endif
 
     <div class="panel panel-default">
         <div class="panel-heading">Quản lý hệ thống</div>
