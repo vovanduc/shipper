@@ -50,11 +50,22 @@ class Authenticate
         foreach(\Config::get('lib.PERMISSIONS') as $key => $value) {
             foreach($value as $key_temp => $value_temp) {
                 if($request_permissions[1] == $key) {
-                    // if($key_temp == $request_permissions[2]) {
-                    //     if(!$permissions[$key][$key_temp]){
-                            view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
-                        //}
-                    //}
+
+                        view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
+
+                        // Module users
+                        if ($key == 'users') {
+                            if (Auth::user()->is_root) {
+                                view()->share('permission_accept_'.$key_temp, true);
+                            }
+
+                            if ($key_temp == 'show' || $key_temp == 'update') {
+                                if($request->route('users') == \Auth::user()->uuid) {
+                                    view()->share('permission_accept_'.$key_temp, true);
+                                }
+                            }
+                        }
+
                 }
             }
         }

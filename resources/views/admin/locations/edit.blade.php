@@ -1,11 +1,17 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_update)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_update)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-6">{{Lang::get('admin.location.edit')}} {{$result->username}} ( {{$result->email}} )</div>
+                <div class="col-md-6">{{Lang::get('admin.location.edit')}} ( {{$result->name}} )</div>
                 <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.locations.index')}}">Trở lại</a></span></div>
             </div>
         </div>
@@ -75,4 +81,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

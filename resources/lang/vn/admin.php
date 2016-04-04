@@ -22,7 +22,12 @@ return [
 			'update' => 'Cập nhật',
 			'delete' => 'Xóa',
 			'permission' => 'Phân quyền',
-			'money' => 'Xem giá tiền'
+			'money' => 'Xem giá tiền',
+			'find' => 'Tìm kiện hàng vận chuyển',
+			'barcode' => 'Quét mã vạch',
+			'shippers' => 'Xem thống kê người đi giao hàng',
+			'customers' => 'Xem thống kê khách hàng',
+			'chart' => 'Xem thống kê biểu đồ',
 		],
 	'shipper' =>
 		[

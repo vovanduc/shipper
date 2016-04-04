@@ -16,10 +16,6 @@ class LogsController extends Controller
     public function __construct(Request $request)
     {
         $this->request = $request;
-
-        if(\Auth::user()->is_admin == false) {
-            return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
-        }
     }
 
     /**

@@ -2,6 +2,11 @@
 
 @section('content')
 
+@if(!$permission_accept_show)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_show)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -207,12 +212,13 @@
             <br/>
             <div class="row">
                 <div class="col-md-12 col-lg-12 " align="center">
-                    <a href="{{URL::route('admin.packages.edit', $result->uuid)}}" class="btn btn-primary btn-block">Sửa thông tin</a>
+                    <a href="{{URL::route('admin.packages.edit', $result->uuid)}}" class="btn btn-primary btn-block {{!$permission_accept_update ? 'disabled' : ''}}">Sửa thông tin</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @section('javascript')

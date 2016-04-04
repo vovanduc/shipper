@@ -1,6 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_show)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_show)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">Nhân viên {{$result->username}} ( {{$result->email}} )</div>
@@ -18,6 +24,18 @@
                         <tr>
                             <td>ID</td>
                             <td>{{$result->uuid}} </td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{$result->username}} </td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>
+                                @if($result->password)
+                                    ******
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Tên</td>
@@ -52,7 +70,7 @@
                                     <li class="list-group-item">
                                         {{Lang::get('admin.permissions.'.$key_temp)}}
                                         <span class="pull-right">
-                                            @if($result->permissions[$key][$key_temp])
+                                            @if(isset($result->permissions[$key][$key_temp]))
                                                 Có
                                             @else
                                                 Không
@@ -66,11 +84,12 @@
                     </tbody>
                 </table>
                 @if (\Auth::user()->uuid == $result->uuid)
-                    <a href="{{URL::route('admin.users.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                    <a href="{{URL::route('admin.users.edit', $result->uuid)}}" class="btn btn-primary {{!$permission_accept_update ? 'disabled' : ''}}">Sửa thông tin</a>
                 @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endif
 @endsection

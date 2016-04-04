@@ -1,6 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_add)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_add)
 <div class="col-md-9">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -64,4 +70,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

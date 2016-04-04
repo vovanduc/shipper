@@ -16,10 +16,6 @@ class PackagesBarcodeController extends Controller
     {
         $this->packages = $packages;
         $this->request = $request;
-
-        if(\Auth::user()->is_admin == false) {
-            return \Redirect::route('admin.index')->with('message_danger', trans('admin.global.no_permission'));
-        }
     }
 
     protected function validator(array $data, array $rules)

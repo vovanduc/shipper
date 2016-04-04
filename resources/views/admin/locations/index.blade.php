@@ -1,12 +1,18 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_index)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_index)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
         		    <div class="col-md-6">{{Lang::get('admin.location.index')}}</div>
-                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.locations.create')}}">Thêm</a></span></div>
+                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.locations.create')}}" class="btn {{!$permission_accept_add ? 'disabled' : ''}}">Thêm</a></span></div>
             </div>
         </div>
 
@@ -36,10 +42,10 @@
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>
             	        					  @if (\Auth::user()->is_admin)
-            		        					<a href="{{URL::route('admin.locations.show', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.locations.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
             		        						<i class="fa fa-search"></i> Xem
             		        					</a>
-            		        					<a href="{{URL::route('admin.locations.edit', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.locations.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
             		        						<i class="fa fa-pencil"></i> Sửa
             									    </a>
                 									<!-- {!! Form::open(array('route' => array('admin.locations.destroy', $item->uuid), 'method' => 'delete')) !!}
@@ -85,4 +91,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

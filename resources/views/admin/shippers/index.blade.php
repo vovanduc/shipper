@@ -1,55 +1,63 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_index)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_index)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
         		    <div class="col-md-6">{{Lang::get('admin.shipper.index')}}</div>
-                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.shippers.create')}}">Thêm</a></span></div>
+                <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.shippers.create')}}" class="btn {{!$permission_accept_add ? 'disabled' : ''}}">Thêm</a></span></div>
             </div>
         </div>
 
         <div class="panel-body">
-            {{ Form::open(array('route' => array('admin.shippers.search'), 'method' => 'POST')) }}
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-xs-6" >
-                            <div class="left-inner-addon">
-                                <input type="text"  name="name" class="form-control" placeholder="Tên" value="{{ $name }}"/>
+            @if($permission_accept_search)
+                {{ Form::open(array('route' => array('admin.shippers.search'), 'method' => 'POST')) }}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-6" >
+                                <div class="left-inner-addon">
+                                    <input type="text"  name="name" class="form-control" placeholder="Tên" value="{{ $name }}"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" >
+                                <div class="right-inner-addon">
+                                    <input type="text" name="email" class="form-control" placeholder="Email" value="{{ $email }}"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-6" >
-                            <div class="right-inner-addon">
-                                <input type="text" name="email" class="form-control" placeholder="Email" value="{{ $email }}"/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6" >
+                                <div class="left-inner-addon">
+                                    <input type="text"  name="phone" class="form-control" placeholder="Điện thoại" value="{{ $phone }}"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" >
+                                <div class="right-inner-addon">
+                                    <input type="text" name="address" class="form-control" placeholder="Địa chỉ" value="{{ $address }}"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-xs-6" >
-                            <div class="left-inner-addon">
-                                <input type="text"  name="phone" class="form-control" placeholder="Điện thoại" value="{{ $phone }}"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-6" >
-                            <div class="right-inner-addon">
-                                <input type="text" name="address" class="form-control" placeholder="Địa chỉ" value="{{ $address }}"/>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                      <div class="col-xs-12" >
-                          <button type="submit" class="btn btn-primary btn-block">
-                            Tìm kiếm
-                          </button>
-                      </div>
-                </li>
-            </ul>
-            {{ Form::close() }}
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                          <div class="col-xs-12" >
+                              <button type="submit" class="btn btn-primary btn-block">
+                                Tìm kiếm
+                              </button>
+                          </div>
+                    </li>
+                </ul>
+                {{ Form::close() }}
+            @endif
 
           	<table class="table table-hover table-responsive">
           		<thead>
@@ -73,14 +81,14 @@
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>
             	        					  @if (\Auth::user()->is_admin)
-            		        					<a href="{{URL::route('admin.shippers.show', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.shippers.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
             		        						<i class="fa fa-search"></i> Xem
             		        					</a>
-            		        					<a href="{{URL::route('admin.shippers.edit', $item->uuid)}}">
+            		        					<a href="{{URL::route('admin.shippers.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
             		        						<i class="fa fa-pencil"></i> Sửa
             									    </a>
                 									{!! Form::open(array('route' => array('admin.shippers.destroy', $item->uuid), 'method' => 'delete')) !!}
-                										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
+                										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
 
                 											<i class="fa fa-trash-o"></i> Xóa
 
@@ -89,6 +97,10 @@
 
                 											function ConfirmDelete()
                 										    {
+
+                                                                @if(!$permission_accept_delete)
+                                                                    return false;
+                                                                @endif
 
                 										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
 
@@ -122,4 +134,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

@@ -1,6 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_show)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_show)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -51,7 +57,7 @@
                             <td>
                                 @if($result->password)
                                     ******
-                                @endif    
+                                @endif
                             </td>
                         </tr>
                         <tr>
@@ -93,10 +99,11 @@
                     </tbody>
                 </table>
 
-                <a href="{{URL::route('admin.shippers.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                <a href="{{URL::route('admin.shippers.edit', $result->uuid)}}" class="btn btn-primary {{!$permission_accept_update ? 'disabled' : ''}}">Sửa thông tin</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endif
 @endsection

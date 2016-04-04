@@ -69,7 +69,8 @@
                     </tbody>
                 </table>
 
-                <a href="{{URL::route('admin.customers.edit', $result->uuid)}}" class="btn btn-primary">Sửa thông tin</a>
+                <a href="{{URL::route('admin.customers.edit', $result->uuid)}}" class="btn btn-primary {{!$permission_accept_update ? 'disabled' : ''}}">Sửa thông tin</a>
+
                 </div>
             </div>
         </div>

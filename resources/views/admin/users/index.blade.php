@@ -1,12 +1,18 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_index)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_index)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
         	<div class="row">
         		<div class="col-md-6">Quản lý nhân viên</div>
-        		<div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.users.create')}}">Thêm</a></span></div>
+        		<div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.users.create')}}" class="btn {{!$permission_accept_add ? 'disabled' : ''}}">Thêm</a></span></div>
         	</div>
         </div>
 
@@ -32,15 +38,15 @@
 	        				<td>{{ $item->created_at }}</td>
 	        				<td>
 
-	        					<a href="{{URL::route('admin.users.show', $item->uuid)}}">
+	        					<a href="{{URL::route('admin.users.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
 	        						<i class="fa fa-search"></i> Xem
 	        					</a>
 
-		        					<a href="{{URL::route('admin.users.edit', $item->uuid)}}">
+		        					<a href="{{URL::route('admin.users.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
 		        						<i class="fa fa-pencil"></i> Sửa
 									</a>
 									{!! Form::open(array('route' => array('admin.users.destroy', $item->uuid), 'method' => 'delete')) !!}
-										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
+										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
 
 											<i class="fa fa-trash-o"></i> Xóa
 
@@ -49,6 +55,10 @@
 
 											function ConfirmDelete()
 										    {
+
+                                                @if(!$permission_accept_delete)
+                                                    return false;
+                                                @endif
 
 										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
 
@@ -73,4 +83,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

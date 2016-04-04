@@ -114,6 +114,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{URL::route('admin.users.change_pass')}}"><i class="fa fa-btn fa-user"></i>Thay đổi mật khẩu</a></li>
+                                <li><a href="{{URL::route('admin.users.show', Auth::user()->uuid)}}"><i class="fa fa-btn fa-user"></i>Cập nhật thông tin</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Đăng xuất</a></li>
                             </ul>
                         </li>

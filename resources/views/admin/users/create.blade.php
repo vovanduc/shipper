@@ -1,6 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_add)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_add)
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">Thêm mới nhân viên</div>
@@ -87,7 +93,7 @@
                         $permissions = unserialize(Auth::user()->permissions);
                         $permissions = $permissions['users']['permission'];
                     ?>
-                    @if($permissions)
+                    @if($permission_accept_permission)
                     <div class="form-group">
                         <label class="col-md-4 control-label">Phân quyền</label>
 
@@ -122,4 +128,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

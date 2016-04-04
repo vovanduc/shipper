@@ -13,6 +13,7 @@ return [
             'shippers' => 'Người đi giao hàng',
             'packages' => 'Kiện hàng',
 			'locations' => 'Vị trí',
+			'statistics' => 'Thống kê',
 			'logs' => 'Lịch sử truy cập',
 		],
     'ACTION' =>
@@ -57,6 +58,8 @@ return [
 				'update' => false,
 				'delete' => false,
 				'money' => false,
+				'find' => false,
+				'barcode' => false,
 			],
 			'locations' => [
 				'index' => false,
@@ -65,6 +68,11 @@ return [
 				'add' => false,
 				'update' => false,
 				'delete' => false,
+			],
+			'statistics' => [
+				'shippers' => false,
+				'customers' => false,
+				'chart' => false,
 			],
 			'logs' => [
 				'index' => false,

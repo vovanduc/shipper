@@ -8,7 +8,7 @@ class UserRepository implements IUserRepository
 {
     public function all($paginate)
     {
-        return User::where('deleted', 0)->paginate($paginate);
+        return User::where('deleted', 0)->orderBy('id', 'DESC')->paginate($paginate);
     }
 
     public function firstOrFail($id)

@@ -11,8 +11,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-            		    <div class="col-md-6">Quản lý khách hàng</div>
-                    <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.create')}}">Thêm</a></span></div>
+            		<div class="col-md-6">Quản lý khách hàng</div>
+                    <div class="col-md-6"><span class="pull-right"><a href="{{URL::route('admin.customers.create')}}" class="btn {{!$permission_accept_add ? 'disabled' : ''}}">Thêm</a></span></div>
                 </div>
             </div>
 
@@ -80,38 +80,37 @@
                 	        				<td>{!! $item->cv_active !!}</td>
                 	        				<td>{{ $item->created_at }}</td>
                 	        				<td>
-                	        					@if (\Auth::user()->is_admin)
-                		        					<a href="{{URL::route('admin.customers.show', $item->uuid)}}">
-                		        						<i class="fa fa-search"></i> Xem
-                		        					</a>
-                		        					<a href="{{URL::route('admin.customers.edit', $item->uuid)}}">
-                		        						<i class="fa fa-pencil"></i> Sửa
-            									    </a>
-                									{!! Form::open(array('route' => array('admin.customers.destroy', $item->uuid), 'method' => 'delete')) !!}
-                										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle">
+            		        					<a href="{{URL::route('admin.customers.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
+            		        						<i class="fa fa-search"></i> Xem
+            		        					</a>
+            		        					<a href="{{URL::route('admin.customers.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
+            		        						<i class="fa fa-pencil"></i> Sửa
+        									    </a>
+            									{!! Form::open(array('route' => array('admin.customers.destroy', $item->uuid), 'method' => 'delete')) !!}
+            										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
 
-                											<i class="fa fa-trash-o"></i> Xóa
+            											<i class="fa fa-trash-o"></i> Xóa
 
-                										</button>
-                										<script type="text/javascript">
+            										</button>
+            										<script type="text/javascript">
+            											function ConfirmDelete()
+            										    {
+                                                            @if(!$permission_accept_delete)
+                                                                return false;
+                                                            @endif
 
-                											function ConfirmDelete()
-                										    {
+                                                            var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
 
-                										      var x = confirm("{{Lang::get('admin.global.sure_delete')}}");
+                                                            if (x)
 
-                										      if (x)
+                                                                return true;
 
-                										        return true;
+                                                            else
 
-                										      else
-
-                										        return false;
-                										    }
-
-                										</script>
-                									{!! Form::close() !!}
-            								    @endif
+                                                                return false;
+            										    }
+            										</script>
+            									{!! Form::close() !!}
                 	        			  </td>
               	        			</tr>
                     			@endforeach

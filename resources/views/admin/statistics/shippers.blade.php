@@ -1,6 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+@if(!$permission_accept_shippers)
+    @include('admin.errors.permission')
+@endif
+
+@if($permission_accept_shippers)
 <style>
     .badge_mini{
         font-size: 20px;
@@ -25,6 +31,6 @@
 
         </div>
     </div>
-
 </div>
+@endif
 @endsection
