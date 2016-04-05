@@ -131,6 +131,15 @@
 
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Gán phân quyền</label>
+
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                {{Form::select("list_users[]",$option_users,null,array('class' => 'form-control', 'multiple' =>'multiple', 'style'=>'height: 400px;', 'name' =>'list_users[]'))}}
+                            </ul>
+                        </div>
+                    </div>
                     @endif
 
                     <div class="form-group">

@@ -137,11 +137,18 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        $option_users = array();
+        $users = \User::where('deleted', 0)->where('Uuid','<>',$id)->get();
+        foreach($users as $item) {
+            $option_users[$item->uuid] = $item->name.' - '.$item->email;
+        }
+
         $result = $this->users->firstOrFail($id);
 
         $result->permissions = unserialize($result->permissions);
 
-        return view('admin.users.edit', compact('result'));
+        return view('admin.users.edit', compact('result'))
+        ->with('option_users', $option_users);
     }
 
     /**
@@ -185,7 +192,16 @@ class UsersController extends Controller
             \Input::merge(array('permissions' => serialize($temp_permissions)));
         }
 
-        $result = $this->users->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
+        // Check permission add users another
+        if($this->request->list_users) {
+            foreach($this->request->list_users as $item) {
+                if($item) {
+                    $this->users->update($item,array('permissions' => serialize($temp_permissions)));
+                }
+            }
+        }
+
+        $result = $this->users->update($id, $this->request->except(['_method', '_token', 'password_confirmation', 'list_users']));
 
         if ($result) {
             $result = $this->users->firstOrFail($id);
