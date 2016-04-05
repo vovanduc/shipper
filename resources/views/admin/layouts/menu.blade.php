@@ -13,11 +13,10 @@
     </div>
 
     <?php
-        $permissions = unserialize(Auth::user()->permissions);
+        $permissions = \User::get_permissions(\Auth::user()->uuid);
         $permissions = $permissions['reports']['shippers'];
     ?>
-    @if(isset($permissions))
-        @if($permissions)
+    @if($permissions)
         <div class="panel panel-default">
             <div class="panel-heading">Báo cáo</div>
             <div class="panel-body">
@@ -26,7 +25,6 @@
                 </ol>
             </div>
         </div>
-        @endif
     @endif
 
     <div class="panel panel-default">
