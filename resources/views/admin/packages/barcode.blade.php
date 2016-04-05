@@ -158,7 +158,7 @@
                                         <td>{{$result->invoice}} </td>
                                     </tr>
                                     <tr>
-                                        <td>Thông tin</td>
+                                        <td>Thông tin kiện hàng</td>
                                         <td>{{$result->info}} </td>
                                     </tr>
                                     <tr>

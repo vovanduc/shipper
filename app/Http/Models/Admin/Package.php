@@ -15,7 +15,7 @@ class Package extends \Eloquent
         'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps','content','quantity','parent','location_id','delivery_at','invoice',
-        'service_type','weight','content','kgs','phone','customer_from','province_id','district_id','info'
+        'service_type','weight','content','kgs','phone','customer_from','province_id','district_id','info','date'
     ];
 
     /**
@@ -67,6 +67,12 @@ class Package extends \Eloquent
 
     public function getDeliveryAtAttribute($date)
     {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
+    }
+
+    public function getDateAttribute($date)
+    {
+        if($date == '0000-00-00 00:00:00') return '';
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
     }
 

@@ -85,8 +85,12 @@
                                 <td>{{$result->invoice}} </td>
                             </tr>
                             <tr>
-                                <td>Thông tin</td>
+                                <td>Thông tin kiện hàng</td>
                                 <td>{{$result->info}} </td>
+                            </tr>
+                            <tr>
+                                <td>Ngày tháng năm</td>
+                                <td>{{$result->date}} </td>
                             </tr>
                             <tr>
                                 <td>Service type</td>

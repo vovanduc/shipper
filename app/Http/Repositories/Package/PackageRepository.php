@@ -35,6 +35,9 @@ class PackageRepository implements IPackageRepository
     public function add($input)
     {
         $input = array_add($input, 'uuid', \Uuid::generate(4)->string);
+
+        $input['date'] = new \DateTime($input['date']);
+
         return \Package::create($input);
     }
 
@@ -44,6 +47,10 @@ class PackageRepository implements IPackageRepository
             if(\Config::get('lib.PACKAGE.delivery_success') == $input['status']) {
                 $input['delivery_at'] = new \DateTime();
             }
+        }
+
+        if(isset($input['date'])) {
+            $input['date'] = new \DateTime($input['date']);
         }
 
         return \Package::where('uuid', $id)->update($input);

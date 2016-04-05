@@ -85,10 +85,18 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('info') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Thông tin</label>
+                        <label class="col-md-4 control-label">Thông tin kiện hàng</label>
 
                         <div class="col-md-6">
                             {{Form::text('info',null,array('class' => 'form-control'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Ngày tháng năm</label>
+
+                        <div class="col-md-6">
+                            {{Form::text('date',null,array('class' => 'form-control datepicker'))}}
                         </div>
                     </div>
 
@@ -269,8 +277,8 @@
 @section('javascript')
 <script>
     $(document).ready(function() {
-        @if($result->delivery_at)
-            $(".datepicker").datepicker('setDate', '{{$result->delivery_at}}');
+        @if($result->date)
+            $(".datepicker").datepicker('setDate', '{{$result->date}}');
         @endif
     });
 </script>

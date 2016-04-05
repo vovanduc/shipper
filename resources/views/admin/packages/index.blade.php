@@ -111,8 +111,22 @@
                                 ?>
           	        			<tr class="text-center">
         	        				<th></th>
-        	        				<td>{{ $item->from_customer }}</td>
-        	        				<td>{{ $item->customer }}</td>
+        	        				<td>
+                                        {{ $item->from_customer }}
+
+                                        @if($item->info)
+                                            <hr>
+                                            <b>{{$item->info}}</b>
+                                        @endif
+                                    </td>
+        	        				<td>
+                                        {{ $item->customer }}
+
+                                        @if($item->date)
+                                            <hr>
+                                            <b>{{$item->date}}</b>
+                                        @endif
+                                    </td>
         	        				<td>{!! $item->cv_status !!}</td>
         	        				<td>
     		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
@@ -151,7 +165,7 @@
     									{!! Form::close() !!}
         	        			  </td>
           	        			</tr>
-                                @if ($item->show_barcode)
+                                @if ($item->show_barcode == '9999999')
                                 <tr class="text-center">
                                     <td colspan="6" style="border-top:0px">
 

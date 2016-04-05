@@ -153,6 +153,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Regulus\ActivityLog\ActivityLogServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Application Service Providers...
