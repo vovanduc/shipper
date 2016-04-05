@@ -13,18 +13,20 @@
     </div>
 
     <?php
-        //$permissions = unserialize(Auth::user()->permissions);
-        //$permissions = $permissions['reports']['shippers'];
+        $permissions = unserialize(Auth::user()->permissions);
+        $permissions = $permissions['reports']['shippers'];
     ?>
     @if(isset($permissions))
-    <!-- <div class="panel panel-default">
-        <div class="panel-heading">Báo cáo</div>
-        <div class="panel-body">
-            <ol>
-            	<li><a href="{{URL::route('admin.reports.shippers')}}">Người đi giao hàng</a></li>
-            </ol>
+        @if($permissions)
+        <div class="panel panel-default">
+            <div class="panel-heading">Báo cáo</div>
+            <div class="panel-body">
+                <ol>
+                	<li><a href="{{URL::route('admin.reports.shippers')}}">Người đi giao hàng</a></li>
+                </ol>
+            </div>
         </div>
-    </div> -->
+        @endif
     @endif
 
     <div class="panel panel-default">
