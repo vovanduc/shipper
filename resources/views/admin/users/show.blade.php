@@ -64,13 +64,16 @@
                         <tr>
                             <td>Phân quyền</td>
                             <td>
-                                @foreach(\Config::get('lib.PERMISSIONS') as $key => $value)
+                                <?php
+                                    $array = \User::get_permissions($result->uuid);
+                                ?>
+                                @foreach($array as $key => $value)
                                     <li class="list-group-item list-group-item-info"><b>{{\Config::get('lib.MODULE.'.$key)}}</b></li>
                                     @foreach($value as $key_temp => $permision)
                                     <li class="list-group-item">
                                         {{Lang::get('admin.permissions.'.$key_temp)}}
                                         <span class="pull-right">
-                                            @if(isset($result->permissions[$key][$key_temp]))
+                                            @if($permision)
                                                 Có
                                             @else
                                                 Không

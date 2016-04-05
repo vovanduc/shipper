@@ -132,10 +132,6 @@
                                 <td>Quận</td>
                                 <td>{{\Package::get_county_option($result->county)}} </td>
                             </tr> -->
-                            <?php
-                                $permissions = unserialize(Auth::user()->permissions);
-                                $permissions = $permissions['packages']['money'];
-                            ?>
                             @if($permission_accept_money)
                             <tr>
                                 <td>Ước tính giá vận chuyển</td>

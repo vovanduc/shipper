@@ -57,12 +57,15 @@ class User extends Authenticatable
         }
     }
 
-    public static function hasAccess($module, $action) {
-        $permissions = \Auth::user()->permissions;
-        $permissions = unserialize($permissions);
-
-
-
-        return $permissions['customers']['index'];
+    public static function get_permissions($uuid) {
+        $array_1 = \Config::get('lib.PERMISSIONS');
+        $array_2 = \User::whereUuid($uuid)->first()->permissions;
+        if($array_2 == '') {
+            $array_2 = \Config::get('lib.PERMISSIONS');
+        } else {
+            $array_2 = unserialize($array_2);
+        }
+        $array = array_merge($array_1, $array_2);
+        return $array;
     }
 }

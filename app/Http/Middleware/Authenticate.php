@@ -30,9 +30,6 @@ class Authenticate
 
         $request_permissions = explode('.',\Request::route()->getName());
 
-        $permissions = \Auth::user()->permissions;
-        $permissions = unserialize($permissions);
-
         if ($request_permissions[2] == 'edit') {
             $request_permissions[2] = 'update';
         }
@@ -45,29 +42,30 @@ class Authenticate
             $request_permissions[2] = 'delete';
         }
 
+        $permissions = \User::get_permissions(\Auth::user()->uuid);
+
         view()->share('permission_accept_'.$request_permissions[2], true);
 
         foreach(\Config::get('lib.PERMISSIONS') as $key => $value) {
             foreach($value as $key_temp => $value_temp) {
                 if($request_permissions[1] == $key) {
 
-                        if(isset($permissions[$key][$key_temp])) {
-                            view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
+                    if(isset($permissions[$key][$key_temp])) {
+                        view()->share('permission_accept_'.$key_temp, $permissions[$key][$key_temp]);
+                    }
+
+                    // Module users
+                    if ($key == 'users') {
+                        if (Auth::user()->is_root) {
+                            view()->share('permission_accept_'.$key_temp, true);
                         }
-                        
-                        // Module users
-                        if ($key == 'users') {
-                            if (Auth::user()->is_root) {
+
+                        if ($key_temp == 'show' || $key_temp == 'update') {
+                            if($request->route('users') == \Auth::user()->uuid) {
                                 view()->share('permission_accept_'.$key_temp, true);
                             }
-
-                            if ($key_temp == 'show' || $key_temp == 'update') {
-                                if($request->route('users') == \Auth::user()->uuid) {
-                                    view()->share('permission_accept_'.$key_temp, true);
-                                }
-                            }
                         }
-
+                    }
                 }
             }
         }
