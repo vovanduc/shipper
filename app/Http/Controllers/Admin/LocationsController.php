@@ -31,18 +31,6 @@ class LocationsController extends Controller
      */
     public function index()
     {
-
-        $results = \Package::groupBy('label')->havingRaw('count(*) > 1');
-
-        if($results->count()) {
-            foreach($results->get() as $item) {
-                $string = substr($item->uuid, 0, 5);
-                $item->label = $string;
-                $item->save();
-            }
-            exit;
-        } 
-
         $result = $this->locations->all(10);
         return view('admin.locations.index', compact('result'));
     }
