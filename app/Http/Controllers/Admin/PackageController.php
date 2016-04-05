@@ -509,7 +509,7 @@ class PackagesController extends Controller
 
         if ($this->request->has('shipper_phone')) {
             $search = $this->shippers->findBy('phone', $this->request->shipper_phone)->first();
-            if($search->uuid) {
+            if($search) {
                 $result = $result->where('shipper_id', $search->uuid);
             }
         }
