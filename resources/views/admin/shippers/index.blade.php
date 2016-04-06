@@ -80,13 +80,12 @@
             	        				<td>{!! $item->cv_active !!}</td>
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>
-            	        					  @if (\Auth::user()->is_admin)
             		        					<a href="{{URL::route('admin.shippers.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
             		        						<i class="fa fa-search"></i> Xem
             		        					</a>
             		        					<a href="{{URL::route('admin.shippers.edit', $item->uuid)}}" class="btn {{!$permission_accept_update ? 'disabled' : ''}}">
             		        						<i class="fa fa-pencil"></i> Sửa
-            									    </a>
+            									</a>
                 									{!! Form::open(array('route' => array('admin.shippers.destroy', $item->uuid), 'method' => 'delete')) !!}
                 										<button Onclick="return ConfirmDelete();" type="submit" class="btn btn-xs blue btn-circle {{!$permission_accept_delete ? 'disabled' : ''}}">
 
@@ -115,7 +114,6 @@
 
                 										</script>
                 									{!! Form::close() !!}
-            								      @endif
             	        			  </td>
           	        			</tr>
                 			@endforeach

@@ -216,6 +216,7 @@ return [
         'Carbon' => Carbon\Carbon::class,
         'User' => App\Http\Models\Admin\User::class,
         'Package' => App\Http\Models\Admin\Package::class,
+        'Shipment' => App\Http\Models\Admin\Shipment::class,
         'Customer' => App\Http\Models\Admin\Customer::class,
         'Shipper' => App\Http\Models\Admin\Shipper::class,
         'Location' => App\Http\Models\Admin\Location::class,

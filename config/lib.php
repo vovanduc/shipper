@@ -16,6 +16,7 @@ return [
 			'statistics' => 'Thống kê',
 			'reports' => 'Báo cáo',
 			'logs' => 'Lịch sử truy cập',
+			'shipments' => 'Lô hàng',
 		],
     'ACTION' =>
 		[
@@ -61,6 +62,14 @@ return [
 				'money' => false,
 				'find' => false,
 				'barcode' => false,
+			],
+			'shipments' => [
+				'index' => false,
+				'show' => false,
+				'search' => false,
+				'add' => false,
+				'update' => false,
+				'delete' => false,
 			],
 			'locations' => [
 				'index' => false,

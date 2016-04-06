@@ -56,6 +56,10 @@ Route::group(['middleware' => 'web'], function () {
 		Route::resource('locations', 'Admin\LocationsController');
 		Route::any('locations/search', array("as"=>"admin.locations.search","uses"=>"Admin\LocationsController@search"));
 
+		// Shipments
+		Route::resource('shipments', 'Admin\ShipmentsController');
+		Route::any('shipments/search', array("as"=>"admin.shipments.search","uses"=>"Admin\ShipmentsController@search"));
+
 		// Statistics
         Route::get('/statistics/shippers', array("as"=>"admin.statistics.shippers","uses"=>"Admin\StatisticsController@statistics"));
 		Route::get('/statistics/customers', array("as"=>"admin.statistics.customers","uses"=>"Admin\StatisticsController@customers"));

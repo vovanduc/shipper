@@ -51,7 +51,7 @@ class CreatePackagesTable extends Migration
                 if (!Schema::hasColumn('packages', 'customer_from')) $table->uuid('customer_from');
                 if (!Schema::hasColumn('packages', 'province_id')) $table->string('province_id');
                 if (!Schema::hasColumn('packages', 'district_id')) $table->string('district_id');
-                if (!Schema::hasColumn('packages', 'info')) $table->string('info');
+                if (!Schema::hasColumn('packages', 'shipment_id')) $table->uuid('shipment_id');
                 if (!Schema::hasColumn('packages', 'date')) $table->dateTime('date');
             });
         }

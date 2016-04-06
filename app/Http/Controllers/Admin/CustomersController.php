@@ -83,7 +83,7 @@ class CustomersController extends Controller
             ]);
             return \Redirect::route('admin.customers.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.customers.index')->with('message_danger', trans('admin.global.message_danger'));
         }
 
     }
@@ -155,7 +155,7 @@ class CustomersController extends Controller
             ]);
             return \Redirect::route('admin.customers.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.customers.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -181,7 +181,7 @@ class CustomersController extends Controller
                 ]);
                 return \Redirect::route('admin.customers.index')->with('message_success', $mess);
             } else {
-                return \Redirect::route('admin.customers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.customers.index')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }

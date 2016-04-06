@@ -55,4 +55,11 @@ return [
 			'edit' => 'Cập nhật vị trí',
 			'info' => 'Thông tin vị trí',
 		],
+	'shipment' =>
+		[
+			'index' => 'Quản lý lô hàng',
+			'add' => 'Thêm lô hàng',
+			'edit' => 'Cập nhật lô hàng',
+			'info' => 'Thông tin lô hàng',
+		],
 ];

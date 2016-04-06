@@ -16,10 +16,6 @@ class UsersController extends Controller
     {
         $this->users = $users;
         $this->request = $request;
-
-        // if(\Auth::user()->is_admin == false) {
-        //     return \Redirect::route('admin.home.index')->with('message_danger', trans('admin.global.no_permission'));
-        // }
     }
 
     protected function validator(array $data, array $rules)
@@ -105,7 +101,7 @@ class UsersController extends Controller
             ]);
             return \Redirect::route('admin.users.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.users.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -215,7 +211,7 @@ class UsersController extends Controller
             ]);
             return \Redirect::route('admin.users.edit', $id)->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.users.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -232,7 +228,7 @@ class UsersController extends Controller
             if ($result) {
                 return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.delete_success'));
             } else {
-                return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.users.index')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }
@@ -246,7 +242,7 @@ class UsersController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return \Redirect::route('admin.users.change_pass')->withErrors($validator);
+                return \Redirect::route('admin.users.index')->withErrors($validator);
             }
 
             $password = $this->request->input('password');
@@ -261,7 +257,7 @@ class UsersController extends Controller
                     'description' => 'Thay đổi mật khẩu',
                     'userId'     => \Auth::user()->uuid,
                 ]);
-                return \Redirect::route('admin.users.index')->with('message_success', trans('admin.global.message_success'));
+                return \Redirect::route('admin.users.change_pass')->with('message_success', trans('admin.global.message_success'));
             } else {
                 return \Redirect::route('admin.users.change_pass')->with('message_danger', trans('admin.global.message_danger'));
             }

@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Repositories\Location\ILocationRepository;
-use App\Http\Models\Admin\Location as Location;
+use App\Http\Repositories\Shipment\IShipmentRepository;
+use App\Http\Models\Admin\Shipment as Shipment;
 
-class LocationsController extends Controller
+class ShipmentsController extends Controller
 {
-    protected $locations;
+    protected $shipments;
 
-    public function __construct(ILocationRepository $locations, Request $request)
+    public function __construct(IShipmentRepository $shipments, Request $request)
     {
-        $this->locations = $locations;
+        $this->shipments = $shipments;
         $this->request = $request;
     }
 
@@ -31,8 +31,8 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $result = $this->locations->all(10);
-        return view('admin.locations.index', compact('result'));
+        $result = $this->shipments->all(10);
+        return view('admin.shipments.index', compact('result'));
     }
 
     /**
@@ -42,7 +42,7 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        return view('admin.locations.create');
+        return view('admin.shipments.create');
     }
 
     /**
@@ -54,30 +54,29 @@ class LocationsController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validator($this->request->all(), [
-                'name' => 'required|max:255|unique:locations',
-                'quantity' => 'required|numeric',
+                'key' => 'required|max:255|unique:shipments',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.locations.create')->withErrors($validator)->withInput();
+            return \Redirect::route('admin.shipments.create')->withErrors($validator)->withInput();
         }
 
         \Input::merge(array('created_by' => \Auth::user()->id));
 
-        $result = $this->locations->add($this->request->except(['_method', '_token', 'password_confirmation']));
+        $result = $this->shipments->add($this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.locations.show', $result->uuid).'">'.$result->name.'</a></b>';
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.shipments.show', $result->uuid).'">'.$result->name.'</a></b>';
             \Activity::log([
                 'contentId'   => $result->uuid,
-                'contentType' => 'location',
+                'contentType' => 'shipment',
                 'action'      => 'add',
                 'description' => $mess,
                 'userId'     => \Auth::user()->uuid,
             ]);
-            return \Redirect::route('admin.locations.index')->with('message_success', $mess);
+            return \Redirect::route('admin.shipments.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.locations.index')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shipments.index')->with('message_danger', trans('admin.global.message_danger'));
         }
 
     }
@@ -90,15 +89,15 @@ class LocationsController extends Controller
      */
     public function show($id)
     {
-        $result = $this->locations->firstOrFail($id);
+        $result = $this->shipments->firstOrFail($id);
         \Activity::log([
             'contentId'   => $id,
-            'contentType' => 'location',
+            'contentType' => 'shipment',
             'action'      => 'view',
-            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.locations.show', $id).'">'.$result->name.'</a></b>',
+            'description' => \Lang::get('admin.global.view').' <b><a target="_blank" href="'.\URL::route('admin.shipments.show', $id).'">'.$result->name.'</a></b>',
             'userId'     => \Auth::user()->uuid,
         ]);
-        return view('admin.locations.show', compact('result'));
+        return view('admin.shipments.show', compact('result'));
     }
 
     /**
@@ -109,8 +108,8 @@ class LocationsController extends Controller
      */
     public function edit($id)
     {
-        $result = $this->locations->firstOrFail($id);
-        return view('admin.locations.edit', compact('result'));
+        $result = $this->shipments->firstOrFail($id);
+        return view('admin.shipments.edit', compact('result'));
     }
 
     /**
@@ -123,31 +122,30 @@ class LocationsController extends Controller
     public function update($id)
     {
         $validator = $this->validator($this->request->all(), [
-            'name' => 'required|max:255|unique:locations,name,'.$id.',uuid',
-            'quantity' => 'required|numeric',
+            'key' => 'required|max:255|unique:shipments,key,'.$id.',uuid',
         ]);
 
         if ($validator->fails()) {
-            return \Redirect::route('admin.locations.edit', $id)->withErrors($validator);
+            return \Redirect::route('admin.shipments.edit', $id)->withErrors($validator);
         }
 
         \Input::merge(array('updated_by' => \Auth::user()->id));
 
-        $result = $this->locations->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
+        $result = $this->shipments->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
 
         if ($result) {
-            $result = $this->locations->firstOrFail($id);
-            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.locations.show', $id).'">'.$result->name.'</a></b>';
+            $result = $this->shipments->firstOrFail($id);
+            $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.shipments.show', $id).'">'.$result->name.'</a></b>';
             \Activity::log([
                 'contentId'   => $id,
-                'contentType' => 'location',
+                'contentType' => 'shipment',
                 'action'      => 'update',
                 'description' => $mess,
                 'userId'     => \Auth::user()->uuid,
             ]);
-            return \Redirect::route('admin.locations.index')->with('message_success', $mess);
+            return \Redirect::route('admin.shipments.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.locations.index')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shipments.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -160,20 +158,20 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         if ($id) {
-            $data = $this->locations->firstOrFail($id);
-            $result = $this->locations->update($id, ['deleted' => 1]);
+            $data = $this->shipments->firstOrFail($id);
+            $result = $this->shipments->update($id, ['deleted' => 1]);
             if ($result) {
-                $mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.locations.show', $id).'">'.$data->name.'</a></b>';
+                $mess = \Lang::get('admin.global.delete_success').' <b><a target="_blank" href="'.\URL::route('admin.shipments.show', $id).'">'.$data->name.'</a></b>';
                 \Activity::log([
                     'contentId'   => $id,
-                    'contentType' => 'location',
+                    'contentType' => 'shipment',
                     'action'      => 'delete',
                     'description' => $mess,
                     'userId'     => \Auth::user()->uuid,
                 ]);
-                return \Redirect::route('admin.locations.index')->with('message_success', $mess);
+                return \Redirect::route('admin.shipments.index')->with('message_success', $mess);
             } else {
-                return \Redirect::route('admin.locations.index')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.shipments.index')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }
@@ -182,10 +180,10 @@ class LocationsController extends Controller
     {
         if (!$this->request->has('name') && !$this->request->has('email')
         && !$this->request->has('phone') && !$this->request->has('address')) {
-            return \Redirect::route('admin.locations.index');
+            return \Redirect::route('admin.shipments.index');
         }
 
-        $result = Location::where('deleted',0);
+        $result = Shipment::where('deleted',0);
 
         if ($this->request->has('name')) {
             $result = $result->where('name', 'LIKE', '%'.$this->request->name.'%');
@@ -205,7 +203,7 @@ class LocationsController extends Controller
 
         $result = $result->orderBy('id', 'DESC')->get();
 
-        return view('admin.locations.index', compact('result'))
+        return view('admin.shipments.index', compact('result'))
             ->with('name', $this->request->name)
             ->with('email', $this->request->email)
             ->with('phone', $this->request->phone)

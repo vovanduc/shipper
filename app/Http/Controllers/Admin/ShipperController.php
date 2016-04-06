@@ -88,7 +88,7 @@ class ShippersController extends Controller
             ]);
             return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shippers.index')->with('message_danger', trans('admin.global.message_danger'));
         }
 
     }
@@ -176,7 +176,7 @@ class ShippersController extends Controller
             ]);
             return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
         } else {
-            return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+            return \Redirect::route('admin.shippers.index')->with('message_danger', trans('admin.global.message_danger'));
         }
     }
 
@@ -202,7 +202,7 @@ class ShippersController extends Controller
                 ]);
                 return \Redirect::route('admin.shippers.index')->with('message_success', $mess);
             } else {
-                return \Redirect::route('admin.shippers.change_pass')->with('message_danger', trans('admin.global.message_danger'));
+                return \Redirect::route('admin.shippers.index')->with('message_danger', trans('admin.global.message_danger'));
             }
         }
     }
