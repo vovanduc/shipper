@@ -18,14 +18,14 @@ class ImportsController extends Controller
 
     public function excel()
     {
-        print 'Hello';exit;
+        //print 'Hello';exit;
 
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
 
         ############################################################################
-        $excel->parser->loadFile(base_path('public/assets/admin/excel/25.03.20161.csv'));
-        for ($i=9; $i <= 143 ; $i++) {
+        $excel->parser->loadFile(base_path('public/assets/admin/excel/01.04.20161.csv'));
+        for ($i=9; $i <= 153 ; $i++) {
             for ($k=1; $k <= 15 ; $k++) {
                 $string = $excel->parser->getCell($i,$k);
                 if ($k==2) $invoice = $excel->parser->getCell($i,$k);
@@ -38,6 +38,9 @@ class ImportsController extends Controller
                 if ($k==10) $content = $excel->parser->getCell($i,$k);
                 if ($k==15) $kgs = $excel->parser->getCell($i,$k);
             }
+
+            // Check invoice
+            if(\Package::whereInvoice($invoice)->first()) continue;
 
             if ($shipper_id) {
                 $shipper_data = \Customer::where('name', $shipper_id)->first();
@@ -52,7 +55,7 @@ class ImportsController extends Controller
                         'address' => $shipper_address,
                     );
                     \Customer::create($input);
-                    $shipper_id = '';
+                    $shipper_id = $uuid;
                 }
             }
 
@@ -69,7 +72,7 @@ class ImportsController extends Controller
                         'address' => $customer_address,
                     );
                     \Customer::create($input);
-                    $customer_id = '';
+                    $customer_id = $uuid;
                 }
             }
 
@@ -85,7 +88,7 @@ class ImportsController extends Controller
                 'content' => $content,
                 'kgs' => $kgs,
                 'address' => $customer_address,
-                'label' => 'label-'.$i,
+                'label' => \Package::create_label(),
                 'status' => $this->status,
             );
 
@@ -103,8 +106,8 @@ class ImportsController extends Controller
         ############################################################################
         print '<br/>############################################################################<br/>';
         ############################################################################
-        $excel->parser->loadFile(base_path('public/assets/admin/excel/29.03.20161.csv'));
-        for ($i=9; $i <= 232 ; $i++) {
+        $excel->parser->loadFile(base_path('public/assets/admin/excel/01.04.20162.csv'));
+        for ($i=9; $i <= 55 ; $i++) {
             for ($k=1; $k <= 15 ; $k++) {
                 $string = $excel->parser->getCell($i,$k);
                 if ($k==2) $invoice = $excel->parser->getCell($i,$k);
@@ -117,6 +120,9 @@ class ImportsController extends Controller
                 if ($k==10) $content = $excel->parser->getCell($i,$k);
                 if ($k==15) $kgs = $excel->parser->getCell($i,$k);
             }
+
+            // Check invoice
+            if(\Package::whereInvoice($invoice)->first()) continue;
 
             if ($shipper_id) {
                 $shipper_data = \Customer::where('name', $shipper_id)->first();
@@ -131,7 +137,7 @@ class ImportsController extends Controller
                         'address' => $shipper_address,
                     );
                     \Customer::create($input);
-                    $shipper_id = '';
+                    $shipper_id = $uuid;
                 }
             }
 
@@ -148,7 +154,7 @@ class ImportsController extends Controller
                         'address' => $customer_address,
                     );
                     \Customer::create($input);
-                    $customer_id = '';
+                    $customer_id = $uuid;
                 }
             }
 
@@ -164,7 +170,7 @@ class ImportsController extends Controller
                 'content' => $content,
                 'kgs' => $kgs,
                 'address' => $customer_address,
-                'label' => 'label-'.$i,
+                'label' => \Package::create_label(),
                 'status' => $this->status,
             );
 
@@ -179,7 +185,6 @@ class ImportsController extends Controller
                 print 'error B '.$i.'<br/>';
             }
         }
-        ############################################################################
 
         die;
     }
