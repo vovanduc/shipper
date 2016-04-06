@@ -24,6 +24,11 @@ class PackagesController extends Controller
         $this->customers = $customers;
         $this->shippers = $shippers;
         $this->request = $request;
+
+        // dd(storage_path());
+        // $files = \Storage::files('public');
+        // dd($files);
+
     }
 
     protected function validator(array $data, array $rules)
