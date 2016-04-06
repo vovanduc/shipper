@@ -46,4 +46,21 @@ class SystemController extends Controller
 
         return view('admin.system.backup', compact('files'));
     }
+
+    public function download_backup($file_name)
+    {
+        // Check if file exists in app/storage/file folder
+        $file_path = storage_path() .'/app/backup/'. $file_name;
+        if (file_exists($file_path))
+        {
+            // Send Download
+            return \Response::download($file_path, $file_name, [
+                'Content-Length: '. filesize($file_path)
+            ]);
+        }
+        else
+        {
+            exit('Requested file does not exist on our server!');
+        }
+    }
 }

@@ -75,6 +75,8 @@ Route::group(['middleware' => 'web'], function () {
 
 		Route::get('get_backup', array("as"=>"admin.system.get_backup","uses"=>"Admin\SystemController@get_backup"));
 		Route::get('get_district', array("as"=>"admin.system.get_district","uses"=>"Admin\SystemController@get_district"));
+		// Download Route
+		Route::get('download_backup/{file_name}', array("as"=>"admin.system.download_backup","uses"=>"Admin\SystemController@download_backup"))->where('file_name', '[A-Za-z0-9\-\_\.]+');
 	});
 });
 

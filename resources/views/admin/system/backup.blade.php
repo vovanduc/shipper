@@ -13,11 +13,13 @@
                     <?php
                         $timestamp = \Storage::lastModified($item);
                         $time = Carbon::now()->timestamp($timestamp)->format('H:i d-m-Y');
+                        $file_name = substr($item, 7);
                     ?>
                     <li class="list-group-item">
                         {{$item}}
                         <span class="pull-right">
                             {{\Storage::size($item)}} Byte <b>( {{$time}} )</b>
+                            <a href="{{URL::route('admin.system.download_backup', $file_name)}}" target="_blank">Tải về</a>
                         </span>
                     </li>
                 @endforeach
