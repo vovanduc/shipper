@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_URL'),
+        'name' => 'backup',
 
         'source' => [
 
@@ -102,7 +102,7 @@ return [
      */
     'monitorBackups' => [
         [
-            'name' => env('APP_URL'),
+            'name' => 'backup',
             'disks' => ['local'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,

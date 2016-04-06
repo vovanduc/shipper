@@ -58,4 +58,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'auth.shippers' => \App\Http\Middleware\RedirectIfNotShipper::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('backup:run')->daily()->at('10:00');
+    }
 }
