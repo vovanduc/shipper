@@ -127,7 +127,7 @@
                                             <b>{{$item->date}}</b>
                                         @endif
                                     </td>
-        	        				<td>{!! $item->cv_status !!}</td>
+        	        				<td>{!! $item->cv_status !!} <hr>{!! $item->invoice !!}</td>
         	        				<td>
     		        					<a href="{{URL::route('admin.packages.show', $item->uuid)}}" class="btn {{!$permission_accept_show ? 'disabled' : ''}}">
     		        						<i class="fa fa-search"></i> Xem
