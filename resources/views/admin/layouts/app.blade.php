@@ -105,6 +105,11 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="{{URL::route('admin.system.get_backup')}}" class="dropdown-toggle" role="button">
+                            <b>Backup dữ liệu</b>
+                        </a>
+                    </li>
                     <!-- Authentication Links -->
                     @if (Auth::user() && Request::is('admin*'))
                         <li class="dropdown">

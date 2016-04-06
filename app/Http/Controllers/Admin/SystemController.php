@@ -36,4 +36,14 @@ class SystemController extends Controller
             return \Response::Json(array("value"=>$data));
         }
     }
+
+    public function get_backup()
+    {
+        $files = \Storage::files('backup');
+
+        //dd(\Storage::get('backup/CARGO MANIFEST_ 03082016.xls - Sheet1.csv.zip'));
+
+
+        return view('admin.system.backup', compact('files'));
+    }
 }

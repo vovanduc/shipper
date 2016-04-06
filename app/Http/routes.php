@@ -73,6 +73,7 @@ Route::group(['middleware' => 'web'], function () {
 
 		Route::get('errors/permission', array("as"=>"admin.errors.permission","uses"=>"Admin\ErrorsController@permission"));
 
+		Route::get('get_backup', array("as"=>"admin.system.get_backup","uses"=>"Admin\SystemController@get_backup"));
 		Route::get('get_district', array("as"=>"admin.system.get_district","uses"=>"Admin\SystemController@get_district"));
 	});
 });
