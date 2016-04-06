@@ -35,7 +35,7 @@
           	        			<tr class="text-center">
             	        				<th></th>
             	        				<td>{{ $item->key }}</td>
-                                        <td>{{ $item->packages->count() }}</td>
+                                        <td>{{ $item->packages()->count() }}</td>
             	        				<td>{!! $item->cv_active !!}</td>
             	        				<td>{{ $item->created_at }}</td>
             	        				<td>

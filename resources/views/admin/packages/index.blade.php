@@ -114,9 +114,9 @@
         	        				<td>
                                         {{ $item->from_customer }}
 
-                                        @if($item->info)
+                                        @if($item->shipment)
                                             <hr>
-                                            <b>{{$item->info}}</b>
+                                            <b>{{$item->shipment}}</b>
                                         @endif
                                     </td>
         	        				<td>

@@ -72,10 +72,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('info') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Thông tin kiện hàng</label>
+                    <div class="form-group{{ $errors->has('shipment_id') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Thông tin lô hàng</label>
                         <div class="col-md-6">
-                            {{Form::text("info",null,array('class' => 'form-control'))}}
+                            {{Form::select("shipment_id",$shipments,null,array('class' => 'form-control select_auto'))}}
                         </div>
                     </div>
 

@@ -80,10 +80,14 @@ class PackagesController extends Controller
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
 
+        $shipments = \Shipment::where('deleted', 0)->orderBy('id', 'DESC')->lists('key','uuid');
+        $shipments = array(''=>'Chọn lô hàng') + $shipments->toArray();
+
         return view('admin.packages.create')
             ->with('customers', $customers)
             ->with('shippers', $shippers)
-            ->with('location_id', $location_id);
+            ->with('location_id', $location_id)
+            ->with('shipments', $shipments);
     }
 
     /**
@@ -207,11 +211,15 @@ class PackagesController extends Controller
         $location_id = \Location::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $location_id = array(''=>'Chọn vị trí') + $location_id->toArray();
 
+        $shipments = \Shipment::where('deleted', 0)->orderBy('id', 'DESC')->lists('key','uuid');
+        $shipments = array(''=>'Chọn lô hàng') + $shipments->toArray();
+
         $result = $this->packages->edit($id);
         return view('admin.packages.edit', compact('result'))
             ->with('customers', $customers)
             ->with('shippers', $shippers)
-            ->with('location_id', $location_id);
+            ->with('location_id', $location_id)
+            ->with('shipments', $shipments);
     }
 
     /**

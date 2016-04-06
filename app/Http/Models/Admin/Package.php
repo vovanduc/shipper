@@ -15,7 +15,8 @@ class Package extends \Eloquent
         'uuid','address','label','status','customer_id','shipper_id','note',
         'county','place_id','latitude','longitude','price','distance','duration',
         'steps','content','quantity','parent','location_id','delivery_at','invoice',
-        'service_type','weight','content','kgs','phone','customer_from','province_id','district_id','info','date'
+        'service_type','weight','content','kgs','phone','customer_from','province_id','district_id','info','date','shipper_id',
+        'shipment_id',
     ];
 
     /**
@@ -147,6 +148,11 @@ class Package extends \Eloquent
         return $this->hasOne('\App\Http\Models\Admin\Location', 'uuid', 'location_id');
     }
 
+    public function shipment()
+    {
+        return $this->hasOne('\App\Http\Models\Admin\Shipment', 'uuid', 'shipment_id');
+    }
+
     public function package_parent()
     {
         return $this->hasOne('\App\Http\Models\Admin\Package', 'uuid','parent');
@@ -176,6 +182,7 @@ class Package extends \Eloquent
         $data->from_customer = !empty($data->from_customer->name) ? $data->from_customer->name : '';
         $data->province = !empty($data->province->name) ? $data->province->name : '';
         $data->district = !empty($data->district->name) ? $data->district->name : '';
+        $data->shipment = !empty($data->shipment->key) ? $data->shipment->key : '';
         return $data;
     }
 
