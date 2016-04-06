@@ -47,7 +47,7 @@ class PackagesController extends Controller
         $customers = \Customer::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
         $shippers = \Shipper::where('deleted', 0)->orderBy('id', 'DESC')->lists('name','uuid');
 
-        $result = $this->packages->all(10);
+        $result = $this->packages->all(20);
         return view('admin.packages.index', compact('result'))
             ->with('customer_id')
             ->with('customer_phone')
