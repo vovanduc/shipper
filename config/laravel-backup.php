@@ -69,7 +69,7 @@ return [
             /*
              * The amount of days that daily backups must be kept.
              */
-            'keepDailyBackupsForDays' => 16,
+            'keepDailyBackupsForDays' => 2,
 
             /*
              * The amount of weeks of which one weekly backup must be kept.
