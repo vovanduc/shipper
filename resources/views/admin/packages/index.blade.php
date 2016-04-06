@@ -109,7 +109,7 @@
                                 <?php
                                     $item = Package::convert($item);
                                 ?>
-          	        			<tr class="text-center">
+          	        			<tr class="text-center" style="background-color: {{ $count % 2 == 0 ? '#ffffff': '#F8F8F8' }};">
         	        				<th></th>
         	        				<td>
                                         {{ $item->from_customer }}
