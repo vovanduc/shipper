@@ -55,7 +55,8 @@ class SystemController extends Controller
         {
             // Send Download
             return \Response::download($file_path, $file_name, [
-                'Content-Length: '. filesize($file_path)
+                'Content-Length: '. filesize($file_path),
+                'Content-Type' => 'application/zip',
             ]);
         }
         else
