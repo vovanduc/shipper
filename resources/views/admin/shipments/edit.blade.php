@@ -48,6 +48,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-4 control-label">Cập nhật trạng thái cho tất cả <b style="color:red">{{$result->packages()->count()}}</b> kiện hàng</label>
+                        <div class="col-md-6">
+                            {{Form::select("status",\Package::get_status_option(),$status,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn trạng thái'))}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-4 control-label">Trạng thái</label>
 
                         <div class="col-md-6">

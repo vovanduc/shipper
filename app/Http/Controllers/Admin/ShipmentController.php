@@ -109,7 +109,7 @@ class ShipmentsController extends Controller
     public function edit($id)
     {
         $result = $this->shipments->firstOrFail($id);
-        return view('admin.shipments.edit', compact('result'));
+        return view('admin.shipments.edit', compact('result'))->with('status', 0);
     }
 
     /**
@@ -131,10 +131,31 @@ class ShipmentsController extends Controller
 
         \Input::merge(array('updated_by' => \Auth::user()->id));
 
-        $result = $this->shipments->update($id, $this->request->except(['_method', '_token', 'password_confirmation']));
+        $result = $this->shipments->update($id, $this->request->except(['_method', '_token', 'password_confirmation', 'status']));
 
         if ($result) {
             $result = $this->shipments->firstOrFail($id);
+
+            if ($this->request->status) {
+                $packages = $result->packages;
+                if($packages->count()) {
+                    foreach($result->packages as $item) {
+                        $item->status = $this->request->status;
+                        $item->save();
+
+                        $message = 'Lô hàng: '.$result->key.' chuyển trạng thái thành <strong>'.\Package::get_status_option($this->request->status).'</strong> <a target="_blank" href="'.\URL::route('admin.packages.show', $item->uuid).'">'.$item->label.'</a>';
+
+                        \Activity::log([
+                            'contentId'   => $item->uuid,
+                            'contentType' => 'package',
+                            'action'      => 'update',
+                            'description' => $message,
+                            'userId'     => \Auth::user()->uuid,
+                        ]);
+                    }
+                }
+            }
+
             $mess = \Lang::get('admin.global.update_success').' <b><a target="_blank" href="'.\URL::route('admin.shipments.show', $id).'">'.$result->name.'</a></b>';
             \Activity::log([
                 'contentId'   => $id,
