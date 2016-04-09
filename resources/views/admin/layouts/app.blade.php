@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     {!! \Html::style('assets/admin/css/bootstrap.min.css') !!}
+    {!! \Html::style('assets/admin/css/bootstrap-modal-bs3patch.css') !!}
     {!! \Html::style('assets/admin/css/select2.min.css') !!}
     {!! \Html::style('assets/admin/css/jquery-ui.css') !!}
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}

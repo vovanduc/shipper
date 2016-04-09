@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\Customer\ICustomerRepository;
 
 class SystemController extends Controller
 {
 
-    public function __construct()
+    public function __construct(ICustomerRepository $customers, Request $request)
     {
-
+        $this->customers = $customers;
+        $this->request = $request;
     }
 
     public function get_district()
@@ -62,6 +64,46 @@ class SystemController extends Controller
         else
         {
             exit('Requested file does not exist on our server!');
+        }
+    }
+
+    public function add_customer()
+    {
+        $customer_name = \Input::get('customer_name');
+        $customer_email = \Input::get('customer_email') ? \Input::get('customer_email') : time().'@gmail.com';
+        $customer_phone = \Input::get('customer_phone') ? \Input::get('customer_phone') : time();
+        $customer_address = \Input::get('customer_address') ? \Input::get('customer_address') : time();
+
+        if(!$customer_name) {
+            return \Response::Json(array("error"=>'Vui lòng nhập tên khách hàng'));
+        } else {
+            $check = \Customer::whereName($customer_name)->first();
+            if($check) {
+                return \Response::Json(array("error"=>'Đã tồn tại tên khách hàng này!'));
+            }
+        }
+
+        $result = $this->customers->add(array(
+            'name' => $customer_name,
+            'email' => $customer_email,
+            'phone' => $customer_phone,
+            'address' => $customer_address,
+            'created_by' => \Auth::user()->id
+        ));
+
+        if ($result) {
+            $mess = \Lang::get('admin.global.add_success').' <b><a target="_blank" href="'.\URL::route('admin.customers.show', $result->uuid).'">'.$result->name.'</a></b>';
+            \Activity::log([
+                'contentId'   => $result->uuid,
+                'contentType' => 'customer',
+                'action'      => 'add',
+                'description' => $mess,
+                'userId'     => \Auth::user()->uuid,
+            ]);
+
+            return \Response::Json(array("success"=>true, 'customer'=>array('uuid'=>$result->uuid, 'name'=>$result->name)));
+        } else {
+            return \Response::Json(array("error"=>trans('admin.global.message_danger')));
         }
     }
 }

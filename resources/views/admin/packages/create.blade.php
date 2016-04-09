@@ -41,7 +41,7 @@
                         <label class="col-md-4 control-label">Người gửi</label>
 
                         <div class="col-md-6">
-                            {{Form::select("customer_from",$customers,null,array('class' => 'form-control select_auto'))}}
+                            {{Form::select("customer_from",$customers,null,array('class' => 'form-control select_auto', 'id' => 'customer_from'))}}
 
                             @if ($errors->has('customer_from'))
                                 <span class="help-block">
@@ -49,19 +49,134 @@
                                 </span>
                             @endif
                         </div>
+                        <div class="col-md-2">
+                            <a data-toggle="modal" data-target="#add_nguoigui" href="#">Thêm người gửi</a>
+                            <!-- Modal -->
+                            <div id="add_nguoigui" class="modal fade" tabindex="-1" data-width="800" style="display: none;margin-top: 100px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Thêm mới người gửi</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Tên</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_name" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">E-Mail</label>
+
+                                                <div class="col-md-8">
+                                                    <input type="email" class="form-control" name="customer_email" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Điện thoại</label>
+
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_phone" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Địa chỉ</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_address" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12" style="color: red">
+                                                    <label class="show_errors"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Đóng</button>
+                                    <button type="button" class="btn btn-primary" id="update_nguoigui">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Người nhận</label>
 
                         <div class="col-md-6">
-                            {{Form::select("customer_id",$customers,null,array('class' => 'form-control select_auto'))}}
+                            {{Form::select("customer_id",$customers,null,array('class' => 'form-control select_auto', 'id' => 'customer_id'))}}
 
                             @if ($errors->has('customer_id'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('customer_id') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                        <div class="col-md-2">
+                            <a data-toggle="modal" data-target="#add_nguoinhan" href="#">Thêm người nhận</a>
+                            <!-- Modal -->
+                            <div id="add_nguoinhan" class="modal fade" tabindex="-1" data-width="800" style="display: none;margin-top: 100px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Thêm mới người nhận</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Tên</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_name_nguoinhan" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">E-Mail</label>
+
+                                                <div class="col-md-8">
+                                                    <input type="email" class="form-control" name="customer_email_nguoinhan" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Điện thoại</label>
+
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_phone_nguoinhan" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Địa chỉ</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="customer_address_nguoinhan" value="">
+                                                    <p>Có thể để trống và cập nhật sau</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12" style="color: red">
+                                                    <label class="show_errors_nguoinhan"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Đóng</button>
+                                    <button type="button" class="btn btn-primary" id="update_nguoinhan">Lưu</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -235,6 +350,79 @@
 <script>
     $(document).ready(function() {
         $(".datepicker").datepicker('setDate', new Date());
+
+        $('#update_nguoigui').on('click', function(){
+            var customer_name = $('input[name="customer_name"]').val();
+            var customer_email = $('input[name="customer_email"]').val();
+            var customer_phone = $('input[name="customer_phone"]').val();
+            var customer_address = $('input[name="customer_address"]').val();
+            $('.show_errors').html('Chờ trong giây lát ...');
+
+            $.ajax({
+                "url":"{{\URL::route("admin.system.add_customer")}}",
+                "type":"GET",
+                "data":{"customer_name":customer_name, "customer_email":customer_email, "customer_address":customer_address},
+                "success":function(data)
+                {
+                    if(data.error)
+                    {
+                        $('.show_errors').html(data.error);
+                    }
+                    if(data.success) {
+                        $('.show_errors').html('');
+                        $('#add_nguoigui').modal('hide');
+                        $('#add_nguoinhan').modal('hide');
+                        $('input[name="customer_name"]').val('');
+                        $('input[name="customer_email"]').val('');
+                        $('input[name="customer_phone"]').val('');
+                        $('input[name="customer_address"]').val('');
+                        var option = [{ id: data.customer.uuid, text: data.customer.name }];
+                        $("#customer_from").select2({
+                          data: option
+                        });
+                        $("#customer_from").select2().val(data.customer.uuid).trigger("change");
+                        return false;
+                    }
+                }
+            })
+        });
+
+        // ################################################
+        $('#update_nguoinhan').on('click', function(){
+            var customer_name = $('input[name="customer_name_nguoinhan"]').val();
+            var customer_email = $('input[name="customer_email_nguoinhan"]').val();
+            var customer_phone = $('input[name="customer_phone_nguoinhan"]').val();
+            var customer_address = $('input[name="customer_address_nguoinhan"]').val();
+            $('.show_errors_nguoinhan').html('Chờ trong giây lát ...');
+
+            $.ajax({
+                "url":"{{\URL::route("admin.system.add_customer")}}",
+                "type":"GET",
+                "data":{"customer_name":customer_name, "customer_email":customer_email, "customer_address":customer_address},
+                "success":function(data)
+                {
+                    if(data.error)
+                    {
+                        $('.show_errors_nguoinhan').html(data.error);
+                    }
+                    if(data.success) {
+                        $('.show_errors').html('');
+                        $('#add_nguoigui').modal('hide');
+                        $('#add_nguoinhan').modal('hide');
+                        $('input[name="customer_name_nguoinhan"]').val('');
+                        $('input[name="customer_email_nguoinhan"]').val('');
+                        $('input[name="customer_phone_nguoinhan"]').val('');
+                        $('input[name="customer_address_nguoinhan"]').val('');
+                        var option = [{ id: data.customer.uuid, text: data.customer.name }];
+                        $("#customer_id").select2({
+                          data: option
+                        });
+                        $("#customer_id").select2().val(data.customer.uuid).trigger("change");
+                        return false;
+                    }
+                }
+            })
+        });
     });
 </script>
 {!! \Html::script('assets/admin/javascript/google_map.js') !!}
