@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .badge_mini{
-        font-size: 30px;
+        font-size: 20px;
         margin-top: 20px;
     }
 </style>
@@ -12,38 +12,24 @@
         <div class="panel-heading">Thống kê trạng thái kiện hàng</div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Đang ở tại kho Mỹ</a>
-                    <span class="badge badge_mini">{{$sum[1]}}</span>
+                @for ($i=1; $i<=8 ; $i++)
+                <div class="col-sm-4 text-center" style="min-height: 200px;">
+                    <a href="#" class="btn btn-block btn-primary">
+                        {{\Package::get_status_option($i)}}
+                    </a>
+                    @foreach($sum[$i] as $item)
+                        <span class="badge badge_mini">
+                            {{\Shipment::whereUuid($item->shipment_id)->first()->key}}
+                            ({{$item->packages_count}})
+                        </span>
+                    @endforeach
                 </div>
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Đang gửi về Việt Nam</a>
-                    <span class="badge badge_mini">{{$sum[2]}}</span>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Đã về Việt Nam - nội địa Tphcm</a>
-                    <span class="badge badge_mini">{{$sum[3]}}</span>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Đang giao hàng</a>
-                    <span class="badge badge_mini">{{$sum[4]}}</span>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Giao hàng thành công</a>
-                    <span class="badge badge_mini">{{$sum[5]}}</span>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-block btn-primary">Đã hủy</a>
-                    <span class="badge badge_mini">{{$sum[6]}}</span>
-                </div>
+                @endfor
             </div>
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
         <div class="panel-heading">Thống kê vị trí kiện hàng</div>
         <div class="panel-body">
             <div class="row">
@@ -67,6 +53,6 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection
