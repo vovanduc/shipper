@@ -55,54 +55,58 @@
             {{ Form::close() }}
             <br/>
             <div class="table-responsive">
-				<table class="table table-condensed">
-					<thead>
-                        <tr>
-							<td class="text-center"><strong>Tên</strong></td>
-							<td class="text-center">
-                                @if($status)
-                                    <strong>Kiện hàng ( {{\Package::get_status_option($status)}} )</strong>
-                                @else
-                                    <strong>Kiện hàng ở tất cả trạng thái</strong>
-                                @endif
-                            </td>
-							<td class="text-center"><strong>Tiền</strong></td>
-                        </tr>
-					</thead>
+				  <table class="table table-condensed">
+    					<thead>
+                  <tr>
+      							<td class="text-center"><strong>Tên</strong></td>
+      							<td class="text-center">
+                        @if($status)
+                            <strong>Kiện hàng ( {{\Package::get_status_option($status)}} )</strong>
+                        @else
+                            <strong>Kiện hàng ở tất cả trạng thái</strong>
+                        @endif
+                    </td>
+                    <td class="text-center"><strong>Kg</strong></td>
+      							<td class="text-center"><strong>Tiền</strong></td>
+                  </tr>
+    					</thead>
 					<tbody>
-                        <?php $total = 0;?>
-						@foreach($result as $item)
-                            <?php
+						      @foreach($result as $item)
+                  <?php
 
-                                if ($status) {
-                                    $packages = $item->packages()->where('status', $status);
-                                } else {
-                                    $packages = $item->packages();
-                                }
+                      $total = 0;
+                      $total_kg = 0;
+                      
+                      if ($status) {
+                          $packages = $item->packages()->where('status', $status);
+                      } else {
+                          $packages = $item->packages();
+                      }
 
-                                if ($time > 0) {
-                                    $packages = $packages->where('delivery_at','>=',$date[0])->where('delivery_at','<=',$date[1]);
-                                }
+                      if ($time > 0) {
+                          $packages = $packages->where('delivery_at','>=',$date[0])->where('delivery_at','<=',$date[1]);
+                      }
 
-                                $total += $packages->sum('price');
-                            ?>
-    						<tr>
-    							<td class="text-center">{{$item->name}}</td>
-    							<td class="text-center">{{$packages->count()}}</td>
-    							<td class="text-center">
-                                    @if($packages->sum('price') > 0)
-                                        {{\Currency::format($packages->sum('price'))}}
-                                    @else
-                                        0 VND
-                                    @endif
-                                </td>
-    						</tr>
-                        @endforeach
-                        <tr>
-                            <td class="no-line"></td>
-                            <td class="no-line text-center"><strong>Tổng tiền</strong></td>
-                            <td class="no-line text-center">{{\Currency::format($total)}}</td>
-                        </tr>
+                      $total += $packages->sum('price');
+                      $total_kg += $packages->sum('kgs');
+                  ?>
+    						  <tr>
+        							<td class="text-center">{{$item->name}}</td>
+        							<td class="text-center">{{$packages->count()}}</td>
+                      <td class="no-line text-center"><strong>{{$total_kg}}</strong></td>
+        							<td class="text-center">
+                          @if($packages->sum('price') > 0)
+                              {{\Currency::format($packages->sum('price'))}}
+                          @else
+                              0 VND
+                          @endif
+                      </td>
+    						  </tr>
+                  @endforeach
+                  <tr>
+                      <td class="no-line"></td>
+                      <td class="no-line text-center">{{\Currency::format($total)}}</td>
+                  </tr>
 					</tbody>
 				</table>
 			</div>
