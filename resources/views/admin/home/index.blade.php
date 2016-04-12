@@ -11,23 +11,27 @@
     <div class="panel panel-default">
         <div class="panel-heading">Thống kê trạng thái kiện hàng</div>
         <div class="panel-body">
+            @for ($i=1; $i<=8 ; $i++)
             <div class="row">
-                @for ($i=1; $i<=8 ; $i++)
-                <div class="col-sm-4 text-center" style="min-height: 200px;">
+                <div class="col-sm-12 text-center">
                     <a href="#" class="btn btn-block btn-primary">
                         {{\Package::get_status_option($i)}}
                     </a>
-                    @if(isset($sum[$i]))
-                        @foreach($sum[$i] as $item)
-                            <span class="badge badge_mini">
+
+                    @foreach($sum[$i] as $item)
+                        <span class="badge badge_mini">
+                            @if(\Shipment::whereUuid($item->shipment_id)->first())
                                 {{\Shipment::whereUuid($item->shipment_id)->first()->key}}
-                                ({{$item->packages_count}})
-                            </span>
-                        @endforeach
-                    @endif
+                            @else
+                                Chưa có lô hàng
+                            @endif
+                            ({{$item->packages_count}})
+                        </span>
+                    @endforeach
+                    </br></br>
                 </div>
-                @endfor
             </div>
+            @endfor
         </div>
     </div>
 
