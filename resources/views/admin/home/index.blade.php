@@ -17,12 +17,14 @@
                     <a href="#" class="btn btn-block btn-primary">
                         {{\Package::get_status_option($i)}}
                     </a>
-                    @foreach($sum[$i] as $item)
-                        <span class="badge badge_mini">
-                            {{\Shipment::whereUuid($item->shipment_id)->first()->key}}
-                            ({{$item->packages_count}})
-                        </span>
-                    @endforeach
+                    @if(isset($sum[$i]))
+                        @foreach($sum[$i] as $item)
+                            <span class="badge badge_mini">
+                                {{\Shipment::whereUuid($item->shipment_id)->first()->key}}
+                                ({{$item->packages_count}})
+                            </span>
+                        @endforeach
+                    @endif
                 </div>
                 @endfor
             </div>
