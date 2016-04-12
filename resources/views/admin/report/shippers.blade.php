@@ -71,12 +71,12 @@
                   </tr>
     					</thead>
 					<tbody>
-						      @foreach($result as $item)
                   <?php
-
                       $total = 0;
                       $total_kg = 0;
-                      
+                  ?>
+						      @foreach($result as $item)
+                  <?php
                       if ($status) {
                           $packages = $item->packages()->where('status', $status);
                       } else {
@@ -93,7 +93,9 @@
     						  <tr>
         							<td class="text-center">{{$item->name}}</td>
         							<td class="text-center">{{$packages->count()}}</td>
-                      <td class="no-line text-center"><strong>{{$total_kg}}</strong></td>
+                      <td class="text-center">
+                        {{$packages->sum('kgs')}}
+                      </td>
         							<td class="text-center">
                           @if($packages->sum('price') > 0)
                               {{\Currency::format($packages->sum('price'))}}
@@ -105,7 +107,9 @@
                   @endforeach
                   <tr>
                       <td class="no-line"></td>
-                      <td class="no-line text-center">{{\Currency::format($total)}}</td>
+                      <td class="no-line text-center"><strong>Tổng cộng</strong></td>
+                      <td class="no-line text-center"><b>{{$total_kg}}</b></td>
+                      <td class="no-line text-center"><b>{{\Currency::format($total)}}</b></td>
                   </tr>
 					</tbody>
 				</table>
