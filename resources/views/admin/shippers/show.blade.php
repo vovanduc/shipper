@@ -19,7 +19,7 @@
         <div class="panel-body">
 
             <div class="row">
-                <div class="col-md-4 col-lg-4 " align="center">
+                <!-- <div class="col-md-4 col-lg-4 " align="center">
                     <i class="fa fa-btn fa-user" style="font-size: 150px;"></i>
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-info"><b>Tổng tiền vận chuyển trong ngày</b></li>
@@ -39,7 +39,7 @@
                             {{$money['year']}}
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
                 <div class=" col-md-8 col-lg-8 ">
                 <table class="table table-user-information">
