@@ -41,7 +41,7 @@
                     </ul>
                 </div> -->
 
-                <div class=" col-md-8 col-lg-8 ">
+                <div class=" col-md-12 col-lg-12 ">
                 <table class="table table-user-information">
                     <tbody>
                         <tr>
