@@ -11,7 +11,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Thống kê trạng thái kiện hàng</div>
         <div class="panel-body">
-            @for ($i=1; $i<=8 ; $i++)
+            @for ($i=1; $i<=9 ; $i++)
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <a href="#" class="btn btn-block btn-primary">

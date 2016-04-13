@@ -53,6 +53,8 @@ class Package extends \Eloquent
             return '<h4><span class="label" style="background-color:#4F1C4C">Đang giao hàng tại Tphcm</span></h4>';
         } else if ($this->attributes['status'] == 8) {
             return '<h4><span class="label" style="background-color:#4F1C4C">Đang giao hàng ngoại thành</span></h4>';
+        } else if ($this->attributes['status'] == 9) {
+            return '<h4><span class="label" style="background-color:#A42127">Hàng chưa giao xong</span></h4>';
         }
     }
 
@@ -208,6 +210,7 @@ class Package extends \Eloquent
         $data[6] = 'Đã hủy';
         $data[7] = 'Đang giao hàng tại Tphcm';
         $data[8] = 'Đang giao hàng ngoại thành';
+        $data[9] = 'Hàng chưa giao xong';
 
         if ($index) {
             return $data[$index];

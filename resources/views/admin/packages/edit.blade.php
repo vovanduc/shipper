@@ -254,6 +254,7 @@
                             {{ Form::radio('status', 4, null) }} {{\Package::get_status_option(4)}}<br/>
                             {{ Form::radio('status', 7, null) }} {{\Package::get_status_option(7)}}<br/>
                             {{ Form::radio('status', 8, null) }} {{\Package::get_status_option(8)}}<br/>
+                            {{ Form::radio('status', 9, null) }} {{\Package::get_status_option(9)}}<br/>
                             {{ Form::radio('status', 5, null) }} {{\Package::get_status_option(5)}}<br/>
                             {{ Form::radio('status', 6, null) }} {{\Package::get_status_option(6)}}<br/>
                         </div>

@@ -33,7 +33,7 @@ class HomeController extends Controller
         // }
 
         $sum = array();
-        for ($i=1; $i<=8 ; $i++) {
+        for ($i=1; $i<=9 ; $i++) {
             //$result = \Package::where('deleted', 0)->where('status', $i)->count();
             $result = \Package::select(\DB::raw('count(*) as packages_count, shipment_id'))
             ->where('deleted', 0)
