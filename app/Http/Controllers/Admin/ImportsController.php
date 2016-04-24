@@ -9,25 +9,26 @@ use App\Http\Controllers\Controller;
 class ImportsController extends Controller
 {
     protected $status = 2;
-    protected $shipment_id = '180-95171963';
-    protected $date = '2016-04-15';
+    protected $shipment_id = '180-95172000';
+    protected $date = '2016-04-19';
 
     public function __construct(Request $request)
     {
         $this->request = $request;
+
     }
 
     public function excel()
     {
-        print 'Hello';exit;
+        //print 'Hello';exit;
 
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
 
         ############################################################################
-        $excel->parser->loadFile(base_path('public/assets/admin/excel/15.04.20161.csv'));
+        $excel->parser->loadFile(base_path('public/assets/admin/excel/19.04.20161.csv'));
         $count = 1;
-        for ($i=9; $i <= 123 ; $i++) {
+        for ($i=9; $i <= 274 ; $i++) {
             for ($k=1; $k <= 15 ; $k++) {
                 $string = $excel->parser->getCell($i,$k);
                 if ($k==2) $invoice = $excel->parser->getCell($i,$k);
