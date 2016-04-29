@@ -58,7 +58,7 @@ class StatisticsController extends Controller
         for ($a = 1; $a <= 12; $a++) {
             $result = \Package::where('deleted', 0)->whereMonth('created_at', '=',$a)->count();
             $finances->addRow([
-              '2015-' . $a, $result
+              '2016-' . $a, $result
             ]);
         }
 
