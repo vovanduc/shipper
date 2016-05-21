@@ -16,7 +16,7 @@ class ReportsController extends Controller
      */
     public function __construct()
     {
-
+        print 'Hệ thống đang cập nhật ...';exit;
     }
 
     /**
