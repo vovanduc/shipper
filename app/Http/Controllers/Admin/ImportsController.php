@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 class ImportsController extends Controller
 {
     protected $status = 2;
-    protected $shipment_id = '180-95204465';
-    protected $date = '2016-05-17';
+    protected $shipment_id = '180-95204513';
+    protected $date = '2016-05-20';
 
     public function __construct(Request $request)
     {
@@ -20,15 +20,15 @@ class ImportsController extends Controller
 
     public function excel()
     {
-        print 'Hello';exit;
+        //print 'Hello';exit;
 
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
 
         ############################################################################
-        $excel->parser->loadFile(base_path('public/assets/admin/excel/17.05.20161.csv'));
+        $excel->parser->loadFile(base_path('public/assets/admin/excel/20.05.20161.csv'));
         $count = 1;
-        for ($i=9; $i <= 222 ; $i++) {
+        for ($i=9; $i <= 123 ; $i++) {
             for ($k=1; $k <= 15 ; $k++) {
                 $string = $excel->parser->getCell($i,$k);
                 if ($k==2) $invoice = $excel->parser->getCell($i,$k);
