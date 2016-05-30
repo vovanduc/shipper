@@ -31,12 +31,13 @@ class ReportsController extends Controller
 
         $result = \Shipper::where('deleted', 0);
 
-         $result = $result->get()->sortByDesc(function($shipper)
-         {
-             return $shipper->packages->count();
-         });
+        $result = $result->get()->sortByDesc(function($shipper)
+        {
+            return $shipper->packages->count();
+        });
 
-         return view('admin.report.shippers', compact('result'))
+
+        return view('admin.report.shippers', compact('result'))
          ->with('month',$month);
     }
 

@@ -43,27 +43,37 @@
     					<thead>
                             <tr>
       							<td class="text-center"><strong>Tên</strong></td>
-      							<td class="text-center">
-
-                                </td>
-                                <td class="text-center"><strong>Kg</strong></td>
-      							<td class="text-center"><strong>Tiền</strong></td>
+                                <td class="text-right"><strong>Kiện hàng</strong></td>
+                                <td class="text-right"><strong>Kg</strong></td>
+      							<td class="text-right"><strong>Tiền</strong></td>
                             </tr>
     					</thead>
 					<tbody>
                         <?php
                             $total = 0;
                             $total_kg = 0;
+                            $total_count = 0;
                         ?>
-						@foreach($result as $item)
-
-                        @endforeach
-
+                        @foreach($result as $item)
+                        <?php
+                            $data = $item->packages()->whereStatus(\Config::get('lib.PACKAGE.delivery_success'))
+                            ->whereMonth('delivery_at', '=', $month);
+                            $total_kg += $data->sum('kgs');
+                            $total += $data->sum('price');
+                            $total_count += $data->count();
+                        ?>
                         <tr>
-                          <td class="no-line"></td>
-                          <td class="no-line text-center"><strong>Tổng cộng</strong></td>
-                          <td class="no-line text-center"><b>{{$total_kg}}</b></td>
-                          <td class="no-line text-center"><b>{{\Currency::format($total)}}</b></td>
+                            <td class="text-center">{{$item->name}}</td>
+                            <td class="text-right">{{$data->count()}}</td>
+                            <td class="text-right">{{$data->sum('kgs')}}</td>
+                            <td class="text-right">{{\Currency::format($data->sum('price'))}}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td class="no-line text-center"><strong>Tổng cộng</strong></td>
+                            <td class="no-line text-right"><b>{{$total_count}}</b></td>
+                            <td class="no-line text-right"><b>{{$total_kg}}</b></td>
+                            <td class="no-line text-right"><b>{{\Currency::format($total)}}</b></td>
                         </tr>
 					</tbody>
 				</table>
