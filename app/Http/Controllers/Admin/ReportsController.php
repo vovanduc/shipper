@@ -36,19 +36,6 @@ class ReportsController extends Controller
             return $shipper->packages->count();
         });
 
-        if($month == 12) {
-            $temp = \Package::get();
-            foreach($temp as $item) {
-                if ($item->distance <= 2000) {
-                    print $item->distance.' - '.$item->kgs.' - '.$item->price.'<br/>';
-                    $item->price = $item->distance * $item->kgs * 1;
-                    $item->save();
-                }
-            }
-        }
-
-
-
         return view('admin.report.shippers', compact('result'))
          ->with('month',$month);
     }
