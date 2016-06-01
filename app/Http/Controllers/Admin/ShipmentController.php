@@ -141,6 +141,9 @@ class ShipmentsController extends Controller
                 if($packages->count()) {
                     foreach($result->packages as $item) {
                         $item->status = $this->request->status;
+                        if(\Config::get('lib.PACKAGE.delivery_success') == $item->status) {
+                            $item->delivery_at = new \DateTime();
+                        }
                         $item->save();
 
                         $message = 'Lô hàng: '.$result->key.' chuyển trạng thái thành <strong>'.\Package::get_status_option($this->request->status).'</strong> <a target="_blank" href="'.\URL::route('admin.packages.show', $item->uuid).'">'.$item->label.'</a>';

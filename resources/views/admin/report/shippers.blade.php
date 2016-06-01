@@ -17,37 +17,21 @@
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                Chọn nhân viên giao hàng
-                            </div>
-                        </div>
-                        <div class="col-xs-6" >
-                            <div class="left-inner-addon">
-                                Theo thời gian
+                                Báo cáo theo tháng
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-6" >
                             <div class="left-inner-addon">
-                                {{Form::select("shipper",$shippers,$shipper,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn tất cả'))}}
-                            </div>
-                        </div>
-                        <div class="col-xs-6" >
-                                {{Form::select("time",$times,$time,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn tất cả'))}}
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-xs-6" >
-                            <div class="left-inner-addon">
-                                Chọn theo trạng thái
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6" >
-                            <div class="left-inner-addon">
-                                {{Form::select("status",\Package::get_status_option(),$status,array('class' => 'form-control select_auto', 'placeholder' => 'Chọn tất cả'))}}
+                                <?php
+                                    $months = array();
+                                    $months[0] = 'Chọn tháng';
+                                    for ($i=1; $i <=12 ; $i++) {
+                                        $months[$i] = 'Tháng '.$i;
+                                    }
+                                ?>
+                                {{Form::select("month",$months,$month,array('class' => 'form-control select', 'placeholder' => ''))}}
                             </div>
                         </div>
                     </div>
@@ -55,62 +39,42 @@
             {{ Form::close() }}
             <br/>
             <div class="table-responsive">
-				  <table class="table table-condensed">
+				<table class="table table-condensed">
     					<thead>
-                  <tr>
+                            <tr>
       							<td class="text-center"><strong>Tên</strong></td>
-      							<td class="text-center">
-                        @if($status)
-                            <strong>Kiện hàng ( {{\Package::get_status_option($status)}} )</strong>
-                        @else
-                            <strong>Kiện hàng ở tất cả trạng thái</strong>
-                        @endif
-                    </td>
-                    <td class="text-center"><strong>Kg</strong></td>
-      							<td class="text-center"><strong>Tiền</strong></td>
-                  </tr>
+                                <td class="text-right"><strong>Kiện hàng</strong></td>
+                                <td class="text-right"><strong>Kg</strong></td>
+      							<td class="text-right"><strong>Tiền</strong></td>
+                            </tr>
     					</thead>
 					<tbody>
-                  <?php
-                      $total = 0;
-                      $total_kg = 0;
-                  ?>
-						      @foreach($result as $item)
-                  <?php
-                      if ($status) {
-                          $packages = $item->packages()->where('status', $status);
-                      } else {
-                          $packages = $item->packages();
-                      }
-
-                      if ($time > 0) {
-                          $packages = $packages->where('delivery_at','>=',$date[0])->where('delivery_at','<=',$date[1]);
-                      }
-
-                      $total += $packages->sum('price');
-                      $total_kg += $packages->sum('kgs');
-                  ?>
-    						  <tr>
-        							<td class="text-center">{{$item->name}}</td>
-        							<td class="text-center">{{$packages->count()}}</td>
-                      <td class="text-center">
-                        {{$packages->sum('kgs')}}
-                      </td>
-        							<td class="text-center">
-                          @if($packages->sum('price') > 0)
-                              {{\Currency::format($packages->sum('price'))}}
-                          @else
-                              0 VND
-                          @endif
-                      </td>
-    						  </tr>
-                  @endforeach
-                  <tr>
-                      <td class="no-line"></td>
-                      <td class="no-line text-center"><strong>Tổng cộng</strong></td>
-                      <td class="no-line text-center"><b>{{$total_kg}}</b></td>
-                      <td class="no-line text-center"><b>{{\Currency::format($total)}}</b></td>
-                  </tr>
+                        <?php
+                            $total = 0;
+                            $total_kg = 0;
+                            $total_count = 0;
+                        ?>
+                        @foreach($result as $item)
+                        <?php
+                            $data = $item->packages()->whereStatus(\Config::get('lib.PACKAGE.delivery_success'))
+                            ->whereMonth('delivery_at', '=', $month);
+                            $total_kg += $data->sum('kgs');
+                            $total += $data->sum('price');
+                            $total_count += $data->count();
+                        ?>
+                        <tr>
+                            <td class="text-center">{{$item->name}}</td>
+                            <td class="text-right">{{$data->count()}}</td>
+                            <td class="text-right">{{$data->sum('kgs')}}</td>
+                            <td class="text-right">{{\Currency::format($data->sum('price'))}}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td class="no-line text-center"><strong>Tổng cộng</strong></td>
+                            <td class="no-line text-right"><b>{{$total_count}}</b></td>
+                            <td class="no-line text-right"><b>{{$total_kg}}</b></td>
+                            <td class="no-line text-right"><b>{{\Currency::format($total)}}</b></td>
+                        </tr>
 					</tbody>
 				</table>
 			</div>
@@ -124,7 +88,7 @@
 @section('javascript')
     <script>
         $(function() {
-            $('.select_auto').change(function() {
+            $('.select').change(function() {
                 this.form.submit();
             });
         });

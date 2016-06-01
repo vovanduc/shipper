@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 class ImportsController extends Controller
 {
     protected $status = 2;
+
     protected $shipment_id = '180-95204594';
     protected $date = '2016-05-27';
 
@@ -19,12 +20,13 @@ class ImportsController extends Controller
 
     public function excel()
     {
-        print 'Hello';exit;
+        //print 'Hello';exit;
 
         require_once base_path('vendor/faisalman/simple-excel-php/src/SimpleExcel/SimpleExcel.php');
         $excel = new \SimpleExcel\SimpleExcel('CSV');
 
         ############################################################################
+
         $excel->parser->loadFile(base_path('public/assets/admin/excel/27.05.20161.csv'));
         $count = 1;
         for ($i=9; $i <= 50 ; $i++) {
