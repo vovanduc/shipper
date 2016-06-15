@@ -10,8 +10,8 @@ class ImportsController extends Controller
 {
     protected $status = 2;
 
-    protected $shipment_id = '180-95308393';
-    protected $date = '2016-06-06';
+    protected $shipment_id = '180-95308485';
+    protected $date = '2016-06-14';
 
     public function __construct(Request $request)
     {
@@ -27,9 +27,9 @@ class ImportsController extends Controller
 
         ############################################################################
 
-        $excel->parser->loadFile(base_path('public/assets/admin/excel/06.06.20161.csv'));
+        $excel->parser->loadFile(base_path('public/assets/admin/excel/14.06.20161.csv'));
         $count = 1;
-        for ($i=9; $i <= 123 ; $i++) {
+        for ($i=9; $i <= 221 ; $i++) {
             for ($k=1; $k <= 15 ; $k++) {
                 $string = $excel->parser->getCell($i,$k);
                 if ($k==2) $invoice = $excel->parser->getCell($i,$k);
